@@ -16,49 +16,49 @@ const Products = () => {
       name: "GLAMOUR-DN3003_PM__7524",
       image: "/images/products/GLAMOUR/_GLAMOUR-DN3003_PM__7524.jpg",
       price: 20.0,
-      discontProc: 0,
+      discountProc: 0,
     },
     {
       id: 2,
       name: "GLAMOUR-DN3004_PM__7343",
       image: "/images/products/GLAMOUR/GLAMOUR-DN3004_PM__7343.jpg",
       price: 128.0,
-      discontProc: 30,
+      discountProc: 30,
     },
     {
       id: 3,
       name: "GLAMOUR-DN3005_PM__7212",
       image: "/images/products/GLAMOUR/GLAMOUR-DN3005_PM__7212.jpg",
       price: 120.0,
-      discontProc: 0,
+      discountProc: 0,
     },
     {
       id: 4,
       name: "GLAMOUR-DN3006_PM__7272",
       image: "/images/products/GLAMOUR/GLAMOUR-DN3006_PM__7272.jpg",
       price: 20.0,
-      discontProc: 0,
+      discountProc: 0,
     },
     {
       id: 5,
       name: "GLAMOUR-DN3007_PM__7161",
       image: "/images/products/GLAMOUR/GLAMOUR-DN3007_PM__7161.jpg",
       price: 20.0,
-      discontProc: 30,
+      discountProc: 30,
     },
     {
       id: 6,
       name: "GLAMOUR-DN3008_PM__7113",
       image: "/images/products/GLAMOUR/GLAMOUR-DN3008_PM__7113.jpg",
       price: 20.0,
-      discontProc: 0,
+      discountProc: 0,
     },
     {
       id: 7,
       name: "GLAMOUR-DN3009_PM__7080",
       image: "/images/products/GLAMOUR/GLAMOUR-DN3009_PM__7080.jpg",
       price: 20.0,
-      discontProc: 0,
+      discountProc: 0,
     },
   ]
 
@@ -82,8 +82,8 @@ const Products = () => {
         {products.map((products) => {
           return (
             <div className="products-container" key={products.id}>
-              {products.discontProc > 0 ? (
-                <div className="products-container__discount-proc">{products.discontProc}%</div>
+              {products.discountProc > 0 ? (
+                <div className="products-container__discount-proc">{products.discountProc}%</div>
               ) : (
                 ""
               )}
@@ -128,10 +128,10 @@ const Products = () => {
                 </div>
               </div>
               <div className="products-container__price-container">
-                {products.discontProc > 0 ? (
+                {products.discountProc > 0 ? (
                   <p className="products-container__discount">
                     {/* ToFixed () форматує число, використовуючи запис з фіксованою комою. */}
-                    {(products.price - (products.price * products.discontProc) / 100).toFixed(2)}
+                    {(products.price - (products.price * products.discountProc) / 100).toFixed(2)}
                   </p>
                 ) : (
                   ""

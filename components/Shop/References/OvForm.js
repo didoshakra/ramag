@@ -6,7 +6,7 @@ import IconRefresh from "../../ui/svg/table/IconRefresh"
 import { ComponentContext } from "../../../context/ComponentContext"
 
 
-export default function OvForm({ onCloseForm, formData, maxName = 50 }) {
+export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
  const { state } = useContext(ComponentContext)
  const { theme } = state
 
@@ -20,7 +20,7 @@ export default function OvForm({ onCloseForm, formData, maxName = 50 }) {
     formState: { errors },
     reset,
   } = useForm({
-    defaultValues: formData ? formData : defaultData,
+    defaultValues: toFormData ? toFormData : defaultData,
   })
 
   const onSubmit = (data) => {

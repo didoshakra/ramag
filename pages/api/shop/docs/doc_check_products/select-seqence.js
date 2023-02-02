@@ -1,10 +1,12 @@
-//pages/api/d_product/select-all.js
+//pages/api/doc_check_products/select-seqence.js
+//Отримати код з послідовності// SELECT nextval('doc_check_products_id_seq')
+
 import { pool } from "../../../../../config/dbShop"
 
-
-export default function handler(req, resp, done) {
-  const sql =
-    "SELECT d_product.id,d_product.name,category_id,price,brand_id,img,ov_id,skod,uktzed,pdv,akcuz,is_discount,d_category.name AS category,d_brand.name AS brand,d_ov.name AS ov FROM d_product JOIN d_category ON d_category.id = d_product.category_id   JOIN d_brand ON d_brand.id = d_product.brand_id JOIN d_ov ON d_ov.kod = d_product.ov_id  ORDER BY id DESC"
+export default function handler(req, resp) {
+  //   const body = req.body //Для feth- не треба перетворення json ->obj
+  console.log("/api/doc_check_products/select-seqence.js/") // your callback here
+  const sql = `SELECT nextval('doc_check_products_id_seq')`
 
   //--- pool(promise)
   pool.connect().then((client) => {
@@ -12,12 +14,12 @@ export default function handler(req, resp, done) {
       .query(sql) // your query string here
       .then((result) => {
         client.release() //звільнення
+        // console.log("*/api/doc_check_products/select-seqence.js/result=", result.rows) // your callback here
         resp.status(200).json(result.rows)
       }) // your callback here
       .catch((err) => {
         client.release() //звільнення
         console.log(err.stack) // your callback here
-        resp.status(500).json({ message: err.message })
       })
   })
 

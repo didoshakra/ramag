@@ -71,7 +71,7 @@ export async function getServerSideProps(context) {
 //*********************************************************************************** */
 
 function GDocCheckHead({ data }) {
-  const workPlace = { departament_id: 1, place: 1, user_id: 1 } //Параметри робочого місця(користувача)
+  const workPlace = { departament: 1, place: 2, user: 1 } //Параметри робочого місця(користувача)
   const titleTable = "Товарні чеки" //заголовок
   //
   const { state, dispatch } = useContext(ComponentContext)
@@ -88,16 +88,15 @@ function GDocCheckHead({ data }) {
   const [docContent, setDocContent] = useState("") //Для показу вмісту документу(різні варіанти для довідників)
   //Початкове значення вибраного рядка для форми і док
   const [headData, setHeadData] = useState({
-    newDoc: true, //Якщо документ добавляється
-    id: 0, //doc_check_head.id = doc_check_products.check_id
+    check_id: 0, //doc_check_products.check_id = doc_check_head.id
     total: 0,
     discount_proc: 0,
-    discount: 0, //Знижка в гривнях
-    departament_id: workPlace.departament_id,
+    discount: 0,
+    departament_id: workPlace.departament,
     place: workPlace.place,
-    user_id: workPlace.user_id,
+    user_id: 1,
     user: "",
-    client_id: 1, //Клієнт по замовчуванню
+    client_id: 0,
     client: "",
   })
 
@@ -198,10 +197,6 @@ function GDocCheckHead({ data }) {
   const onAdd = () => {
     selSequence() // Отримати код з послідовності// SELECT nextval('doc_check_products_id_seq')
     //
-    setHeadData((state) => ({ ...state, newDoc: true }))
-    setHeadData((state) => ({ ...state, departament_id: workPlace.departament_id }))
-    setHeadData((state) => ({ ...state, place: workPlace.place }))
-    setHeadData((state) => ({ ...state, user_id: workPlace.user_id }))
     setHeadData((state) => ({ ...state, total: 0 }))
     setHeadData((state) => ({ ...state, discount: 0 }))
     setDocContent("DocCheckProducts") //Для відкриття забаного ("DocCheckProducts") компонента
@@ -218,9 +213,11 @@ function GDocCheckHead({ data }) {
       //   console.log("doc_check_head.js/selParam/resRow=", resRow[0].nextval)
       if (resRow.length > 0) {
         //--- Обновлення значення полів масиву об'єктів
-        setHeadData((state) => ({ ...state, id: resRow[0].nextval }))
+        // setHeadData((state) => ({ ...state, id: resRow[0].nextval }))
+        setHeadData((state) => ({ ...state, check_id: resRow[0].nextval }))
       } else {
-        setHeadData((state) => ({ ...state, id: 0 }))
+        // setHeadData((state) => ({ ...state, id: 0 }))
+        setHeadData((state) => ({ ...state, check_id: 0 }))
       }
       //   document.querySelector("#enter")?.focus() //Передати фокус в Отримано від покупця
     } else {
@@ -254,7 +251,6 @@ function GDocCheckHead({ data }) {
       console.log(`doc_check_head.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
     }
   }
-  
 
   //   //--- Коригування записів(кнопка)
   const onEdit = () => {
@@ -468,11 +464,10 @@ function GDocCheckHead({ data }) {
           onRowDoubleClicked={onDoubleClicke} //Подвійний клік на рядку
         ></AgGridReact>
       </div>
-      {docContent === "DocCheckProducts" && (
+      {docContent == "DocCheckProducts" && (
         <DocCheckProducts
           setDocContent={setDocContent} //Активація lдокументу
           headData={headData} //Для select( вибору даних по докумуету-у випадку перегляду=docHeadData.id)
-          setHeadData={setHeadData}
         />
       )}
       {/* --- */}

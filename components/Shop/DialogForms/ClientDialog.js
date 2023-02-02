@@ -1,14 +1,13 @@
-//ClientDialog.js/react-hook-form
+//ClientDialog.js/input*not react-hook-form
 
 import { useEffect, useState, useContext, useRef } from "react"
 import { ComponentContext } from "../../../context/ComponentContext"
 import IconCancel from "../../ui/svg/head/IconCancel"
-import { dbHost } from "../../../config/dbHost"
 
-export default function ClientDialog({  setIsClientDialog, setDocHeadData }) {
+export default function ClientDialog({ setIsClientDialog, setHeadData }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
-  const [value, setValue] = useState({
+  const [rezSelect, setRezSelect] = useState({
     id: "0",
     name: "",
     last_name: "",
@@ -21,8 +20,7 @@ export default function ClientDialog({  setIsClientDialog, setDocHeadData }) {
   //Визначення клієнта
   const onClientSkod = (e) => {
     if (e.key === "Enter") {
-      setValue({ name: "666666666" })
-      //   alert("onCesh/Enter")
+        // alert("onCesh/Enter")
       // console.log("ClientDialig.js/onClientSkod/e.target.value=", e.target.value)
       console.log("ClientDialig.js/onClientSkod/e.target=", e.target)
       e.preventDefault() //Повертаємся назад в поле
@@ -31,13 +29,13 @@ export default function ClientDialog({  setIsClientDialog, setDocHeadData }) {
     }
   }
   //--- Вибір з БД/d_product по полю SKod
-  const selParam = async (values) => {
-    console.log("ClientDialig.js/selParam/values=", values)
+  const selParam = async (param) => {
+    console.log("ClientDialig.js/selParam/param=", param)
     const urlAPI = "/api/shop/references/d_client/" // Для useSWR/getServerSideProp i...
-    const url = `${dbHost}${urlAPI}/select-params` //
+    const url = `${urlAPI}/select-params` //
     const options = {
       method: "POST",
-      body: JSON.stringify(values), //Для запитів до серверів використовувати формат JSON
+      body: JSON.stringify(param), //Для запитів до серверів використовувати формат JSON
       headers: {
         "Content-Type": "application/json", //Вказує на тип контенту
       },
@@ -45,28 +43,28 @@ export default function ClientDialog({  setIsClientDialog, setDocHeadData }) {
     const response = await fetch(url, options)
     if (response.ok) {
       const resRow = await response.json() //повертає тіло відповіді json
-      console.log("ClientDialig.js/selParam/resRow=", resRow)
-      setValue({ name: "7777777777" })
+        console.log("Client/Dialig.js/selParam/resRow=", resRow)
       if (resRow.length > 0) {
         //--- Обновлення значення полів масиву об'єктів
-        setValue((state) => ({ ...state, id: resRow[0].id }))
-        setValue((state) => ({ ...state, name: resRow[0].name }))
-        setValue((state) => ({ ...state, last_name: resRow[0].last_name }))
-        setValue((state) => ({ ...state, skod: resRow[0].skod }))
-        setValue((state) => ({ ...state, discont_proc: resRow[0].discont_proc }))
+        setRezSelect((state) => ({ ...state, id: resRow[0].id }))
+        setRezSelect((state) => ({ ...state, name: resRow[0].name }))
+        setRezSelect((state) => ({ ...state, last_name: resRow[0].last_name }))
+        setRezSelect((state) => ({ ...state, skod: resRow[0].skod }))
+        setRezSelect((state) => ({ ...state, discount_proc: resRow[0].discount_proc }))
         //
       } else {
-        setValue((state) => ({ ...state, id: 0 }))
-        setValue((state) => ({ ...state, name: "* Клієнта не знайдено!" }))
-        setValue((state) => ({ ...state, last_name: "" }))
-        setValue((state) => ({ ...state, skod: "" }))
-        setValue((state) => ({ ...state, discont_proc: "" }))
+        console.log("Client/Dialig.js/selParam/resRow=", resRow)
+        setRezSelect((state) => ({ ...state, id: 0 }))
+        setRezSelect((state) => ({ ...state, name: "* Клієнта не знайдено!" }))
+        setRezSelect((state) => ({ ...state, last_name: "" }))
+        setRezSelect((state) => ({ ...state, skod: "" }))
+        setRezSelect((state) => ({ ...state, discount_proc: 0 }))
       }
       document.querySelector("#enter")?.focus() //Передати фокус в Отримано від покупця
     } else {
       const err = await response.json() //повертає тіло відповіді json
       alert(`Помилка запиту! ${err.message} / ${err.stack}`)
-      //   console.log(`Product.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
+        console.log(`Product.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
     }
   }
 
@@ -78,9 +76,9 @@ export default function ClientDialog({  setIsClientDialog, setDocHeadData }) {
 
   //Кнопка Ввести(підтвердження вводу даних)
   const onButtonEnter = () => {
-    setDocHeadData((prevState) => ({ ...prevState, client_id: value.id }))
-    setDocHeadData((prevState) => ({ ...prevState, client: `${value.name} ${value.last_name}` }))
-    setDocHeadData((prevState) => ({ ...prevState, discont_proc: value.discont_proc }))
+    setHeadData((state) => ({ ...state, client_id: rezSelect.id }))
+    setHeadData((state) => ({ ...state, client: `${rezSelect.name} ${rezSelect.last_name}` }))
+    setHeadData((state) => ({ ...state, discount_proc: rezSelect.discount_proc }))
     setIsClientDialog(false)
   }
 
@@ -112,12 +110,14 @@ export default function ClientDialog({  setIsClientDialog, setDocHeadData }) {
           <div className="flexRow-sBetween" style={{ marginTop: "20px" }}>
             <label className="label1">Клієнт: </label>
             <p className="sum1">
-              {value.name} {value.last_name}
+              {rezSelect.name} {rezSelect.last_name}
             </p>
           </div>
           <div className="flexRow-sBetween" style={{ marginTop: "20px" }}>
             <label className="label2">Знижка(%): </label>
-            <p className="sum2">{value.discont_proc}</p>
+            <p className="sum2">
+              {rezSelect.discount_proc}
+            </p>
           </div>
           <button id="enter" className="button" onClick={onButtonEnter}>
             Ввести

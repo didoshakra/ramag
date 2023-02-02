@@ -5,21 +5,21 @@ import IconCancel from "../../ui/svg/head/IconCancel"
 import IconRefresh from "../../ui/svg/table/IconRefresh"
 import { ComponentContext } from "../../../context/ComponentContext"
 
-export default function BrandForm({ onCloseForm, formData }) {
+export default function BrandForm({ onCloseForm, toFormData }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
 
   const defaultData = {
     name: "",
   }
- 
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm({
-    defaultValues: formData ? formData : defaultData,
+    defaultValues: toFormData ? toFormData : defaultData,
   })
 
   const onSubmit = (data) => {

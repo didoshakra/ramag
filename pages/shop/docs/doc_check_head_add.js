@@ -29,8 +29,8 @@ import DocCheckProducts from "./doc_check_products"
 
 function DocCheckHead({ data, isDovidnuk = false, setDovActive, setValue }) {
   const titleTable = "Товарні чеки" //заголовок
- const { state, dispatch } = useContext(ComponentContext)
- const { theme, themeTypeLight } = state
+  const { state, dispatch } = useContext(ComponentContext)
+  const { theme, themeTypeLight } = state
   const router = useRouter() //для переходу на сторінки
   const gridRef = useRef(0)
   const [gridApi, setGridApi] = useState(null)
@@ -67,8 +67,8 @@ function DocCheckHead({ data, isDovidnuk = false, setDovActive, setValue }) {
     // { field: "number", headerName: "№ чека" },
     { field: "departament_id", hide: true }, //Прихований(hide) рядок
     { field: "kasa", headerName: "Каса" },
-    { field: "cashier_id", hide: true }, //Прихований(hide) рядок
-    { field: "cashier", headerName: "Касир", minWidth: 200, flex: 3 }, //Прихований(hide) рядок
+    { field: "user_id", hide: true }, //Прихований(hide) рядок
+    { field: "user", headerName: "Касир", minWidth: 200, flex: 3 }, //Прихований(hide) рядок
     { field: "client_id", hide: true },
     { field: "client", headerName: "Клієнт", minWidth: 200, flex: 3 },
   ])
@@ -84,13 +84,6 @@ function DocCheckHead({ data, isDovidnuk = false, setDovActive, setValue }) {
     suppressDragLeaveHidesColumns: false,
     suppressSizeToFit: true, //автоматичне змінення розміру стовбця(до розміру екрану)
   }
-
-  // useEffect(() => {
-  //   if (gridApi) {
-  //     //Якщо включено sizeColumnsToFit, то не працює параметр flex:1/flex:2...
-  //     gridApi.sizeColumnsToFit() //Розмір стовпців відповідно до встановленого розміру(width).Якщо width не встановлено то воно береться з defaultColDef
-  //   }
-  // }, [rowData])
 
   // загрузка даних в Agrid
   const onGridReady = (params) => {
@@ -381,7 +374,7 @@ function DocCheckHead({ data, isDovidnuk = false, setDovActive, setValue }) {
                 defaultValue={"10"}
                 onChange={() => onPageSizeChanged()}
                 id="page-size"
-                title="Page Size"
+                title="Розмір сторінки"
               >
                 <option value="10" disabled>
                   10
@@ -416,11 +409,7 @@ function DocCheckHead({ data, isDovidnuk = false, setDovActive, setValue }) {
                   />
                 </button>
                 <button className="agrid_head-nav-button" onClick={onExportExcel} title="Експорт в Excel">
-                  <IconExport
-                    width="15"
-                    height="15"
-                    colorFill={theme.colors.tableIcon}
-                  />
+                  <IconExport width="15" height="15" colorFill={theme.colors.tableIcon} />
                 </button>
               </div>
             </>

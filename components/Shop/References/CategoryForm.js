@@ -5,7 +5,7 @@ import IconCancel from "../../ui/svg/head/IconCancel"
 import IconRefresh from "../../ui/svg/table/IconRefresh"
 import { ComponentContext } from "../../../context/ComponentContext"
 
-export default function CategoryForm({ onCloseForm, formData }) {
+export default function CategoryForm({ onCloseForm, toFormData }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
 
@@ -19,7 +19,7 @@ export default function CategoryForm({ onCloseForm, formData }) {
     formState: { errors },
     reset,
   } = useForm({
-    defaultValues: formData ? formData : defaultData,
+    defaultValues: toFormData ? toFormData : defaultData,
   })
 
   const onSubmit = (data) => {

@@ -1,12 +1,13 @@
 //d_product.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
 //??? Все ОК, крім асинхронного виводу добавлення записів в PostgreSQL
 
+import Layout from "../../../components/Main/Layout"
+import { dbHost } from "../../../config/dbHost"
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import * as XLSX from "xlsx"
-import { useEffect, useContext, useMemo, useState, useCallback, useRef } from "react"
+import { useContext, useMemo, useState, useCallback, useRef } from "react"
 import { useRouter } from "next/router"
 import { AgGridReact } from "ag-grid-react"
-import Layout from "../../../components/Main/Layout"
 // import ProgressBar from "../../../components/Main/ProgresBar"
 import ProductInsertPasgreSQL from "../../../components/Shop/References/ProductInsertPasgreSQL"
 import { ComponentContext } from "../../../context/ComponentContext"
@@ -15,6 +16,8 @@ import { ComponentContext } from "../../../context/ComponentContext"
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 // import "ag-grid-community/dist/styles/ag-theme-balham.css"
+import CheckboxRenderer from "../../../components/Shop/AgGridModules/CheckboxRenderer"
+//
 import IconAdd from "../../../components/ui/svg/table/IconAdd"
 import IconPencil_c3 from "../../../components/ui/svg/table/IconPencil_c3"
 import IconCancel from "../../../components/ui/svg/head/IconCancel"
@@ -29,6 +32,7 @@ import IconPrinter_c2 from "../../../components/ui/svg/head/IconPrinter_c2" //П
 import ProductForm from "../../../components/Shop/References/ProductForm"
 
 //--- DProduct --------------------------------------------------------------
+const urlAPI = "/api/shop/references/d_product/" // Для useSWR/getServerSideProp i...
 const fetcher = (url) => fetch(url).then((r) => r.json()) // Для загрузка даних на фронтенді
 
 export default function DProduct({
@@ -39,7 +43,8 @@ export default function DProduct({
   setFocus, //Для передачі вибраних змінних в Form
 }) {
   //= Загрузка даних на фронтенді useSWR ================================================================*/
-  const { data, error } = useSWR("/api/shop/references/d_product/select-all", fetcher, { initialData: serverData })
+  const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, { initialData: serverData })
+
   if (error) return <div>не вдалося завантажити</div>
   if (!data) return <p>Loading/Завантаження ...</p>
   //**============================================================================================= */
@@ -74,6 +79,25 @@ export default function DProduct({
   return <>{isDovidnuk ? <Dovidnuk /> : <NeDovidnuk />}</>
 }
 
+//= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
+export async function getServerSideProps(context) {
+  //onst response = await fetch("http://localhost:3000/api/shop/docs/doc_check_head/")
+  const url = `${dbHost}${urlAPI}select-all` //->/[...slug].js
+  const response = await fetch(url)
+  const data = await response.json()
+
+  //Якщо (!data)-видасть помилку 404
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
+  return {
+    props: { serverData: data }, // буде передано компоненту сторінки як атрибути
+  }
+}
+//*********************************************************************************** */
+
 //--- Product -----------------------------------------------------------------
 function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus }) {
   //data-дані,isDovidnuk-чи цей модуль буде відкритий як довідник
@@ -90,14 +114,15 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
   const [countSelectedRows, setCountSelectedRows] = useState(0) //к-сть виділених рядків
   const [selectedRowState, setSelectedRowState] = useState({}) //к-сть виділених рядків
   const [formActive, setFormActive] = useState(false) //Для відкриття/закриття форми
-  const [formData, setFormData] = useState({}) //Початкове значення для форми
+  const [toFormData, setToFormData] = useState({}) //Початкове значення для форми
   const [isAdd, setIsAdd] = useState(false) //Щоб знати для чого заходилось у форму(добавл чи кориг)
-  // const [dataJson, setDataJson] = useState([]) // для convertToJson даних з EXELL
-  const dataJson = useRef([]) // для convertToJson даних з EXELL
-  const insertRows = useRef(0) //к-сть записів вставлених з EXELL
+  // const [dataJson, setDataJson] = useState([]) // для convertToJson з EXELL/не зберігає до renderingy
+  const dataJson = useRef([]) // для convertToJson з EXELL/зберігає до renderingy
+  const insertRows = useRef(0) //к-сть записів вставлених з EXELL\Не працює
   const [isExell, setIsExell] = useState(false) //Чи йде імпорт з EXEL для ProgressBar
 
   //*** параметри і ф-ції AG_Grid **************************************** */
+  // Для відображення фото в ячейці
   const ImgUrlCellRenderer = (params) => {
     // console.log("Product.js/imgUrlCellRenderer/params", params.value)
     return (
@@ -151,12 +176,27 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
     { field: "brand", headerName: "Бренд", minWidth: 150, flex: 2 },
     { field: "uktzed", headerName: "УКТЗЕД", minWidth: 120 },
     {
+      field: "is_discount",
+      headerName: "^знижка",
+      cellRenderer: "checkboxRenderer",
+      minWidth: 120,
+    },
+    // {
+    //   field: "is_discount",
+    //   headerName: "^знижка",
+    //   minWidth: 120,
+    // },
+    {
       field: "img",
       headerName: "Фото",
       cellRenderer: ImgUrlCellRenderer, //Ф-ція  cellRenderer повинна бути обявлена до приимінення //https://www.ag-grid.com/react-data-grid/component-cell-renderer/
       //   editable: true,
     },
   ])
+
+  //   CheckboxRenderer = () => {
+  //     return `<input type='checkbox' ${params.value ? "checked" : ""} />`
+  //   }
 
   const defaultColDef = {
     flex: 1,
@@ -168,6 +208,11 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
     // cellRenderer: RendNumer,//Колір для парних рядків
     suppressDragLeaveHidesColumns: false,
     suppressSizeToFit: true, //автоматичне змінення розміру стовбця(до розміру екрану)
+  }
+
+  //Для CheckboxRenderer
+  const frameworkComponents = {
+    checkboxRenderer: CheckboxRenderer,
   }
 
   // useEffect(() => {
@@ -242,7 +287,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
   //--- Добавалення запису (кнопка) ----------------------------------------------*/
   const onAdd = () => {
     setIsAdd(true) //Для форми(добавлення чи коригування)
-    setFormData(null) //Пусті дані в форму
+    setToFormData(null) //Пусті дані в форму
     setFormActive(true) //Відкриваємо форму для занесення інфи
     // rowAdd(formData)// переніс в onCloseForm
   }
@@ -262,13 +307,14 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
     if (response.ok) {
       // якщо HTTP-статус в диапазоне 200-299
       const resRow = await response.json() //повертає тіло відповіді json
+      console.log(`Запис успішно добавленo`)
       //   console.log("Product.js/rowAdd/try/esponse.ok/resRow=", resRow)
-      alert(`Запис успішно добавленo`)
+      //   alert(`Запис успішно добавленo`)
       return resRow
     } else {
       const err = await response.json() //повертає тіло відповіді json
-      alert(`Запис не добавлено! ${err.message} / ${err.stack}`)
-      //   console.log(`Product.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
+      //   alert(`Запис не добавлено! ${err.message} / ${err.stack}`)
+      console.log(`Product.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
     }
   }
   //--- Коригування записів(кнопка) ------------------------------------------------------- */
@@ -276,7 +322,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
     if (countSelectedRows > 0) {
       const selectRow = selectedRowState["0"] //Значення всіх полів 0-го виділеного рядка
       setIsAdd(false) //Для форми(добавлення чи коригування)
-      setFormData(selectRow) //Дані з вибраного запису в форму
+      setToFormData(selectRow) //Дані з вибраного запису в форму
       setFormActive(true) //Відкриваємо форму для занесення інфи
       // rowEdit(formData)// переніс в onCloseForm, бо зразу спрацьовувало
       //   console.log("Product/onEdit/selectRow  = ", selectRow)
@@ -367,9 +413,11 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
       rows.push(rowData)
     })
 
-    dataJson.current = rows
+    //
+    dataJson.current = rows //dataJson = useRef([])-бо useState не мінялось?
     // console.log("exell_eventfile_table.js/convertToJson/dataJson.current=", dataJson.current)
-    // // setDataJson(rows) //збереження даних\не зберігає до renderingy
+
+    // setDataJson(rows) //збереження даних\не зберігає до renderingy
     // console.log("exell_eventfile_table.js/convertToJson/rows=", rows)
     return rows
   }
@@ -379,7 +427,6 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
     const file = e.target.files[0] //для читання файлу.
     const reader = new FileReader()
     //імпорт з EXELL в файл fileData
-    // var dJson= []
     reader.onload = async (event) => {
       const bstr = event.target.result
       const workBook = XLSX.read(bstr, { type: "binary" }) //читання файлу excel
@@ -403,18 +450,16 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
   }
 
   //--- Загрузка даних в PjstgreSQL
-  //   const insertPostgreSQL = (dJson) => {
   const insertPostgreSQL = () => {
     // setIsExell(true)
     // console.log("d_product.js/insertPostgreSQL//dataJson.current=", dataJson.current)
-    // console.log("d_product.js/insertPostgreSQL//dJson=", dJson)
 
     let insertZap = 0
     try {
       //   dataJson.forEach((row) => {
-      //   dJson.forEach((row) => {
       dataJson.current.forEach((row) => {
-        rowAdd(row, 1)
+        // rowAdd(row, 1) //Запис в БД(select)
+        rowAdd(row) //Запис в БД(select)
         insertZap = insertZap + 1
         insertRows.current = insertRows.current + 1
         // dispatch({ type: "PROGRES", payload: insertZap }) //Змінюємо state.user
@@ -552,7 +597,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
                 defaultValue={"10"}
                 onChange={() => onPageSizeChanged()}
                 id="page-size"
-                title="Page Size"
+                title="Розмір сторінки"
               >
                 <option value="10" disabled>
                   10
@@ -637,10 +682,11 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
           onSelectionChanged={onSelectionChanged} //Вибір клацанням на рядок
           onRowDoubleClicked={onDoubleClicke} //Подвійниц клік на рядку
           cacheQuickFilter={true}
+          frameworkComponents={frameworkComponents} //Для checkBox
         ></AgGridReact>
       </div>
-      {/* {formActive ? <ProductForm onCloseForm={onCloseForm} formData={formData} /> : ""} */}
-      {formActive && <ProductForm onCloseForm={onCloseForm} formData={formData} />}
+      {/* {formActive ? <ProductForm onCloseForm={onCloseForm} toFormData={toFormData} /> : ""} */}
+      {formActive && <ProductForm onCloseForm={onCloseForm} toFormData={toFormData} />}
       {/* --- */}
       <style jsx>{`
         .agrid_head-container-right-notMobi,

@@ -6,7 +6,7 @@ import IconRefresh from "../../ui/svg/table/IconRefresh"
 import { ComponentContext } from "../../../context/ComponentContext"
 
 
-export default function DepartamentForm({ onCloseForm, formData }) {
+export default function DepartamentForm({ onCloseForm, toFormData }) {
  const { state } = useContext(ComponentContext)
  const { theme } = state
 
@@ -20,7 +20,7 @@ export default function DepartamentForm({ onCloseForm, formData }) {
     formState: { errors },
     reset,
   } = useForm({
-    defaultValues: formData ? formData : defaultData,
+    defaultValues: toFormData ? toFormData : defaultData,
   })
 
   const onSubmit = (data) => {

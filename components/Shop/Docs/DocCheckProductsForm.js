@@ -4,11 +4,11 @@ import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test
 import IconCancel from "../../ui/svg/head/IconCancel"
 import IconRefresh from "../../ui/svg/table/IconRefresh"
 import DProduct from "../../../pages/shop/references/d_product"
-import { dbHost } from "../../../config/dbHost"
 
 import { ComponentContext } from "../../../context/ComponentContext"
 
-export default function DocCheckProductsForm({ onCloseForm, formData }) {
+export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
+  const workPlace = { departament: 1, place: 2 } //Параметри робочого місця(користувача)
   const urlAPI = "/api/shop/references/d_product/" // Для useSWR/getServerSideProp i...
   const { state } = useContext(ComponentContext)
   const { theme } = state
@@ -16,14 +16,16 @@ export default function DocCheckProductsForm({ onCloseForm, formData }) {
   const [useAdmin, setUseAdmin] = useState(true) //Для адміністратора
   const defaultData = {
     skod: "",
-    check_id: "0",
-    product_id: "1",
-    name: "",
-    quantity: "",
-    ov_id: "1",
+    product_id: 1,
+    name: "",//Назва продукту
+    quantity: 0,
+    ov_id: 1,
     ov: "",
-    price: "",
-    discount: "",
+    price: 0,
+    discount: 0,
+    departament_id: workPlace.departament,
+    place: workPlace.place,
+    client_id:1,
   }
 
   const {
@@ -35,7 +37,7 @@ export default function DocCheckProductsForm({ onCloseForm, formData }) {
     getValues,
     setFocus,
   } = useForm({
-    defaultValues: formData ? formData : defaultData,
+    defaultValues: toFormData ? toFormData : defaultData,
   })
   //   console.log("DocCheckProductsForm/register,=", register("category").onChange)
 
@@ -84,7 +86,7 @@ export default function DocCheckProductsForm({ onCloseForm, formData }) {
   //--- Вибір з БД/d_product по полю SKod
   const selParam = async (values) => {
     console.log("DocCheckProductsForm.js/selParam/values=", values.skod)
-    const url = `${dbHost}${urlAPI}/select-params` //
+    const url = `${urlAPI}/select-params` //
     const options = {
       method: "POST",
       body: JSON.stringify(values), //Для запитів до серверів використовувати формат JSON
@@ -159,7 +161,7 @@ export default function DocCheckProductsForm({ onCloseForm, formData }) {
               <>
                 <input
                   className="input"
-                //   readonly
+                  //   readonly
                   type="text"
                   {...register("price", {
                     pattern: {
@@ -186,17 +188,19 @@ export default function DocCheckProductsForm({ onCloseForm, formData }) {
               //   type="text"
               type="number"
               step="1"
-              min="0"
+              min="0.001"
               max="99999999.99"
               {...register("quantity", {
                 pattern: {
                   value: /^\d*\.?\d{0,3}$/g, //(.) 2-а знаки після коми\ Не виводить повідомлення
                 },
+                min: 0.001,
                 max: 99999999.99,
               })}
             />
             <div className="errorMsg">
               {errors.quantity?.type === "pattern" && "Не: .XX"}
+              {errors.quantity?.type === "min" && " > 0"}
               {errors.quantity?.type === "max" && "до 99999999.99"}
             </div>
           </div>

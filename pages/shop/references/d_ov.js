@@ -38,7 +38,7 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
   const [countSelectedRows, setCountSelectedRows] = useState(0) //к-сть виділених рядків
   const [selectedRowState, setSelectedRowState] = useState({}) //к-сть виділених рядків
   const [formActive, setFormActive] = useState(false) //Для відкриття/закриття форми
-  const [formData, setFormData] = useState({}) //Початкове значення для форми
+  const [toFormData, setToFormData] = useState({}) //Початкове значення для форми
   const [isAdd, setIsAdd] = useState(false) //Щоб знати для чого заходилось у форму(добавл чи кориг)
 
   //*** параметри і ф-ції AG_Grid **************************************** */
@@ -144,7 +144,7 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
   //--- Добавалення запису (кнопка) ----------------------------------------------*/
   const onAdd = () => {
     setIsAdd(true) //Для форми(добавлення чи коригування)
-    setFormData({}) //Пусті дані в форму
+    setToFormData({}) //Пусті дані в форму
     setFormActive(true) //Відкриваємо форму для занесення інфи
     // rowAdd()// переніс в onCloseForm
   }
@@ -181,7 +181,7 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
     if (countSelectedRows > 0) {
       const selectRow = selectedRowState["0"] //Значення всіх полів 0-го виділеного рядка
       setIsAdd(false) //Для форми(добавлення чи коригування)
-      setFormData(selectRow) //Дані з вибраного запису в форму
+      setToFormData(selectRow) //Дані з вибраного запису в форму
       setFormActive(true) //Відкриваємо форму для занесення інфи
       // rowEdit(formData)// переніс в onCloseForm, бо зразу спрацьовувало
       //   console.log("Ov/onEdit/selectRow  = ", selectRow)
@@ -359,7 +359,7 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
                 defaultValue={"10"}
                 onChange={() => onPageSizeChanged()}
                 id="page-size"
-                title="Page Size"
+                title="Розмір сторінки"
               >
                 <option value="10" disabled>
                   10
@@ -428,7 +428,7 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
           onRowDoubleClicked={onDoubleClicke} //Подвійниц клік на рядку
         ></AgGridReact>
       </div>
-      {formActive && <OvForm onCloseForm={onCloseForm} formData={formData} />}
+      {formActive && <OvForm onCloseForm={onCloseForm} toFormData={toFormData} />}
       {/* --- */}
       <style jsx>{`
         .agrid_head-container-right-notMobi,

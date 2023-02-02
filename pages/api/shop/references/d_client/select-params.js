@@ -8,8 +8,9 @@ export default function handler(req, resp) {
   //   const par = body.skod //values
   const par = body //singleValue
   console.log("/api/d_client/select-params.js/par=", par) // your callback here
-//   const sql = `SELECT d_client.id,d_client.name,price,skod ,d_ov.name AS ov FROM d_client JOIN d_ov ON d_ov.id = d_client.ov_id WHERE d_client.skod = '4820192681810'`
-  const sql = `SELECT id,name,last_name,skod,discont_proc FROM d_client  WHERE d_client.skod = '${par}'`
+  //   const sql = `SELECT d_client.id,d_client.name,price,skod ,d_ov.name AS ov FROM d_client JOIN d_ov ON d_ov.id = d_client.ov_id WHERE d_client.skod = '4820192681810'`
+//   const sql = `SELECT id,name,last_name,skod,discount_proc FROM d_client  WHERE d_client.skod = '${par}'`
+  const sql = `SELECT * FROM d_client  WHERE d_client.skod = '${par}'`
 
   //--- pool(promise)
   pool.connect().then((client) => {

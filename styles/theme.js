@@ -119,6 +119,7 @@ export const themeLith = {
     formIcon2: "#f64532",
     //-----------------------------------------------
     dialogTitle: "#f64532", //"#6B8E23", //"#82AE46",
+    dialogLabel1: "#6B8E23",
     dialogLabel2: "grey",
     dialogSum1: "#f64532", //"#0092ff","blue",
     dialogSum2: "grey",

@@ -5,7 +5,7 @@ import IconCancel from "../../ui/svg/head/IconCancel"
 import IconRefresh from "../../ui/svg/table/IconRefresh"
 import { ComponentContext } from "../../../context/ComponentContext"
 
-export default function ClientForm({ onCloseForm, formData }) {
+export default function ClientForm({ onCloseForm, toFormData }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
 
@@ -13,9 +13,9 @@ export default function ClientForm({ onCloseForm, formData }) {
     name: "",
     last_name: "",
     email: "",
-    total: "",
+    // total: 0,
     skod: "",
-    discont_proc: "",
+    discount_proc: "0",
   }
 
   const {
@@ -24,8 +24,8 @@ export default function ClientForm({ onCloseForm, formData }) {
     formState: { errors },
     reset,
   } = useForm({
-    // defaultValues: formData ? formData : defaultData,
-    defaultValues: formData,
+    defaultValues: toFormData ? toFormData : defaultData,
+    // defaultValues: toFormData,
   })
 
   const onSubmit = (data) => {
@@ -67,7 +67,7 @@ export default function ClientForm({ onCloseForm, formData }) {
             <label className="label">email</label>
             <input
               className="input"
-                type="email"
+              type="email"
               {...register("email", {
                 maxLength: 30,
                 // pattern: {
@@ -93,7 +93,7 @@ export default function ClientForm({ onCloseForm, formData }) {
             <input
               className="input"
               type="text"
-              {...register("discont_proc", {
+              {...register("discount_proc", {
                 pattern: {
                   value: /^\d*\.?\d{0,2}$/g, //(.) 2-а знаки після коми\ Не виводить повідомлення
                 },
@@ -101,8 +101,8 @@ export default function ClientForm({ onCloseForm, formData }) {
               })}
             />
             <div className="errorMsg">
-              {errors.discont_proc?.type === "pattern" && "Не: .XX"}
-              {errors.discont_proc?.type === "max" && "до 100"}
+              {errors.discount_proc?.type === "pattern" && "Не: .XX"}
+              {errors.discount_proc?.type === "max" && "до 100"}
             </div>
           </div>
         </div>

@@ -4,14 +4,13 @@ import { useEffect, useState, useContext, useRef } from "react"
 import { ComponentContext } from "../../../context/ComponentContext"
 import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test', { required: true })} />
 import IconCancel from "../../ui/svg/head/IconCancel"
-import { dbHost } from "../../../config/dbHost"
 
 export default function ClientDialog({ isClientDialog, setIsClientDialog, setClientData }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
   const [valN, setValN] = useState("")
   const [value, setValue] = useState({
-    // id,name,last_name,skod,discont_proc
+    // id,name,last_name,skod,discount_proc
     id: "0",
     name: "11",
     last_name: "22",
@@ -23,7 +22,7 @@ export default function ClientDialog({ isClientDialog, setIsClientDialog, setCli
 
   //Визначення клієнта
   const onClientSkod = (e) => {
-      alert("onClientSkod")
+    alert("onClientSkod")
     setValue({ name: "wwwwwwwwwww" })
     setValN("wwwwwwwwwww")
     if (e.key === "Enter") {
@@ -39,7 +38,7 @@ export default function ClientDialog({ isClientDialog, setIsClientDialog, setCli
   const selParam = async (values) => {
     console.log("ClientDialig.js/selParam/values=", values)
     const urlAPI = "/api/shop/references/d_client/" // Для useSWR/getServerSideProp i...
-    const url = `${dbHost}${urlAPI}/select-params` //
+    const url = `${urlAPI}/select-params` //
     const options = {
       method: "POST",
       body: JSON.stringify(values), //Для запитів до серверів використовувати формат JSON
@@ -50,14 +49,14 @@ export default function ClientDialog({ isClientDialog, setIsClientDialog, setCli
     const response = await fetch(url, options)
     if (response.ok) {
       const resRow = await response.json() //повертає тіло відповіді json
-        console.log("ClientDialig.js/selParam/resRow=", resRow)
+      console.log("ClientDialig.js/selParam/resRow=", resRow)
       if (resRow.length > 0) {
         console.log("ClientDialig.js/selParam/resRow**[0]=", resRow[0].skod)
-        setValue({id: resRow[0].id})
-        setValue({name: resRow[0].name})
-        setValue({last_name: resRow[0].last_name})
-        setValue({skod: resRow[0].skod})
-        setValue({discont_proc: resRow[0].discont_proc})
+        setValue({ id: resRow[0].id })
+        setValue({ name: resRow[0].name })
+        setValue({ last_name: resRow[0].last_name })
+        setValue({ skod: resRow[0].skod })
+        setValue({ discount_proc: resRow[0].discount_proc })
         // setFocus("quantity", { shouldSelect: true })
         document.querySelector("#enter")?.focus() //Передати фокус в Отримано від покупця
       } else {
@@ -65,7 +64,7 @@ export default function ClientDialog({ isClientDialog, setIsClientDialog, setCli
         // setValue("name", "* Клієнта НЕ ЗНАЙДЕНО *")
         // setValue("last_name", resRow[0].last_name)
         // setValue("skod", resRow[0].skod)
-        // setValue("discont_proc", resRow[0].discont_proc)
+        // setValue("discount_proc", resRow[0].discount_proc)
       }
     } else {
       const err = await response.json() //повертає тіло відповіді json
@@ -86,15 +85,15 @@ export default function ClientDialog({ isClientDialog, setIsClientDialog, setCli
     setIsClientDialog(false)
   }
 
-//   const onKeyDown = (e) => {
-//     // https://react-hook-form.com/api/useform/getvalues
-//     if (e.key === "Enter") {
-//       //   console.log("ClientDialig.js/onKeyDown/e=", e)
-//       e.preventDefault() //Повертаємся назад в поле
-//       const singleValue = getValues("skod") // Одна змінна
-//       selParam(singleValue) //Запит по Ш-коду
-//     }
-//   }
+  //   const onKeyDown = (e) => {
+  //     // https://react-hook-form.com/api/useform/getvalues
+  //     if (e.key === "Enter") {
+  //       //   console.log("ClientDialig.js/onKeyDown/e=", e)
+  //       e.preventDefault() //Повертаємся назад в поле
+  //       const singleValue = getValues("skod") // Одна змінна
+  //       selParam(singleValue) //Запит по Ш-коду
+  //     }
+  //   }
 
   useEffect(() => {
     if (isClientDialog) {

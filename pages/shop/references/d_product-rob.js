@@ -76,6 +76,25 @@ export default function DProduct({
   return <>{isDovidnuk ? <Dovidnuk /> : <NeDovidnuk />}</>
 }
 
+//= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
+export async function getServerSideProps(context) {
+  //onst response = await fetch("http://localhost:3000/api/shop/docs/doc_check_head/")
+  const url = `${dbHost}${urlAPI}select-all` //->/[...slug].js
+  const response = await fetch(url)
+  const data = await response.json()
+
+  //Якщо (!data)-видасть помилку 404
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
+  return {
+    props: { serverData: data }, // буде передано компоненту сторінки як атрибути
+  }
+}
+//*********************************************************************************** */
+
 //--- Product -----------------------------------------------------------------
 function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus }) {
   //data-дані,isDovidnuk-чи цей модуль буде відкритий як довідник
@@ -92,7 +111,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
   const [countSelectedRows, setCountSelectedRows] = useState(0) //к-сть виділених рядків
   const [selectedRowState, setSelectedRowState] = useState({}) //к-сть виділених рядків
   const [formActive, setFormActive] = useState(false) //Для відкриття/закриття форми
-  const [formData, setFormData] = useState({}) //Початкове значення для форми
+  const [toFormData, setToFormData] = useState({}) //Початкове значення для форми
   const [isAdd, setIsAdd] = useState(false) //Щоб знати для чого заходилось у форму(добавл чи кориг)
   // const [dataJson, setDataJson] = useState([]) // для convertToJson даних з EXELL
   const dataJson = useRef([]) // для convertToJson даних з EXELL
@@ -245,7 +264,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
   //--- Добавалення запису (кнопка) ----------------------------------------------*/
   const onAdd = () => {
     setIsAdd(true) //Для форми(добавлення чи коригування)
-    setFormData(null) //Пусті дані в форму
+    setToFormData(null) //Пусті дані в форму
     setFormActive(true) //Відкриваємо форму для занесення інфи
     // rowAdd(formData)// переніс в onCloseForm
   }
@@ -279,7 +298,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
     if (countSelectedRows > 0) {
       const selectRow = selectedRowState["0"] //Значення всіх полів 0-го виділеного рядка
       setIsAdd(false) //Для форми(добавлення чи коригування)
-      setFormData(selectRow) //Дані з вибраного запису в форму
+      setToFormData(selectRow) //Дані з вибраного запису в форму
       setFormActive(true) //Відкриваємо форму для занесення інфи
       // rowEdit(formData)// переніс в onCloseForm, бо зразу спрацьовувало
       //   console.log("Product/onEdit/selectRow  = ", selectRow)
@@ -555,7 +574,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
                 defaultValue={"10"}
                 onChange={() => onPageSizeChanged()}
                 id="page-size"
-                title="Page Size"
+                title="Розмір сторінки"
               >
                 <option value="10" disabled>
                   10
@@ -642,8 +661,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
           cacheQuickFilter={true}
         ></AgGridReact>
       </div>
-      {/* {formActive ? <ProductForm onCloseForm={onCloseForm} formData={formData} /> : ""} */}
-      {formActive && <ProductForm onCloseForm={onCloseForm} formData={formData} />}
+      {formActive && <ProductForm onCloseForm={onCloseForm} toFormData={toFormData} />}
       {/* --- */}
       <style jsx>{`
         .agrid_head-container-right-notMobi,

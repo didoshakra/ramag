@@ -13,8 +13,8 @@ export default function DocCheckHeadForm({ onCloseForm, formData }) {
 
   const defaultData = {
     departament_id: "1",
-    casa: "1",
-    cashier_id: "1",
+    place: "1",
+    user_id: "1",
     client_id: "1",
     client: "Клієнт",
     total: "",

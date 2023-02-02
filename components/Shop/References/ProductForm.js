@@ -8,7 +8,7 @@ import DBrand from "../../../pages/shop/references/d_brand"
 import DOv from "../../../pages/shop/references/d_ov"
 import { ComponentContext } from "../../../context/ComponentContext"
 
-export default function ProductForm({ onCloseForm, formData }) {
+export default function ProductForm({ onCloseForm, toFormData }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
 
@@ -37,7 +37,7 @@ export default function ProductForm({ onCloseForm, formData }) {
     formState: { errors },
     reset,
   } = useForm({
-    defaultValues: formData ? formData : defaultData,
+    defaultValues: toFormData ? toFormData : defaultData,
   })
   //   console.log("ProductForm/register,=", register("category").onChange)
 

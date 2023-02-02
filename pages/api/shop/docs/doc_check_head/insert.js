@@ -4,12 +4,13 @@ import { pool } from "../../../../../config/dbShop"
 
 export default function handler(req, resp) {
   const sql =
-    "insert into doc_check_head(departament_id,casa,cashier_id,client_id,total,discount) VALUES($1,$2,$3,$4,$5,$6) RETURNING *"
+    "insert into doc_check_head(id,departament_id,place,user_id,client_id,total,discount) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *"
   const bodyData = req.body //Для feth- не треба перетворення json ->obj
   const sqlvalues = [
+    bodyData.id, //doc_check_head.id = doc_check_products.check_id
     bodyData.departament_id,
-    bodyData.casa,
-    bodyData.cashier_id,
+    bodyData.place,
+    bodyData.user_id,
     bodyData.client_id,
     bodyData.total,
     bodyData.discount,

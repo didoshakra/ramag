@@ -1,10 +1,5 @@
 //doc_check_products.js //Товари в чеку
-//Є PaymentDialo/ClientDialog/ExitDialog
-//Початкові дані для agGrid з БД !!!
-//Добавлення в БД, але для agGrid оновлюю  масив setRowData(rows1)
-//При добаленні не створюєм шапку документа doc_check_head, а входим в документ(doc_check_products)
-//№ чеку для check_id,беремо з select-seqence (SELECT nextval('doc_check_head_id_seq')`)
-//Не зміг реалізувати добвлення в doc_check_head з зарезервованим check_id(nextval)-> cannot insert a non-DEFAULT value into column "id" / undefined
+//Дані для agGrid з масиву і добавлення в масив!!(setRowData(rows1)
 
 //*** Для agGrid **** */ */
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
@@ -15,7 +10,6 @@ import { AgGridReact } from "ag-grid-react"
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 // import "ag-grid-community/dist/styles/ag-theme-balham.css"
-// 
 import { dbHost } from "../../../config/dbHost"
 import { ComponentContext } from "../../../context/ComponentContext"
 import IconAdd from "../../../components/ui/svg/table/IconAdd"
@@ -39,14 +33,16 @@ import ExitDialog from "../../../components/Shop/DialogForms/ExitDialog"
 const urlAPI = "/api/shop/docs/doc_check_products/" // Для useSWR/getServerSideProp i...
 const fetcher = (url) => fetch(url).then((res) => res.json()) // Для useSWR
 
-export default function DocCheckProducts({ serverData, setDocContent, headData, setHeadData }) {
+// export default function DocCheckProducts({ serverData, setDocContent, headData = "{}" }) {
+export default function DocCheckProducts({ serverData, setDocContent, headData }) {
   //serverData-Вхідні дані з Сервера/ setDocContent-Назва документа(для закриття док)/headData-Дані шапки документу
-  //   console.log("doc_check_products.js/headData=", headData)
+  //console.log("doc_check_products.js/headData=", headData)
+
+  const headID = headData ? headData.id : "0" //Для запиту fetch(url)-(id.запису)
 
   //--- Загрузка даних на фронтенді useSWR
   // ("/api/shop/docs/doc_check_products/"
-  const { data, error } = useSWR(`${urlAPI}${headData.id}`, fetcher, {
-    //   const { data, error } = useSWR(`${urlAPI}33`, fetcher, {
+  const { data, error } = useSWR(`${urlAPI}${headID}`, fetcher, {
     initialData: serverData,
   })
 
@@ -56,15 +52,19 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
   return (
     <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0 }}>
       {/* <div style={{ position: "relative", width: "calc(100vw)", height: "calc(100vh - 350px)" }}> */}
-      <GDocCheckProducts data={data} setDocContent={setDocContent} headData={headData} setHeadData={setHeadData} />
+      <GDocCheckProducts
+        data={data}
+        setDocContent={setDocContent}
+        headData={headData}
+        // setDocHeadData={setDocHeadData}
+      />
     </div>
   )
 }
 //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
   // const response = await fetch("http://localhost:3000/api/shop/docs/doc_check_products/select-all")
-  const url = `${dbHost}${urlAPI}${headData.id}` //->/[...slug].js
-  //   const url = `${dbHost}${urlAPI}33` //->/[...slug].js
+  const url = `${dbHost}${urlAPI}${docHeadData.id}` //->/[...slug].js
   const response = await fetch(url)
   const data = await response.json()
 
@@ -84,12 +84,10 @@ function GDocCheckProducts({
   data, // Рядки документа
   setDocContent, //Для виходу з документу setDocContent("")
   headData, //
-  setHeadData = { setHeadData },
+  //   setDocHeadData //Для зміи даних у шапці документу
 }) {
   const iconSize = "15px"
-  const newDoc = headData.newDoc ? "*добавляється*" : ""
-  const titleTable = `${newDoc}  Товари в чеку №: ` //заголовок
-  //
+  const titleTable = "Товари в чеку №: " //заголовок
   const { state, dispatch } = useContext(ComponentContext)
   const { theme, themeTypeLight } = state
   const router = useRouter() //для переходу на сторінки
@@ -100,11 +98,32 @@ function GDocCheckProducts({
   const [countSelectedRows, setCountSelectedRows] = useState(0) //к-сть виділених рядків
   const [selectedRowState, setSelectedRowState] = useState({}) //к-сть виділених рядків
   const [formActive, setFormActive] = useState(false) //Для відкриття/закриття форми
+  const [formData, setFormData] = useState({}) //Початкове значення для форми
   const [isAdd, setIsAdd] = useState(false) //Щоб знати для чого заходилось у форму(добавл чи кориг)
   const [isPaymentDialog, setIsPaymentDialog] = useState(false) //Діалог оплати
+  //   const [paymentAction, setPaymentAction] = useState(0) //Дії з  діалогу оплати(0-вихід без дії)
   const [isClientDialog, setIsClientDialog] = useState(false) //Діалог введення клієнта
   const [isExitDialog, setIsExitDialog] = useState(false) //Діалог виходу з програми
-  const [toFormData, setToFormData] = useState({}) //Початкове значення для форми
+
+  // Дані шапки документу
+  const [docHeadData, setDocHeadData] = useState(
+    headData
+      ? headData
+      : {
+          name: "",
+          id: 0,
+          total: 0,
+          discount_proc: 0,
+          discount: 0,
+          place: 1,
+          user_id: 1,
+          user: "Касир",
+          client_id: "",
+          client: "",
+          departament_id: 1,
+        }
+  )
+  //    console.log("doc_check_products.js/docHeadData=", docHeadData)
 
   //--- Голова документа
   const DocHead = () => {
@@ -112,23 +131,30 @@ function GDocCheckProducts({
       <div className="headItemWrapper">
         <div className="headItem">
           <label className="label2">Kлієнт:</label>
-          <p className="sum2">{headData.client}</p>
-        </div>
+          <p className="sum2">{docHeadData.client}</p>
+        </div>{" "}
         <div className="headItem" style={{ minWidth: 50, marginLeft: "5px", paddingLeft: "5px" }}>
           <label className="label1">Сума(грн):</label>
-          <p className="sum1">{headData.total}</p>
+          {/* <p className="label">{docHeadData.total}</p> */}
+          <p className="sum1">{docHeadData.total}</p>
         </div>
         <div className="headItem">
-          <label className="label2">Знижка(%):</label>
+          <label className="label2">Знижка(грн):</label>
+          {/* <p className="data">{docHeadData.discount}</p> */}
+          {/* <p className="sum2">{docHeadData.discount}</p> */}
           <p className="sum2">
-            {/* {(Number(headData.total) * Number(headData.discount_proc) / 100).toFixed(2)} */}
-            {Number(headData.discount_proc)}
-            {/* {headData.discount} */}
+            {/* {Number(docHeadData.total)} */}
+            {Number(docHeadData.total) * (Number(docHeadData.discount_proc) / 100).toFixed(2)}
           </p>
         </div>
         <div className="headItem">
           <label className="label1">До оплати(грн):</label>
-          <p className="sum1">{(Number(headData.total) * (1 - Number(headData.discount_proc) / 100)).toFixed(2)}</p>
+          {/* <p className="data">{docHeadData.discount}</p> */}
+          {/* <p className="sum2">{docHeadData.discount}</p> */}
+          <p className="sum1">
+            {/* {Number(docHeadData.total)} */}
+            {(Number(docHeadData.total) * (1 - Number(docHeadData.discount_proc) / 100)).toFixed(2)}
+          </p>
         </div>
         <style jsx>{`
           .headItemWrapper {
@@ -189,24 +215,24 @@ function GDocCheckProducts({
     return params.data.quantity * params.data.price - params.data.discount
   }
 
-  //   const [columnDefs, setColumnDefs] = useState([
   const columnDefs = useMemo(() => [
     //??? Якщо включено sizeColumnsToFit, то не працює параметр flex:1/flex:2...
-    {
-      //   headerName: "#",
-      //   field: "id",
-      minWidth: 20,
-      maxWidth: 20,
-      checkboxSelection: true, //
-      headerCheckboxSelection: true, //Добавляє в шапку
-      sortable: false,
-      suppressMenu: true,
-      filter: false,
-      resizable: false,
-      lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
-      suppressMovable: true, //Заборона перетягнути заголовок стовпця.
-      suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
-    },
+    //   const [columnDefs, setColumnDefs] = useState([
+    // {
+    //   //   headerName: "#",
+    //   //   field: "id",
+    //   minWidth: 20,
+    //   maxWidth: 20,
+    //   checkboxSelection: true, //
+    //   headerCheckboxSelection: true, //Добавляє в шапку
+    //   sortable: false,
+    //   suppressMenu: true,
+    //   filter: false,
+    //   resizable: false,
+    //   lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
+    //   suppressMovable: true, //Заборона перетягнути заголовок стовпця.
+    //   suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
+    // },
     { field: "product_id", hide: true }, //Прихований(hide) рядок
     { field: "name", headerName: "Назва товару", minWidth: 230, flex: 5 }, //Прихований(hide) рядок
     { field: "quantity", headerName: "Кількість", type: "numericColumn", minWidth: 110 },
@@ -259,8 +285,6 @@ function GDocCheckProducts({
 
   //Перемалює всі рядки
   const redrawAllRows = useCallback(() => {
-    // console.log("d_doc_check_products.js/redrawAllRows/rowData=", rowData)
-    // alert("redrawAllRows")
     //   progressColor()
     gridRef.current.api.redrawRows()
   }, [])
@@ -293,68 +317,44 @@ function GDocCheckProducts({
   // Добавалення запису (кнопка/виклик форми (саме добавлення в onCloseForm)) -*/
   const onAdd = () => {
     setIsAdd(true) //Для форми(добавлення чи коригування)
-    // setFormData(null) //Пусті дані в форму
-    setToFormData(null) //Пусті дані в форму
+    setFormData(null) //Пусті дані в форму
     setFormActive(true) //Відкриваємо форму для занесення інфи
   }
 
-  //=== Добавленн запису в масив agGrid
-  const rowAddArray = (newRow) => {
+  // Добавленн запису в масив agGrid
+  const rowAddArray = (formData) => {
     //Вираховуємо суму документа
-    const sumHead = (Number(headData.total) + Number(newRow.price) * Number(newRow.quantity)).toFixed(2)
-    console.log("d_doc_check_products.js/rowAddArray/newRow=", newRow)
-    setHeadData((prevState) => ({ ...prevState, total: sumHead }))
+    const sumHead = (Number(docHeadData.total) + Number(formData.price) * Number(formData.quantity)).toFixed(2)
+    console.log("d_doc_check_products.js/rowAddArray/sumHead=", sumHead)
+    // setDocHeadData({ total: sumHead })
+    setDocHeadData((prevState) => ({ ...prevState, total: sumHead }))
     //Додавання рядка в масив рядків agGrid
     const rows1 = [...rowData] //копіюємо поточний масив рядків agGrid
-    // rows1.push({ ...newRow }) //добавляємо в кінець масиву рядків agGrid
-    rows1.unshift({ ...newRow }) //добавляємо в початок масиву рядків agGrid
+    // console.log("d_doc_check_products.js/rowAddArray/rows1=", rows1)
+    rows1.push({ ...formData }) //добавляємо в кінець масиву рядків agGrid
+    // console.log("d_doc_check_products.js/rowAddArray/rows1/2=", rows1)
     setRowData(rows1) //Обновлює масив рядків agGrid
     redrawAllRows() //Перемалює рядки agGrid
   }
 
-  //=== Добавалення запису в БД(doc_check_products)
+  // Добавалення запису(заgпис в БД)
   const rowAdd = async (formData) => {
-    //   const rowAdd = async () => {
-    // console.log("doc_check_products.js/rowAdd/headData=", headData)
-    console.log("doc_check_products.js/rowAdd/formData=", formData)
-
-    //Рядок для запису в doc_check_products:
-    const addRow = {
-      check_id: headData.id, //
-      departament_id: headData.departament_id, //Add
-      place: headData.place, //Add
-      user_id: headData.user_id, //Add
-      client_id: headData.client_id, //Add 1-по замовчуванню
-      //
-      product_id: formData.product_id, //Add+Edit
-      ov_id: formData.ov_id, //Add+Edit
-      price: formData.price, //Add+Edit//Add+Edit//Add
-      quantity: formData.quantity, //Add+Edit
-      discount: formData.discount, //Знижка в грн
-    }
-    console.log("doc_check_products.js/rowAdd/headData=", headData)
-    console.log("doc_check_products.js/rowAdd/addRow=", addRow)
+    // console.log("Product.js/rowAdd/formData=", formData)
     // console.log("Product.js/rowAdd/JSON.stringify(formData)=", JSON.stringify(formData))
-
     const url = "/api/shop/docs/doc_check_products/insert" //працює
     const options = {
       method: "POST",
-      //   body: JSON.stringify(formData), //Для запитів до серверів використовувати формат JSON
-      body: JSON.stringify(addRow), //Для запитів до серверів використовувати формат JSON
+      body: JSON.stringify(formData), //Для запитів до серверів використовувати формат JSON
       headers: {
         "Content-Type": "application/json", //Вказує на тип контенту
       },
     }
-
-    const response = await fetch(url, options) //Запит
-
+    const response = await fetch(url, options)
     if (response.ok) {
       // якщо HTTP-статус в диапазоне 200-299
       const resRow = await response.json() //повертає тіло відповіді json
       //   console.log("Product.js/rowAdd/try/esponse.ok/resRow=", resRow)
-      //   alert(`Запис успішно добавленo`)
-
-      if (resRow === 1) rowAddArray(formData) //Додавання рядка до масиву а не обновлення запитом
+      alert(`Запис успішно добавленo`)
       return resRow
     } else {
       const err = await response.json() //повертає тіло відповіді json
@@ -362,60 +362,15 @@ function GDocCheckProducts({
       //   console.log(`Product.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
     }
   }
-
-  //=== Добавалення запису в БД(doc_check_products)
-  const rowAddHead = async () => {
-    //   const rowAdd = async () => {
-    console.log("doc_check_products.js/rowAdd/headData=", headData)
-    //Рядок для запису в doc_check_products:
-    const addRow = {
-      id: headData.id, //
-      departament_id: headData.departament_id, //Add
-      place: headData.place, //Add
-      user_id: headData.user_id, //Add
-      client_id: headData.client_id, //Add 1-по замовчуванню
-      total: headData.total, //Add 1-по замовчуванню
-      discount: headData.discount, //Add 1-по замовчуванню
-    }
-    // console.log("Product.js/rowAdd/JSON.stringify(formData)=", JSON.stringify(formData))
-
-    const url = "/api/shop/docs/doc_check_head/insert" //працює
-    const options = {
-      method: "POST",
-      //   body: JSON.stringify(formData), //Для запитів до серверів використовувати формат JSON
-      body: JSON.stringify(addRow), //Для запитів до серверів використовувати формат JSON
-      headers: {
-        "Content-Type": "application/json", //Вказує на тип контенту
-      },
-    }
-
-    const response = await fetch(url, options) //Запит
-
-    if (response.ok) {
-      // якщо HTTP-статус в диапазоне 200-299
-      const resRow = await response.json() //повертає тіло відповіді json
-      //   console.log("Product.js/rowAdd/try/esponse.ok/resRow=", resRow)
-        alert(`Запис успішно добавленo`)
-
-      if (resRow === 1) rowAddArray(formData) //Додавання рядка до масиву а не обновлення запитом
-      return resRow
-    } else {
-      const err = await response.json() //повертає тіло відповіді json
-      alert(`Запис не добавлено! ${err.message} / ${err.stack}`)
-      //   console.log(`Product.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
-    }
-  }
-
   // Коригування записів(кнопка) ------------------------- */
   const onEdit = () => {
     if (countSelectedRows > 0) {
       const selectRow = selectedRowState["0"] //Значення всіх полів 0-го виділеного рядка
       setIsAdd(false) //Для форми(добавлення чи коригування)
-      //   setFormData(selectRow) //Дані з вибраного запису в форму
-      setToFormData(selectRow) //Дані з вибраного запису в форму
+      setFormData(selectRow) //Дані з вибраного запису в форму
       setFormActive(true) //Відкриваємо форму для занесення інфи
       // rowEdit(formData)// переніс в onCloseForm, бо зразу спрацьовувало
-      //   console.log("GDocCheckProducts/onEdit/selectRow  = ", selectRow)
+      console.log("GDocCheckProducts/onEdit/selectRow  = ", selectRow)
       //****************************************** */
     } else {
       alert("Не вибрано ні одного запису для коригуввання")
@@ -476,41 +431,40 @@ function GDocCheckProducts({
     }
   }
 
-  // Закриття форми вводу даних і виклик ф-цій запису в БД(масив) ------/
-  //formData-дані з форми
+  // Закриття форми вводу даних (UsersForm) ----------------/
   const onCloseForm = (formData) => {
-    console.log("d_doc_check_products.js/onCloseForm/formData=", formData)
+    // console.log("d_doc_check_products.js/onCloseForm/formData=", formData)
     setFormActive(false)
     //Якщо є дані з форми
     if (formData) {
-      //   if (isAdd) rowAddArray(formData)//Для добавлення в масив
-      if (isAdd) rowAdd(formData) //Для добавлення в БД
+      if (isAdd) rowAddArray(formData)
       else rowEdit(formData) //Виклик ф-ції запису в БД
-      //   redrawAllRows() //Перемалює рядки agGrid
+      // onGridReady()
+      redrawAllRows() //Перемалює рядки agGrid
       // setRowData(data)
     }
   }
 
-  //   //=== Загрузка даних в PjstgreSQL
-  //   //   const insertPostgreSQL = (dJson) => {
-  //   const insertPostgreSQL = () => {
-  //     let insertZap = 0
-  //     try {
-  //       //Цикл forEach по dataJson
-  //       rowData.current.forEach((row) => {
-  //         rowAdd(row) //Запис в БД(select)
-  //         insertZap = insertZap + 1
-  //         insertRows.current = insertRows.current + 1
-  //         // console.log("d_product.js/insertPostgreSQL/insertRows.current=", insertRows.current)
-  //         // console.log("d_product.js/insertPostgreSQL/insertZap=", insertZap)
-  //       })
-  //     } finally {
-  //       //   console.log("d_product.js/insertPostgreSQL/finally/insertRows.current=", insertRows.current)
-  //       alert(`finally:Добавленo ${insertZap}`)
-  //       //   insertRows.current=0
-  //     }
-  //     return insertZap
-  //   }
+  //=== Загрузка даних в PjstgreSQL
+  //   const insertPostgreSQL = (dJson) => {
+  const insertPostgreSQL = () => {
+    let insertZap = 0
+    try {
+      //Цикл forEach по dataJson
+      rowData.current.forEach((row) => {
+        rowAdd(row) //Запис в БД(select)
+        insertZap = insertZap + 1
+        insertRows.current = insertRows.current + 1
+        // console.log("d_product.js/insertPostgreSQL/insertRows.current=", insertRows.current)
+        // console.log("d_product.js/insertPostgreSQL/insertZap=", insertZap)
+      })
+    } finally {
+      //   console.log("d_product.js/insertPostgreSQL/finally/insertRows.current=", insertRows.current)
+      alert(`finally:Добавленo ${insertZap}`)
+      //   insertRows.current=0
+    }
+    return insertZap
+  }
 
   //===================================================================
 
@@ -549,16 +503,11 @@ function GDocCheckProducts({
     // alert("onPaymentDialog")
     setIsPaymentDialog(true)
   }
-
-  // Дії(Функція) після виходу з діалогів(PaymentDialog/ExitDialog)
+  // Дії після виходу з діалогів(PaymentDialog/ExitDialog)
   const dialogAction = (par) => {
     // alert("dialogAction",par)
-    if (par === 1) {
-      //Записс даних в БД
-      console.log("doc_check_products.js/dialogAction/headData=", headData)
-      alert("doc_check_products.js/dialogAction/1-вихід із збереженням")
-      rowAddHead() //Запис в БД  doc_check_head
-    } else exitWithout() //Вихід без збереження
+    if (par === 1) alert("1-вихід із збереженням")
+    else exitWithout() //Вихід без збереження
   }
 
   return (
@@ -569,10 +518,12 @@ function GDocCheckProducts({
         <PaymentDialog
           setIsPaymentDialog={setIsPaymentDialog}
           dialogAction={dialogAction}
-          total={(Number(headData.total) * (1 - Number(headData.discount_proc) / 100)).toFixed(2)}
+          total={(Number(docHeadData.total) * (1 - Number(docHeadData.discount_proc) / 100)).toFixed(2)}
         />
       )}
-      {isClientDialog && <ClientDialog setIsClientDialog={setIsClientDialog} setHeadData={setHeadData} />}
+      {isClientDialog && (
+        <ClientDialog setIsClientDialog={setIsClientDialog} setDocHeadData={setDocHeadData} total={docHeadData.total} />
+      )}
       {isExitDialog && <ExitDialog setIsExitDialog={setIsExitDialog} dialogAction={dialogAction} />}
       <div className="agrid_head-container">
         <div className="agrid_head-container-left">
@@ -656,7 +607,7 @@ function GDocCheckProducts({
         </div>
         {/*  */}
         <div className="agrid_head-title">
-          {titleTable} {headData.id}
+          {titleTable} {docHeadData.id}
         </div>
         {/* <div>Імпортовано: {insertRows.current} зап.</div> */}
         {/*  */}
@@ -690,7 +641,7 @@ function GDocCheckProducts({
       </div>
       <div className="agrid_head-title-mobi">
         <p>
-          {titleTable} {headData.id}
+          {titleTable} {docHeadData.id}
         </p>
       </div>
 
@@ -719,7 +670,7 @@ function GDocCheckProducts({
           //   onRowDoubleClicked={onDoubleClicke}
         ></AgGridReact>
       </div>
-      {formActive && <DocCheckProductsForm onCloseForm={onCloseForm} toFormData={toFormData} />}
+      {formActive && <DocCheckProductsForm onCloseForm={onCloseForm} formData={formData} />}
       {/* --- */}
       <style jsx>{`
         .agrid_head-container-right-notMobi,

@@ -1,11 +1,10 @@
 //pages/api/references/d_client/edit.js
 
-
 import { pool } from "../../../../../config/dbShop"
 
 export default function handler(req, resp) {
   const data = JSON.parse(req.body) //Для feth- не треба переиворення json ->obj
-  const sql = `UPDATE d_client SET name = '${data.name}', last_name = '${data.last_name}', email = '${data.email}', skod = '${data.skod}', discont_proc = '${data.discont_proc}' WHERE id IN (${data.id})`
+  const sql = `UPDATE d_client SET name = '${data.name}', last_name = '${data.last_name}', email = '${data.email}', skod = '${data.skod}', discount_proc = '${data.discount_proc}' WHERE id IN (${data.id})`
 
   //--- pool(promise)
   pool.connect().then((client) => {
