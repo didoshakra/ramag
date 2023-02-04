@@ -4,7 +4,7 @@ import { useEffect, useState, useContext, useRef } from "react"
 import { ComponentContext } from "../../../context/ComponentContext"
 import IconCancel from "../../ui/svg/head/IconCancel"
 
-export default function ClientDialog({ setIsClientDialog, setHeadData }) {
+export default function ClientDialog({ setIsClientDialog, setHeadData, discountRecalc }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
   const [rezSelect, setRezSelect] = useState({
@@ -12,7 +12,7 @@ export default function ClientDialog({ setIsClientDialog, setHeadData }) {
     name: "",
     last_name: "",
     skod: "",
-    diccont_proc: "",
+    discount_proc: 0,
   })
 
   //   const [inputRef, setInputFocus] = useFocus() //https://stackoverflow.com/questions/28889826/how-to-set-focus-on-an-input-field-after-rendering
@@ -20,9 +20,9 @@ export default function ClientDialog({ setIsClientDialog, setHeadData }) {
   //Визначення клієнта
   const onClientSkod = (e) => {
     if (e.key === "Enter") {
-        // alert("onCesh/Enter")
+      // alert("onCesh/Enter")
       // console.log("ClientDialig.js/onClientSkod/e.target.value=", e.target.value)
-      console.log("ClientDialig.js/onClientSkod/e.target=", e.target)
+      //   console.log("ClientDialig.js/onClientSkod/e.target=", e.target)
       e.preventDefault() //Повертаємся назад в поле
       const clientSkod = e.target.value //Значення останньогог поля
       selParam(clientSkod) //Запит по Ш-коду
@@ -30,7 +30,7 @@ export default function ClientDialog({ setIsClientDialog, setHeadData }) {
   }
   //--- Вибір з БД/d_product по полю SKod
   const selParam = async (param) => {
-    console.log("ClientDialig.js/selParam/param=", param)
+    // console.log("ClientDialig.js/selParam/param=", param)
     const urlAPI = "/api/shop/references/d_client/" // Для useSWR/getServerSideProp i...
     const url = `${urlAPI}/select-params` //
     const options = {
@@ -43,7 +43,7 @@ export default function ClientDialog({ setIsClientDialog, setHeadData }) {
     const response = await fetch(url, options)
     if (response.ok) {
       const resRow = await response.json() //повертає тіло відповіді json
-        console.log("Client/Dialig.js/selParam/resRow=", resRow)
+      //   console.log("Client/Dialig.js/selParam/resRow=", resRow)
       if (resRow.length > 0) {
         //--- Обновлення значення полів масиву об'єктів
         setRezSelect((state) => ({ ...state, id: resRow[0].id }))
@@ -51,9 +51,8 @@ export default function ClientDialog({ setIsClientDialog, setHeadData }) {
         setRezSelect((state) => ({ ...state, last_name: resRow[0].last_name }))
         setRezSelect((state) => ({ ...state, skod: resRow[0].skod }))
         setRezSelect((state) => ({ ...state, discount_proc: resRow[0].discount_proc }))
-        //
       } else {
-        console.log("Client/Dialig.js/selParam/resRow=", resRow)
+        // console.log("Client/Dialig.js/selParam/resRow=", resRow)
         setRezSelect((state) => ({ ...state, id: 0 }))
         setRezSelect((state) => ({ ...state, name: "* Клієнта не знайдено!" }))
         setRezSelect((state) => ({ ...state, last_name: "" }))
@@ -64,7 +63,7 @@ export default function ClientDialog({ setIsClientDialog, setHeadData }) {
     } else {
       const err = await response.json() //повертає тіло відповіді json
       alert(`Помилка запиту! ${err.message} / ${err.stack}`)
-        console.log(`Product.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
+    //   console.log(`ClientDialog.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
     }
   }
 
@@ -76,9 +75,8 @@ export default function ClientDialog({ setIsClientDialog, setHeadData }) {
 
   //Кнопка Ввести(підтвердження вводу даних)
   const onButtonEnter = () => {
-    setHeadData((state) => ({ ...state, client_id: rezSelect.id }))
-    setHeadData((state) => ({ ...state, client: `${rezSelect.name} ${rezSelect.last_name}` }))
-    setHeadData((state) => ({ ...state, discount_proc: rezSelect.discount_proc }))
+    // console.log("ClientDialog.js/onButtonEnter/rezSelect=", rezSelect)
+    discountRecalc(rezSelect)
     setIsClientDialog(false)
   }
 
@@ -115,9 +113,7 @@ export default function ClientDialog({ setIsClientDialog, setHeadData }) {
           </div>
           <div className="flexRow-sBetween" style={{ marginTop: "20px" }}>
             <label className="label2">Знижка(%): </label>
-            <p className="sum2">
-              {rezSelect.discount_proc}
-            </p>
+            <p className="sum2">{rezSelect.discount_proc}</p>
           </div>
           <button id="enter" className="button" onClick={onButtonEnter}>
             Ввести

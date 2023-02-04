@@ -106,15 +106,15 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
         setValue("ov_id", resRow[0].ov_id)
         setValue("ov", resRow[0].ov)
         setValue("price", resRow[0].price)
-        setValue("quantity", "")
+        setValue("quantity", 0)
         setFocus("quantity", { shouldSelect: true })
       } else {
         setValue("product_id", "")
         setValue("name", "*** ТОВАР НЕ ЗНАЙДЕНО ***")
         setValue("ov_id", "")
         setValue("ov", "")
-        setValue("price", "")
-        setValue("quantity", "")
+        setValue("price", 0)
+        setValue("quantity", 0)
         onProduct()
       }
       //   onProduct()
@@ -226,26 +226,6 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
             </div>
             <input className="input" onClick={onProduct} {...register("name")} />
           </div>
-          {/*  */}
-          {/* className="inputBody" <div style={{ weight: "50px", margin: "0 1px" }}>
-            <div className="inputImgContainer">
-              <label className="label">Знижка(Грн)</label>
-            </div>
-            <input
-              className="input"
-              type="text"
-              {...register("discount", {
-                pattern: {
-                  value: /^\d*\.?\d{0,2}$/g, //(.) 2-а знаки після коми\ Не виводить повідомлення
-                },
-                max: 100000000,
-              })}
-            />
-            <div cclassName="errorMsg">
-              {errors.discount?.type === "pattern" && "Не формат: 99999999.99"}
-              {errors.discount?.type === "max" && "від 0 до 99999999.99"}
-            </div>
-          </div> */}
           {/*  */}
         </div>
       </form>

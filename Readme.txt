@@ -63,4 +63,9 @@
         CheckboxRenderer-модуль для рендеру Checkbox в agGrid
     / в doc_check_products- товари в чеках:
         Не зміг реалізувати добвлення в doc_check_head з зарезервованим check_id(nextval)-> cannot insert a non-DEFAULT value into column "id" / undefined
+2023.02.03 / в doc_check_products- товари в чеках:
+    Доробив функцію перерахунку знижки в рядкак і шапці чеку
+    При добавленні рядка  враховується поточни знижка
 
+ 2023.02.04 / в doc_check_products- товари в чеках:
+    Запис в БД doc_check_products товарів з масиву і doc_check_head ???

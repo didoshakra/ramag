@@ -1,8 +1,5 @@
-import {useState} from 'react'
-
+//Для agGrid
 export default function CheckBoxRenderer(props) {
-//   const [checkedHandler, setCheckedHandler] = useState()
-
   const checkedHandler=(e)=> {
     let checked = e.target.checked
     let colId = props.column.colId

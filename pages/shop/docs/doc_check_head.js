@@ -88,7 +88,7 @@ function GDocCheckHead({ data }) {
   const [docContent, setDocContent] = useState("") //Для показу вмісту документу(різні варіанти для довідників)
   //Початкове значення вибраного рядка для форми і док
   const [headData, setHeadData] = useState({
-    newDoc: true, //Якщо документ добавляється
+    newDoc: false, //Якщо документ добавляється
     id: 0, //doc_check_head.id = doc_check_products.check_id
     total: 0,
     discount_proc: 0,
@@ -196,16 +196,17 @@ function GDocCheckHead({ data }) {
   //=== Add/Edit/Delete/Cancel
   // Добавалення запису (кнопка)
   const onAdd = () => {
-    selSequence() // Отримати код з послідовності// SELECT nextval('doc_check_products_id_seq')
-    //
+    // selSequence() // Отримати код з послідовності// SELECT nextval('doc_check_products_id_seq')
+    //+++ Зміна конкретного ключа об'єкта useState //https://qna.habr.com/q/1152478
     setHeadData((state) => ({ ...state, newDoc: true }))
     setHeadData((state) => ({ ...state, departament_id: workPlace.departament_id }))
     setHeadData((state) => ({ ...state, place: workPlace.place }))
     setHeadData((state) => ({ ...state, user_id: workPlace.user_id }))
     setHeadData((state) => ({ ...state, total: 0 }))
     setHeadData((state) => ({ ...state, discount: 0 }))
+    setHeadData((state) => ({ ...state, discount_proc: 0 }))
+
     setDocContent("DocCheckProducts") //Для відкриття забаного ("DocCheckProducts") компонента
-    // onDoubleClicke() // в документ
   }
 
   // Вибір з БД// Отримати код з послідовності// SELECT nextval('doc_check_products_id_seq')
@@ -254,7 +255,6 @@ function GDocCheckHead({ data }) {
       console.log(`doc_check_head.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
     }
   }
-  
 
   //   //--- Коригування записів(кнопка)
   const onEdit = () => {
@@ -327,7 +327,7 @@ function GDocCheckHead({ data }) {
   //--- При двойному кліку по рядку вибрати значення з довідника і передати в input форми
   const onDoubleClicke = () => {
     setHeadData(selectedRowState["0"]) //Дані з вибраного запису в форму(для select)
-    setDocContent("DocCheckProducts") //Для відкриття забаного ("DocCheckProducts") компонента
+    // setDocContent("DocCheckProducts") //Для відкриття забаного ("DocCheckProducts") компонента
   }
 
   //--- ExportExell // Пацює при включеній опції "ag-grid-enterprise"
