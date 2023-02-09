@@ -3,7 +3,7 @@
 import { useEffect, useState, useContext, useRef } from "react"
 import { ComponentContext } from "../../../context/ComponentContext"
 
-export default function ExitDialog({ setIsExitDialog, dialogAction }) {
+export default function ExitDialog({ setIsExitDialog, exitBackDialog }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
 
@@ -16,14 +16,14 @@ export default function ExitDialog({ setIsExitDialog, dialogAction }) {
   const onEnterSave = () => {
     // alert("onEnterSave")
     setIsExitDialog(false)
-    dialogAction(1)
+    exitBackDialog(1)
   }
 
   //1-вихід без збереження
   const onWithoutSave = () => {
     // alert("onWithoutSave")
     setIsExitDialog(false)
-    dialogAction(0)
+    exitBackDialog(0)
   }
 
   useEffect(() => {
@@ -41,11 +41,11 @@ export default function ExitDialog({ setIsExitDialog, dialogAction }) {
           <button id="cancel" className="button" onClick={onCancelDialog}>
             Відмінити
           </button>
-          <button className="button" onClick={onEnterSave}>
-            Із збереженням
-          </button>
           <button className="button" onClick={onWithoutSave}>
             Без збереженням
+          </button>
+          <button className="button" onClick={onEnterSave}>
+            Із збереженням
           </button>
         </div>
         {/* </div> */}

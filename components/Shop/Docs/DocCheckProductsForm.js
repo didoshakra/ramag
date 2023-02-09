@@ -61,16 +61,20 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
     // console.log("DocCheckProductsForm.js/onKeyDown/multipleValues['skod']", multipleValues["skod"])
     // onProduct()
     if (e.key === "Enter") {
+
       //   console.log("DocCheckProductsForm.js/onKeyDown/e=", e)
       e.preventDefault() //Повертаємся назад в поле
       const singleValue = getValues("skod") // Одна змінна
-      selParam(singleValue) //Запит по Ш-коду
+    //
+    if (singleValue != "") selParam(singleValue) //Запит до БД по Ш-коду
+    else onProduct()
     }
   }
   //Вихід (При натисканні клавіші в останньому полі)
   const onOutput = (e) => {
+    //   alert("onOutput")
     if (e.key === "Enter") {
-      handleSubmit(onSubmit)()
+        handleSubmit(onSubmit)()//Вихід з даними
       //   e.preventDefault() //Повертаємся назад в поле
       //   alert("Вихід")
     }
@@ -161,6 +165,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
               <>
                 <input
                   className="input"
+                  required
                   //   readonly
                   type="text"
                   {...register("price", {
@@ -185,11 +190,12 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
             <input
               onKeyDown={(e) => onOutput(e)}
               className="input"
+              required
               //   type="text"
-              type="number"
-              step="1"
-              min="0.001"
-              max="99999999.99"
+            //   type="number"
+            //   step="1"
+            //   min="0.001"
+            //   max="99999999.99"
               {...register("quantity", {
                 pattern: {
                   value: /^\d*\.?\d{0,3}$/g, //(.) 2-а знаки після коми\ Не виводить повідомлення
@@ -216,7 +222,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
             {/* //відключено ввід */}
             {/* //Не передає значення */}
             {/* <input className="input" {...register("ov", { disabled: true })} /> */}
-            <input className="input" {...register("ov")} />
+            <input className="input" required {...register("ov")} />
           </div>
           {/*  */}
           <div className="inputBody" style={{ width: 380, margin: "0 1px" }}>
@@ -224,7 +230,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
               <img style={{ width: 15, height: 15 }} src="/icons/png/Book24_24.png" />
               <label className="label">Назва товару</label>
             </div>
-            <input className="input" onClick={onProduct} {...register("name")} />
+            <input className="input" required onClick={onProduct} {...register("name")} />
           </div>
           {/*  */}
         </div>

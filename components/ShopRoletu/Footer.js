@@ -134,7 +134,7 @@ const Footer = () => {
                 <span className="item-questions__icon">
                   <IconPhone width="15" height="15" />
                 </span>
-                <span className="text">+ 38(067) 413-44-88</span>
+                <span className="text">+ 38(067) 777-77-77</span>
               </a>
             </li>
             <li>

@@ -64,8 +64,8 @@ const MenuItems = ({ items, depthLevel }) => {
             {depthLevel === 0 ? (
               items.title
             ) : (
-              <Link href={`${items.url}`} >
-                <a>{items.title}</a>
+              <Link href={`${items.url}`} legacyBehavior>
+                <a className="menu-items-a">{items.title}</a>
               </Link>
             )}
 
@@ -88,8 +88,8 @@ const MenuItems = ({ items, depthLevel }) => {
           <Dropdown depthLevel={depthLevel} submenus={items.submenu} dropdown={dropdown} />
         </>
       ) : (
-        <Link href={`${items.url}`}>
-          <a>{items.title}</a>
+        <Link href={`${items.url}`} legacyBehavior>
+          <a className="menu-items-a">{items.title}</a>
         </Link>
       )}
       <style jsx>{`
@@ -123,14 +123,14 @@ const MenuItems = ({ items, depthLevel }) => {
           margin-left: 3px;
         }
 
-        .menu-items > a,
+        .menu-items-a,
         .menu-items button {
           text-align: left;
           padding: 0.5rem 1rem;
           height: 30px;
         }
 
-        .menu-items a:hover,
+        .menu-items-a:hover,
         .menu-items button:hover {
           text-decoration: underline;
           color: ${theme.colors.headMenuBackgroundActive};

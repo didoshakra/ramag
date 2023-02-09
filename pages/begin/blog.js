@@ -1,4 +1,4 @@
-import Layout from "../../components/MainLayout"
+import Layout from "../../components/Main/Layout"
 
 export default function Blogt() {
   return (

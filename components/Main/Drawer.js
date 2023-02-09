@@ -67,7 +67,7 @@ function Drawer({ drawerOpen, onOpened }) {
         return (
           <li className="drawer_item" key={index}>
             <Link href={`${item.link}`} >
-              <span>{item.a}</span>
+              {item.a}
             </Link>
           </li>
         )

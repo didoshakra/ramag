@@ -11,15 +11,13 @@ const HeaderLogo = () => {
 
   return (
     <div className="headerLogo">
-      <Link href="/">
-        <a className="headerLogo__icon">
-          <img title="ramag" width={70} height={50} src="/images/head/sun_man_hands-oval-ra-red.png" alert="logo" />
-          {/* <img title="ramag" width={70} height={50} src="/images/head/sun_man_mount-380.png" alert="logo" /> */}
-          {/* <img title="raui" width={50} height={50} src="/images/head/sun_man_hands-oval-ra.png" alert="logo" /> */}
-          {/* <img title="raui" width={60} height={50} src="/images/head/Ra-oval.png" alert="logo" /> */}
-        </a>
+      <Link href="/" className="headerLogo__icon">
+        <img title="ramag" width={70} height={50} src="/images/head/sun_man_hands-oval-ra-red.png" alert="logo" />
+        {/* <img title="ramag" width={70} height={50} src="/images/head/sun_man_mount-380.png" alert="logo" /> */}
+        {/* <img title="raui" width={50} height={50} src="/images/head/sun_man_hands-oval-ra.png" alert="logo" /> */}
+        {/* <img title="raui" width={60} height={50} src="/images/head/Ra-oval.png" alert="logo" /> */}
       </Link>
-      <Link href="/">
+      <Link href="/" legacyBehavior>
         <a className="headerLogo__text" title="RAMAG">
           RAMAG
         </a>

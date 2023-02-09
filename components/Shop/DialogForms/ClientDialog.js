@@ -4,7 +4,7 @@ import { useEffect, useState, useContext, useRef } from "react"
 import { ComponentContext } from "../../../context/ComponentContext"
 import IconCancel from "../../ui/svg/head/IconCancel"
 
-export default function ClientDialog({ setIsClientDialog, setHeadData, discountRecalc }) {
+export default function ClientDialog({ setIsClientDialog, discountRecalc }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
   const [rezSelect, setRezSelect] = useState({

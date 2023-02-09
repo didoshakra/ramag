@@ -3,7 +3,7 @@ import { useEffect, useState, useContext, useRef } from "react"
 import { ComponentContext } from "../../../context/ComponentContext"
 import IconCancel from "../../ui/svg/head/IconCancel"
 
-export default function PaymentDialog({ setIsPaymentDialog, dialogAction ,total}) {
+export default function PaymentDialog({ setIsPaymentDialog, exitPaymentDialog, total }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
   const [sumRest, setSumRest] = useState(0) //Решта
@@ -15,7 +15,7 @@ export default function PaymentDialog({ setIsPaymentDialog, dialogAction ,total}
     if (e.key === "Enter") {
       //   console.log("doc_check_products.js/onCesh//e.target.value=", e.target.value)
       const sumClient = e.target.value //Значення останньогог поля
-      setSumRest(sumClient - total)
+      setSumRest((Number(sumClient) - Number(total)).toFixed(2))
       e.preventDefault() //Повертаємся назад в поле
       document.querySelector("#enter")?.focus() //Передати фокус в Отримано від покупця
     }
@@ -24,24 +24,15 @@ export default function PaymentDialog({ setIsPaymentDialog, dialogAction ,total}
   //Вихід з діалогу  без виходу з документу
   const onCancel = () => {
     //   alert("onCancel")
-    // dialogAction(0)
     setIsPaymentDialog(false)
   }
 
   //Вихід з діалогу і вихід з документу із збереженням даних
   const onButtonOplata = () => {
     //   alert("onButtonOplata")
-    dialogAction(1)
+    exitPaymentDialog(1) //вихід із збереженням даних
     setIsPaymentDialog(false)
   }
-
-  //   const inputRef1 = useRef()
-  //   useEffect(() => {
-  //       setTimeout(() => {
-  //         inputRef1.current.select()
-  //         // inputRef.current.focus()// or inputRef.current.focus(); in your case
-  //       }, 300)
-  //   }, [])
 
   //Фокус в Отримано від покупця
   useEffect(() => {
@@ -75,23 +66,24 @@ export default function PaymentDialog({ setIsPaymentDialog, dialogAction ,total}
             className="input"
             onKeyDown={(e) => onCesh(e)}
             type="number"
-            // placeholder="1.00"
             placeholder={total}
+            // placeholder="1.00"
             // value={total}
-            step="0.01"
-            min="0.00"
-            max="10000000"
+            // step="0.01"
+            // min="0.00"
+            // max="10000000"
           />
           {/*  */}
           <div className="flexRow-sBetween" style={{ marginTop: "20px" }}>
             <label className="label1">До оплати(грн): </label>
             {/* <p className="sum1">{sumPayment} грн</p> */}
-            <p className="sum1">{total}</p>
+            <p className="sum1">{Number(total).toFixed(2)}</p>
           </div>
           <hr width="100%" />
           <div className="flexRow-sBetween" style={{ marginTop: "10px" }}>
             <label className="label2">Решта: </label>
             <p className="sum2">{sumRest} грн</p>
+            {/* <p className="sum2">{(Number(sumClient) - Number(total)).toFixed(2)} грн</p> */}
           </div>
           {/* <input className="submit" type="submit" value="Оплатити" /> */}
 

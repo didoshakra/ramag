@@ -68,7 +68,7 @@ export default function DProduct({
       <Layout>
         <div
           //   style={{ position: "relative", margin: "5px", width: "calc(100vw)", height: "calc(100vh - 150px)" }}
-          style={{ position: "relative", width: "calc(100vw)", height: "calc(100vh - 100px)" }}
+          style={{ position: "relative", width: "calc(100vw)", height: "calc(100vh - 120px)" }}
         >
           <Product data={data} />
         </div>
@@ -118,7 +118,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
   const [isAdd, setIsAdd] = useState(false) //Щоб знати для чого заходилось у форму(добавл чи кориг)
   // const [dataJson, setDataJson] = useState([]) // для convertToJson з EXELL/не зберігає до renderingy
   const dataJson = useRef([]) // для convertToJson з EXELL/зберігає до renderingy
-  const insertRows = useRef(0) //к-сть записів вставлених з EXELL\Не працює
+  //   const insertRows = useRef(0) //к-сть записів вставлених з EXELL\Не працює
   const [isExell, setIsExell] = useState(false) //Чи йде імпорт з EXEL для ProgressBar
 
   //*** параметри і ф-ції AG_Grid **************************************** */
@@ -210,7 +210,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
     suppressSizeToFit: true, //автоматичне змінення розміру стовбця(до розміру екрану)
   }
 
-  //Для CheckboxRenderer
+  // //Для CheckboxRenderer
   const frameworkComponents = {
     checkboxRenderer: CheckboxRenderer,
   }
@@ -442,35 +442,56 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
       //   console.log("exell_eventfile_table.js/handleImportExell/rr=", jData)
 
       //*** Загрузка даних в PjstgreSQL
-      const insertZap = await insertPostgreSQL(jData) //Загрузка даних в PjstgreSQL
-      //   const insertZap = insertPostgreSQL(jData) //Загрузка даних в PjstgreSQL
+      const insertZap = await insertDB(jData) //Загрузка даних в PjstgreSQL
+      //   const insertZap = insertDB(jData) //Загрузка даних в PjstgreSQL
       console.log("d_product.js/handleImportExell/insertZap=", insertZap)
     }
     reader.readAsBinaryString(file)
   }
 
-  //--- Загрузка даних в PjstgreSQL
-  const insertPostgreSQL = () => {
-    // setIsExell(true)
-    // console.log("d_product.js/insertPostgreSQL//dataJson.current=", dataJson.current)
+  //   //--- Загрузка даних в PjstgreSQL / forEach
+  //   const insertDB = () => {
+  //     // console.log("d_product.js/insertDB//dataJson.current=", dataJson.current)
+
+  //     let insertZap = 0
+  //     try {
+  //       //   dataJson.forEach((row) => {
+  //       dataJson.current.forEach((row) => {
+  //         //
+  //         rowAdd(row) //Запис в БД(select)
+  //         //
+  //         insertZap = insertZap + 1
+  //         insertRows.current = insertRows.current + 1
+  //         console.log("d_product.js/insertDB/progres=", progres)
+  //         // console.log("d_product.js/insertDB/insertRows.current=", insertRows.current)
+  //         console.log("d_product.js/insertDB/insertZap=", insertZap)
+  //       })
+  //     } finally {
+  //       //   console.log("d_product.js/insertDB/finally/insertRows.current=", insertRows.current)
+  //       alert(`finally:Добавленo ${insertZap}`)
+  //       //   insertRows.current=0
+  //     }
+  //     return insertZap
+  //   }
+
+  //--- Загрузка даних в DB / .map
+  const insertDB = async () => {
+    // console.log("d_product.js/insertDB//dataJson.current=", dataJson.current)
 
     let insertZap = 0
     try {
-      //   dataJson.forEach((row) => {
-      dataJson.current.forEach((row) => {
-        // rowAdd(row, 1) //Запис в БД(select)
-        rowAdd(row) //Запис в БД(select)
+      //Цикл по rowData(запис в БД (doc_check_products)
+      const addToDB = await dataJson.current.map((item, index) => {
+        // console.log("doc_check_products.js/rowAddProductsFromArray/item=", item)
+        //
+        rowAdd(item) //Запис в БД(select)
+        //
         insertZap = insertZap + 1
-        insertRows.current = insertRows.current + 1
-        // dispatch({ type: "PROGRES", payload: insertZap }) //Змінюємо state.user
-
-        // console.log("d_product.js/insertPostgreSQL/progres=", progres)
-        console.log("d_product.js/insertPostgreSQL/insertRows.current=", insertRows.current)
-        console.log("d_product.js/insertPostgreSQL/insertZap=", insertZap)
       })
+
     } finally {
-      //   console.log("d_product.js/insertPostgreSQL/finally/insertRows.current=", insertRows.current)
-      alert(`finally:Добавленo ${insertZap}`)
+      //   console.log("d_product.js/insertDB/finally/insertRows.current=", insertRows.current)
+      await alert(`finally:Добавленo ${insertZap}`)
       //   insertRows.current=0
     }
     return insertZap

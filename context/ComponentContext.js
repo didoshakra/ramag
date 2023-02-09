@@ -40,7 +40,7 @@ const initialState = {
   themeTypeLight: true,
   profile: "admin",
   progres: 0,
-  //profile: "user",
+//   profile: "user",
 }
 
 export const ComponentContext = createContext(initialState)

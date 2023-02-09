@@ -192,72 +192,76 @@ function GDocCheckHead({ data }) {
   const onCancel = () => {
     router.push("/") //перехід на сторінку
   }
+  //** k agGrid  **********************************************************************/
 
   //=== Add/Edit/Delete/Cancel
   // Добавалення запису (кнопка)
   const onAdd = () => {
     // selSequence() // Отримати код з послідовності// SELECT nextval('doc_check_products_id_seq')
+
     //+++ Зміна конкретного ключа об'єкта useState //https://qna.habr.com/q/1152478
     setHeadData((state) => ({ ...state, newDoc: true }))
     setHeadData((state) => ({ ...state, departament_id: workPlace.departament_id }))
     setHeadData((state) => ({ ...state, place: workPlace.place }))
     setHeadData((state) => ({ ...state, user_id: workPlace.user_id }))
+    setHeadData((state) => ({ ...state, id: 0 })) //doc_check_head.id=doc_check_products.check_id
     setHeadData((state) => ({ ...state, total: 0 }))
     setHeadData((state) => ({ ...state, discount: 0 }))
     setHeadData((state) => ({ ...state, discount_proc: 0 }))
 
-    setDocContent("DocCheckProducts") //Для відкриття забаного ("DocCheckProducts") компонента
+    setDocContent("DocCheckProducts") //Відкриття заданого ("DocCheckProducts") компонента
   }
 
-  // Вибір з БД// Отримати код з послідовності// SELECT nextval('doc_check_products_id_seq')
-  const selSequence = async () => {
-    // console.log("doc_check_head.js/selSequence/values=")
-    const url = `/api/shop/docs/doc_check_head/select-seqence/` //!!Має бути doc_check_products
-    const response = await fetch(url)
-    if (response.ok) {
-      const resRow = await response.json() //повертає тіло відповіді json
-      //   console.log("doc_check_head.js/selParam/resRow=", resRow[0].nextval)
-      if (resRow.length > 0) {
-        //--- Обновлення значення полів масиву об'єктів
-        setHeadData((state) => ({ ...state, id: resRow[0].nextval }))
-      } else {
-        setHeadData((state) => ({ ...state, id: 0 }))
-      }
-      //   document.querySelector("#enter")?.focus() //Передати фокус в Отримано від покупця
-    } else {
-      const err = await response.json() //повертає тіло відповіді json
-      console.log(`Product.js/rowAdd/try/else/\ запиту\ ${err.message} / ${err.stack} `)
-    }
-  }
+  //   // Вибір з БД// Отримати код з послідовності// SELECT nextval('doc_check_products_id_seq')
+  //   const selSequence = async () => {
+  //     // console.log("doc_check_head.js/selSequence/values=")
+  //     const url = `/api/shop/docs/doc_check_head/select-seqence/` //!!Має бути doc_check_products
+  //     const response = await fetch(url)
+  //     if (response.ok) {
+  //       const resRow = await response.json() //повертає тіло відповіді json
+  //       //   console.log("doc_check_head.js/selParam/resRow=", resRow[0].nextval)
+  //       if (resRow.length > 0) {
+  //         //--- Обновлення значення полів масиву об'єктів
+  //         setHeadData((state) => ({ ...state, id: resRow[0].nextval }))
+  //       } else {
+  //         setHeadData((state) => ({ ...state, id: 0 }))
+  //       }
+  //       //   document.querySelector("#enter")?.focus() //Передати фокус в Отримано від покупця
+  //     } else {
+  //       const err = await response.json() //повертає тіло відповіді json
+  //       console.log(`Product.js/rowAdd/try/else/\ запиту\ ${err.message} / ${err.stack} `)
+  //     }
+  //   }
 
-  //--- Добавалення(create) запису(запит)
-  const rowAdd = async (headData) => {
-    // console.log("doc_check_head.js/rowAdd/headData=", headData)
-    // console.log("doc_check_head.js/rowAdd/JSON.stringify(headData)=", JSON.stringify(headData))
-    const url = "/api/shop/docs/doc_check_head/insert" //працює
-    const options = {
-      method: "POST",
-      body: JSON.stringify(headData), //Для запитів до серверів використовувати формат JSON
-      headers: {
-        "Content-Type": "application/json", //Вказує на тип контенту
-      },
-    }
-    const response = await fetch(url, options)
-    if (response.ok) {
-      // якщо HTTP-статус в диапазоне 200-299
-      const resRow = await response.json() //повертає тіло відповіді json
-      //   console.log("doc_check_head.js/rowAdd/try/esponse.ok/resRow=", resRow)
-      alert(`Запис успішно добавленo ${resRow}`)
-      return resRow
-    } else {
-      const err = await response.json() //повертає тіло відповіді json
-      //   alert(`Запис не добавлено! ${err.message} / ${err.stack}`)
-      console.log(`doc_check_head.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
-    }
-  }
+  //   //--- Добавалення(create) запису(запит)
+  //   const rowAdd = async (headData) => {
+  //     // console.log("doc_check_head.js/rowAdd/headData=", headData)
+  //     // console.log("doc_check_head.js/rowAdd/JSON.stringify(headData)=", JSON.stringify(headData))
+  //     const url = "/api/shop/docs/doc_check_head/insert" //працює
+  //     const options = {
+  //       method: "POST",
+  //       body: JSON.stringify(headData), //Для запитів до серверів використовувати формат JSON
+  //       headers: {
+  //         "Content-Type": "application/json", //Вказує на тип контенту
+  //       },
+  //     }
+  //     const response = await fetch(url, options)
+  //     if (response.ok) {
+  //       // якщо HTTP-статус в диапазоне 200-299
+  //       const resRow = await response.json() //повертає тіло відповіді json
+  //       //   console.log("doc_check_head.js/rowAdd/try/esponse.ok/resRow=", resRow)
+  //       alert(`Запис успішно добавленo ${resRow}`)
+  //       return resRow
+  //     } else {
+  //       const err = await response.json() //повертає тіло відповіді json
+  //       //   alert(`Запис не добавлено! ${err.message} / ${err.stack}`)
+  //       console.log(`doc_check_head.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
+  //     }
+  //   }
 
   //   //--- Коригування записів(кнопка)
   const onEdit = () => {
+    onDoubleClicke()
     //     if (countSelectedRows > 0) {
     //       const selectRow = selectedRowState["0"] //Значення всіх полів 0-го виділеного рядка
     //       setIsAdd(false) //Для форми(добавлення чи коригування)
@@ -327,7 +331,7 @@ function GDocCheckHead({ data }) {
   //--- При двойному кліку по рядку вибрати значення з довідника і передати в input форми
   const onDoubleClicke = () => {
     setHeadData(selectedRowState["0"]) //Дані з вибраного запису в форму(для select)
-    // setDocContent("DocCheckProducts") //Для відкриття забаного ("DocCheckProducts") компонента
+    setDocContent("DocCheckProducts") //Для відкриття забаного ("DocCheckProducts") компонента
   }
 
   //--- ExportExell // Пацює при включеній опції "ag-grid-enterprise"

@@ -1,9 +1,7 @@
 //HomePage.js
 import Head from "next/head"
 import Layout from "../components/Main/Layout"
-import HomeSlaider from "../components/shopRoletu/HomeSlaider"
-import Сategory from "../components/shopRoletu/Сategory"
-import Products from "../components/shopRoletu/Products"
+import MyHomePage from "../components/Shop/MyHomePage"
 import Footer from "../components/shopRoletu/Footer"
 
 // const HomePage = () => {
@@ -15,10 +13,8 @@ import Footer from "../components/shopRoletu/Footer"
         {/* <title>{t("header-titleSite")}</title> */}
         <title>RAMAG</title>
       </Head>
-      <HomeSlaider />
-      <Сategory />
-      <Products />
-      <Footer />
+      <MyHomePage />
+      {/* <Footer /> */}
     </Layout>
   )
 }

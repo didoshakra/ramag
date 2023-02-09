@@ -4,8 +4,6 @@ export default function CheckBoxRenderer(props) {
     let checked = e.target.checked
     let colId = props.column.colId
     props.node.setDataValue(colId, checked)}
-  return (
-    <input type="checkbox" onClick={(e)=>checkedHandler} checked={props.value} />
-  )
+  return <input type="checkbox" onChange={(e) => checkedHandler} checked={props.value} />
 }
 

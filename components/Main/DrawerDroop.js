@@ -6,7 +6,7 @@ import Link from "next/link"
 import { ComponentContext } from "../../context/ComponentContext"
 import IconCancel from "../ui/svg/head/IconCancel" //хрестик
 import Navbar from "./multilevelMenu/Navbar"
-import { menuAdmin,menuExamples } from "./multilevelMenu/multilevelMenu"
+import { menuAdmin, menuDocuments } from "./multilevelMenu/multilevelMenu"
 
 //***************************************************************** */
 export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
@@ -80,79 +80,82 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
   ]
 
   //********************************************************************** */
-  const RenderMenu = ({ menu, title = "" }) => (
-    <ul className="DrawerDroop-itemWraper">
-      <p className="DrawerDroop-itemTitle">{title}</p>
-      {menu.map((item, index) => {
-        return (
-          <li className="DrawerDroop-item" key={index}>
-            <img src={item.img} alert="logo" top="5" height="20" />
-            {item.link ? (
-              <Link href={`${item.link}`}>
-                <a title={item.title ? item.title : item.a}>{item.a}</a>
-              </Link>
-            ) : (
-              <a title={item.a} href={`${item.url}`}>
-                {item.a}
-              </a>
-            )}
-          </li>
-        )
-      })}
-      <style jsx>
-        {`
-          //*** item ******************************
-          .DrawerDroop-itemWraper {
-            padding: 0;
-            margin: 0;
-            // width: 150px;
-            background: ${theme.colors.headMenuBackground};
-          }
-          .DrawerDroop-itemTitle {
-            font-size: 14px;
-            font-weight: 400;
-          }
+//   const RenderMenu = ({ menu, title = "" }) => (
+//     <ul className="DrawerDroop-itemWraper">
+//       <p className="DrawerDroop-itemTitle">{title}</p>
+//       {menu.map((item, index) => {
+//         return (
+//           <li className="DrawerDroop-item" key={index}>
+//             <img src={item.img} alert="logo" top="5" height="20" />
+//             {item.link ? (
+//             //   <Link href={`${item.link}`}>
+//             //     <a title={item.title ? item.title : item.a}>{item.a}</a>
+//             //   </Link>
+//               <Link href={`${item.link}`}>
+//                 <a title={item.title ? item.title : item.a}>{item.a}</a>
+//               </Link>
+//             ) : (
+//               <a title={item.a} href={`${item.url}`}>
+//                 {item.a}
+//               </a>
+//             )}
+//           </li>
+//         )
+//       })}
+//       <style jsx>
+//         {`
+//           //*** item ******************************
+//           .DrawerDroop-itemWraper {
+//             padding: 0;
+//             margin: 0;
+//             // width: 150px;
+//             background: ${theme.colors.headMenuBackground};
+//           }
+//           .DrawerDroop-itemTitle {
+//             font-size: 14px;
+//             font-weight: 400;
+//           }
 
-          .DrawerDroop-item {
-            //position: relative;
-            display: flex;
-            margin: 0;
-            padding: 5px 10px;
-            font-size: 18px;
-            font-weight: 100;
-            font-family: ${theme.fontFamily.serif};
-            list-style-type: none;
-            align-items: center;
-            text-decoration: none;
-            color: ${theme.colors.headText};
-            background: ${theme.colors.headMenuBackground};
-            // background: ${theme.colors.headBackground};
-          }
-          .DrawerDroop-item:hover {
-            //   color: ${theme.colors.headIconHover};
-            background: ${theme.colors.headMenuBackgroundHover};
-            cursor: pointer;
-          }
+//           .DrawerDroop-item {
+//             //position: relative;
+//             display: flex;
+//             margin: 0;
+//             padding: 5px 10px;
+//             font-size: 18px;
+//             font-weight: 100;
+//             font-family: ${theme.fontFamily.serif};
+//             list-style-type: none;
+//             align-items: center;
+//             text-decoration: none;
+//             color: ${theme.colors.headText};
+//             background: ${theme.colors.headMenuBackground};
+//             // background: ${theme.colors.headBackground};
+//           }
+//           .DrawerDroop-item:hover {
+//             //   color: ${theme.colors.headIconHover};
+//             background: ${theme.colors.headMenuBackgroundHover};
+//             cursor: pointer;
+//           }
 
-          //DrawerDroop-item:hover:hover спрацьовує дочірне <a>
-          .DrawerDroop-item:hover a {
-            color: ${theme.colors.headMenuTextHover};
-            background: ${theme.colors.headMenuBackgroundHover};
-          }
+//           //DrawerDroop-item:hover:hover спрацьовує дочірне <a>
+//           .DrawerDroop-item:hover a {
+//             color: ${theme.colors.headMenuTextHover};
+//             background: ${theme.colors.headMenuBackgroundHover};
+//           }
 
-          .DrawerDroop-item a {
-            margin-left: 10px;
-            padding: 0;
-            display: flex;
-            align-items: center; //Y Вирівнювання
-            color: ${theme.colors.headMobileText};
-            //   background: ${theme.colors.headMobileBackground};
-            background: ${theme.colors.headBackground};
-          }
-        `}
-      </style>
-    </ul>
-  )
+//           .DrawerDroop-item a {
+//             margin-left: 10px;
+//             padding: 0;
+//             display: flex;
+//             align-items: center; //Y Вирівнювання
+//             color: ${theme.colors.headMobileText};
+//             //   background: ${theme.colors.headMobileBackground};
+//             background: ${theme.colors.headBackground};
+//           }
+//         `}
+//       </style>
+//     </ul>
+//   )
   //********************************************************************** */
   return (
     <div className="DrawerDroop">
@@ -162,8 +165,8 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
             {/* <img title="ramag" src="/images/head/sun_man_hands-oval-ra-red.png" alert="logo" width="40" /> */}
             <img title="ramag" src="/images/head/sun_man_mount-380.png" alert="logo" width="80" />
           </Link>
-          <Link href="/">
-            <a className="DrawerDroop-header_text" title="RAMag">
+          <Link href="/" legacyBehavior>
+            <a className="DrawerDroop-header_text" title="RAMAG">
               RAMAG
             </a>
           </Link>
@@ -187,7 +190,7 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
       <Navbar multilevelMenu={menuAdmin} />
       {/* ----------------------------------------------------------- */}
       <hr width="100%" color="red" />
-      <Navbar multilevelMenu={menuExamples} />
+      <Navbar multilevelMenu={menuDocuments} />
       {/* ----------------------------------------------------------- */}
       {/* Divider/Роздільник */}
       <hr width="100%" color="red" />
@@ -285,7 +288,7 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
             font-size: 20px;
             font-weight: 800;
             color: #3bff3d;
-            // color: ${theme.colors.headLogoText};
+            color: ${theme.colors.headLogoText};
             background-color: #3b6a3d;
             // background: ${theme.colors.headBackground};
           }

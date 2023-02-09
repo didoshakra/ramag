@@ -1,10 +1,10 @@
-//HomeSlaider.js / Muiv4.5.1
+//HomePage.js / Muiv4.5.1
 //Добавлено animat
 import  { useContext } from "react"
 import Link from "next/link"
 import { ComponentContext } from "../../context/ComponentContext"
 
-const HomeSlaider = () => {
+const MyHomePage = () => {
   const disabled = false //Для buton
   const { state } = useContext(ComponentContext)
   const theme = state.theme
@@ -17,11 +17,8 @@ const HomeSlaider = () => {
         <div className="overlay"></div>
         <div className="slider-text">
           {/* <h1>Ми пропонуємо свіжі овочі та фрукти</h1> */}
-          <h1>("Ми пропонуємо широкий вибір продукції та її багату палітру."</h1>
-          <h2 className="subheading">"100% якісна і надійна продукція від виробника"</h2>
-          <Link href={`/`} className="button">
-           Докладніше
-          </Link>
+          <h1>Гори кличуть, і я мушу йти! </h1>
+          <h2 className="subheading">Джон Мьюр</h2>
         </div>
       </div>
       {/* елемент слайдеру */}
@@ -29,17 +26,8 @@ const HomeSlaider = () => {
         {/* overlay/перекривати-Робить тінь */}
         <div className="overlay"></div>
         <div className="slider-text">
-          <h1>"У нас ви знайдете товари для будь-якого приміщення"</h1>
-          <h2 className="subheading">"100% якісна і надійна продукція від виробника"</h2>
-          {/* <a href="#" className="button" onClick={buttonClick2}> */}
-          <a
-            href={`/`}
-            className="button"
-            // onClick={buttonClick2}
-          >
-            Докладніше
-          </a>
-          <div></div>
+          <h1>Тримай своє обличчя до сонця, і ти ніколи не побачиш тіней</h1>
+          <h2 className="subheading">Хелен Келлер</h2>
         </div>
       </div>
       <style jsx>{`
@@ -49,11 +37,13 @@ const HomeSlaider = () => {
         }
 
         .image2 {
-          background: 100% transparent url("/images/home/rol6-1.jpg") no-repeat;
+          //   background: 100% transparent url("/images/home/rol6-1.jpg") no-repeat;
+          background: 100% transparent url("/images/home/sun3_1280-847.jpg") no-repeat;
           //   z-index: 10;
         }
         .image1 {
-          background: 100% transparent url("/images/home/rol10-1.jpg") no-repeat;
+          //   background: 100% transparent url("/images/home/rol10-1.jpg") no-repeat;
+          background: 100% transparent url("/images/home/karpaty-morning1_960-640.jpg") no-repeat;
           animation-delay: 5s; //Затримка анімації для 2-го слайду
           //   z-index: 10;
         }
@@ -110,7 +100,6 @@ const HomeSlaider = () => {
           opacity: 0.2;
         }
         .slider-text {
-          //position: absolute;//З аbsolute не працює центрування
           padding: 0 15px;
           display: flex;
           align-items: center; //Y-вертикально
@@ -178,4 +167,4 @@ const HomeSlaider = () => {
     </section>
   )
 }
-export default HomeSlaider
+export default MyHomePage

@@ -109,46 +109,27 @@ const userSwitcher = () => {
           //padding: 0;
           list-style-type: none; //маркери для списка.
         }
+
         .userSwitcher__iconWraper {
           display: flex;
           align-items: center;
-          margin: 0;
-          margin-right: 5px; //Відступ від кожного елемента зліва
           justify-content: center;
-          color: ${theme.colors.headIcon};
-          background: ${theme.colors.headBackground};
-          //border: 2px solid ${theme.colors.headIcon};
-          border: ${theme.colors.headIconBorderWidht} ${theme.colors.headIconBorderStyle} ${theme.colors.headIcon};
-          border-radius: 36px;
+          margin-right: 5px; //Відступ від кожного елемента зліва
           width: 36px;
           height: 36px;
+          border-radius: 36px;
+          //   border: ${theme.colors.headIconBorderWidht} ${theme.colors.headIconBorderStyle} ${theme.colors.headIcon};
+          //   color: ${theme.colors.headIcon};
+          //   background-image: url("/avatar/2.jpg");
         }
+
         .userSwitcher__iconWraper:hover {
           color: ${theme.colors.headIconHover};
           background: ${theme.colors.headIconBackgroundHover};
           cursor: pointer;
         }
 
-        .userSwitcher__iconWraper {
-          margin-right: 5px; //Відступ від кожного елемента зліва
-          width: 36px;
-          height: 36px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: ${theme.colors.headIconBorderWidht} ${theme.colors.headIconBorderStyle} ${theme.colors.headIcon};
-          border-radius: 36px;
-          color: ${theme.colors.headIcon};
-          //   background-image: url("/avatar/2.jpg");
-        }
-        .userSwitcher__iconWraper:hover {
-          color: ${theme.colors.headIconHover};
-          background: ${theme.colors.headIconBackgroundHover};
-          cursor: pointer;
-        }
         .userSwitcher__avatar {
-          //width: 100%;
-          //height: 100%;
           width: 30px;
           height: 30px;
           border-radius: 50%;

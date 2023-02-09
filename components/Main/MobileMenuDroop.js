@@ -66,8 +66,7 @@ const MobileMenuDroop = (props) => {
       return (
         <li className="mobileMenuDroop__dropdown__item" key={index}>
           <Link href={`${item.link}`} >
-            {/* <p className="g-nav__item-a">{item.a}</p> */}
-            <span>{item.a}</span>
+            {item.a}
           </Link>
         </li>
       )

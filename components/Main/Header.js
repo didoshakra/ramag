@@ -75,23 +75,23 @@ const Header = () => {
 
   const menu = [
     {
-      a: "headerMenu_home",
-      link: "/begin/home",
+      a: "Домашня сторінка",
+      link: "/",
     },
     {
-      a: "headerMenu_shop",
+      a: "Магазин",
       link: "/shop",
     },
     {
-      a: "headerMenu_about",
+      a: "Про нас",
       link: "/begin/about",
     },
     {
-      a: "headerMenu_blog",
+      a: "Блог",
       link: "/begin/blog",
     },
     {
-      a: "headerMenu_contact",
+      a: "Контакти",
       link: "/begin/contacts",
     },
     // {
