@@ -2,7 +2,6 @@
 import Head from "next/head"
 import Layout from "../components/Main/Layout"
 import MyHomePage from "../components/Shop/MyHomePage"
-import Footer from "../components/shopRoletu/Footer"
 
 // const HomePage = () => {
   export default function HomePage() {
