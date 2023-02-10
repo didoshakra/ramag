@@ -71,7 +71,7 @@ const Footer = () => {
             </li>
             <li>
               <a href="#" className="py-2 d-block">
-                Зв'яжіться з нами
+                Звяжіться з нами
                 {/* Contact Us */}
               </a>
             </li>
@@ -125,14 +125,19 @@ const Footer = () => {
           <ul className="list-unstyled">
             <li>
               <span className="item-questions__icon">
-                <IconMapMarker_c4 width="15" height="15" colorFill="#000" colorStroke="#000" />
+                <IconMapMarker_c4
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill="#000"
+                  colorStroke="#000"
+                />
               </span>
               <span className="text"> вул. Січових Стрільців 22, Тернопіль, Україна</span>
             </li>
             <li>
               <a href="#">
                 <span className="item-questions__icon">
-                  <IconPhone width="15" height="15" />
+                  <IconPhone width={theme.size.tableIcon} height={theme.size.tableIcon} />
                 </span>
                 <span className="text">+ 38(067) 777-77-77</span>
               </a>
@@ -140,7 +145,7 @@ const Footer = () => {
             <li>
               <a href="#">
                 <span className="item-questions__icon">
-                  <IconMail_с2 width="15" height="15" />
+                  <IconMail_с2 width={theme.size.tableIcon} height={theme.size.tableIcon} />
                 </span>
                 <span className="text">info@roma.com</span>
               </a>
@@ -154,7 +159,12 @@ const Footer = () => {
           <div className="footer-copyright-row">
             <p>
               Copyright © {new Date().getFullYear()}
-              <IconHeart_c2 width="15" height="15" colorFill="#000" colorStroke="#000" />
+              <IconHeart_c2
+                width={theme.size.tableIcon}
+                height={theme.size.tableIcon}
+                colorFill="#000"
+                colorStroke="#000"
+              />
               {/* <a href="https://colorlib.com" target="_blank">
                 Colorlib
               </a> */}
@@ -294,7 +304,7 @@ const Footer = () => {
           left: 0;
           right: 0;
           top: -30px;
-        //   z-index: 99;
+          //   z-index: 99;
         }
 
         .footer-mouse-icon {

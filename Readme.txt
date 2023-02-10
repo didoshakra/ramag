@@ -82,3 +82,8 @@
         <a className="menu-items-a">{items.title}</a>
         </Link>
 
+2023.02.09 / Розмістив БД на elephantsql.com
+    Почистив від лишніх модулів
+    Deploy to Versal
+
+

@@ -129,55 +129,58 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
     )
   }
 
-  const columnDefs = useMemo(() => [
-    //   const [columnDefs, setColumnDefs] = useState([
-    {
-      //   headerName: "#",
-      //   field: "id",
-      minWidth: 30,
-      maxWidth: 30,
-      checkboxSelection: isDovidnuk ? false : true, //
-      headerCheckboxSelection: isDovidnuk ? false : true, //Добавляє в шапку
-      sortable: false,
-      suppressMenu: true,
-      filter: false,
-      resizable: false,
-      lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
-      suppressMovable: true, //Заборона перетягнути заголовок стовпця.
-      suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
-    },
+  const columnDefs = useMemo(
+    () => [
+      //   const [columnDefs, setColumnDefs] = useState([
+      {
+        //   headerName: "#",
+        //   field: "id",
+        minWidth: 30,
+        maxWidth: 30,
+        checkboxSelection: isDovidnuk ? false : true, //
+        headerCheckboxSelection: isDovidnuk ? false : true, //Добавляє в шапку
+        sortable: false,
+        suppressMenu: true,
+        filter: false,
+        resizable: false,
+        lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
+        suppressMovable: true, //Заборона перетягнути заголовок стовпця.
+        suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
+      },
 
-    { field: "price", headerName: "Ціна(грн)", minWidth: 120, type: "numericColumn", filter: "agNumberColumnFilter" },
-    {
-      field: "name",
-      headerName: "Назва",
-      minWidth: 300,
-      flex: 5,
-      filter: "agTextColumnFilter",
-      //   filterParams: {
-      //     buttons: ["reset", "apply"],
-      //     debounceMs: 200,
-      //   },
-    },
-    { field: "ov_id", hide: true }, //Прихований(hide) рядок
-    { field: "ov", headerName: "Од.вим.", minWidth: 110 },
+      { field: "price", headerName: "Ціна(грн)", minWidth: 120, type: "numericColumn", filter: "agNumberColumnFilter" },
+      {
+        field: "name",
+        headerName: "Назва",
+        minWidth: 300,
+        flex: 5,
+        filter: "agTextColumnFilter",
+        //   filterParams: {
+        //     buttons: ["reset", "apply"],
+        //     debounceMs: 200,
+        //   },
+      },
+      { field: "ov_id", hide: true }, //Прихований(hide) рядок
+      { field: "ov", headerName: "Од.вим.", minWidth: 110 },
 
-    { field: "skod", headerName: "ШтрихКод", minWidth: 120, filter: "agTextColumnFilter" },
-    { field: "id", headerName: "Код", minWidth: 120 },
-    { field: "pdv", headerName: "ПДВ(%)", minWidth: 120, type: "rightAligned" },
-    { field: "akcuz", headerName: "Акциз(%)", minWidth: 120, type: "rightAligned" },
-    { field: "category_id", hide: true }, //Прихований(hide) рядок
-    { field: "category", headerName: "Категорія", minWidth: 150, flex: 2 },
-    { field: "brand_id", hide: true }, //Прихований(hide) рядок
-    { field: "brand", headerName: "Бренд", minWidth: 150, flex: 2 },
-    { field: "uktzed", headerName: "УКТЗЕД", minWidth: 120 },
-    {
-      field: "img",
-      headerName: "Фото",
-      cellRenderer: ImgUrlCellRenderer, //Ф-ція  cellRenderer повинна бути обявлена до приимінення //https://www.ag-grid.com/react-data-grid/component-cell-renderer/
-      //   editable: true,
-    },
-  ])
+      { field: "skod", headerName: "ШтрихКод", minWidth: 120, filter: "agTextColumnFilter" },
+      { field: "id", headerName: "Код", minWidth: 120 },
+      { field: "pdv", headerName: "ПДВ(%)", minWidth: 120, type: "rightAligned" },
+      { field: "akcuz", headerName: "Акциз(%)", minWidth: 120, type: "rightAligned" },
+      { field: "category_id", hide: true }, //Прихований(hide) рядок
+      { field: "category", headerName: "Категорія", minWidth: 150, flex: 2 },
+      { field: "brand_id", hide: true }, //Прихований(hide) рядок
+      { field: "brand", headerName: "Бренд", minWidth: 150, flex: 2 },
+      { field: "uktzed", headerName: "УКТЗЕД", minWidth: 120 },
+      {
+        field: "img",
+        headerName: "Фото",
+        cellRenderer: ImgUrlCellRenderer, //Ф-ція  cellRenderer повинна бути обявлена до приимінення //https://www.ag-grid.com/react-data-grid/component-cell-renderer/
+        //   editable: true,
+      },
+    ],
+    [isDovidnuk]
+  )
 
   const defaultColDef = {
     flex: 1,
@@ -508,16 +511,28 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
           {isDovidnuk ? (
             <>
               <button className="agrid_head-nav-button" onClick={toDov} title="Вибрати">
-                <IconSelect width="15" height="15" colorFill={theme.colors.tableIcon} />
+                <IconSelect
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               </button>
             </>
           ) : (
             <>
               <button className="agrid_head-nav-button" onClick={changeTheme} title="Зміна теми">
                 {themeTypeLight ? (
-                  <IconMoon_border width="15" height="15" colorFill={theme.colors.tableIcon} />
+                  <IconMoon_border
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
+                    colorFill={theme.colors.tableIcon}
+                  />
                 ) : (
-                  <IconSun_border width="15" height="15" colorFill={theme.colors.tableIcon} />
+                  <IconSun_border
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
+                    colorFill={theme.colors.tableIcon}
+                  />
                 )}
               </button>
               <button
@@ -526,19 +541,27 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
                 title="Відновлення початкового стану колонок"
               >
                 <IconTable_c2
-                  width="15"
-                  height="15"
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
                   colorFill={theme.colors.tableIcon}
                   colorFill1={theme.colors.tableIcon1}
                 />
                 {/* Колонки */}
               </button>
               <button className="agrid_head-nav-button" onClick={refreshState} title="Обновити дані">
-                <IconRefresh width="15" height="15" colorFill={theme.colors.tableIcon} />
+                <IconRefresh
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               </button>
               {countSelectedRows === 0 ? (
                 <button className="agrid_head-nav-button" onClick={onAdd} title="Добавити">
-                  <IconAdd width="15" height="15" colorFill={theme.colors.tableIcon} />
+                  <IconAdd
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
+                    colorFill={theme.colors.tableIcon}
+                  />
                 </button>
               ) : (
                 ""
@@ -546,8 +569,8 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
               {countSelectedRows === 1 ? (
                 <button className="agrid_head-nav-button" onClick={onEdit} title="Редагувати">
                   <IconPencil_c3
-                    width="15"
-                    height="15"
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
                     colorFill={theme.colors.tableIcon}
                     colorFill1={theme.colors.tableIcon1}
                     colorFill2={theme.colors.tableIcon2}
@@ -559,8 +582,8 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
               {countSelectedRows > 0 ? (
                 <button className="agrid_head-nav-button" onClick={onDelete} title="Видалити">
                   <IconTrash
-                    width="15"
-                    height="15"
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
                     colorFill={theme.colors.tableIcon}
                     colorFill1={theme.colors.tableIcon1}
                   />
@@ -605,16 +628,16 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
               </div>
               <button className="agrid_head-nav-button" onClick={onPrint} title="Друк на принтер">
                 <IconPrinter_c2
-                  width="15"
-                  height="15"
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
                   colorFill={theme.colors.tableIcon}
                   colorFill1={theme.colors.tableIcon1}
                 />
               </button>
               <button className="agrid_head-nav-button" onClick={onExportExcel} title="Експорт в Excel">
                 <IconExport
-                  width="15"
-                  height="15"
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
                   colorFill={theme.colors.tableIcon}
                   colorFill1={theme.colors.tableIcon1}
                 />
@@ -622,7 +645,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
             </>
           )}
           <button className="agrid_head-nav-button" onClick={onCancel} title="Вийти">
-            <IconCancel width="15" height="18" colorFill={theme.colors.tableIcon} />
+            <IconCancel width={theme.size.tableIcon} height="18" colorFill={theme.colors.tableIcon} />
           </button>
         </div>
         {/*  */}
@@ -703,10 +726,11 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
         }
         .agrid_head-nav-button {
           display: flex;
+          justify-content: center;
           align-items: center;
-          width: ${theme.size.dialogIconBorder};
-          height: ${theme.size.dialogIconBorder};
-          border-radius: ${theme.size.dialogIconBorder};
+          width: ${theme.size.tableIconBorder};
+          height: ${theme.size.tableIconBorder};
+          border-radius: ${theme.size.tableIconBorder};
           color: ${theme.colors.tableIcon};
           border: 2px solid ${theme.colors.tableIconBorder};
           background-color: ${theme.colors.tableHeadBackground};

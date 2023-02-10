@@ -102,35 +102,38 @@ function GDocCheckHead({ data }) {
   })
 
   //*** параметри і ф-ції AG_Grid
-  const columnDefs = useMemo(() => [
-    //   const [columnDefs, setColumnDefs] = useState([
-    {
-      minWidth: 30,
-      maxWidth: 50,
-      checkboxSelection: true, //
-      headerCheckboxSelection: true, //Добавляє в шапку
-      sortable: false,
-      suppressMenu: true,
-      filter: false,
-      resizable: false,
-      lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
-      suppressMovable: true, //Заборона перетягнути заголовок стовпця.
-      suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
-    },
-    { field: "id", headerName: "№чека" },
-    { field: "total", headerName: "Сума(грн)", type: "numericColumn", minWidth: 120, flex: 2 },
-    { field: "discount", headerName: "Знижка(грн)", type: "rightAligned", minWidth: 140, flex: 2 },
+  const columnDefs = useMemo(
+    () => [
+      //   const [columnDefs, setColumnDefs] = useState([
+      {
+        minWidth: 30,
+        maxWidth: 50,
+        checkboxSelection: true, //
+        headerCheckboxSelection: true, //Добавляє в шапку
+        sortable: false,
+        suppressMenu: true,
+        filter: false,
+        resizable: false,
+        lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
+        suppressMovable: true, //Заборона перетягнути заголовок стовпця.
+        suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
+      },
+      { field: "id", headerName: "№чека" },
+      { field: "total", headerName: "Сума(грн)", type: "numericColumn", minWidth: 120, flex: 2 },
+      { field: "discount", headerName: "Знижка(грн)", type: "rightAligned", minWidth: 140, flex: 2 },
 
-    // { field: "number", headerName: "№ чека" },
-    { field: "departament_id", hide: true }, //Прихований(hide) рядок
-    { field: "departament", headerName: "Підрозділ" },
-    { field: "place", headerName: "Каса" },
-    { field: "user_id", hide: true }, //Прихований(hide) рядок
-    { field: "user", headerName: "Касир" },
-    { field: "client_id", hide: true }, //Прихований(hide) рядок
-    { field: "client", headerName: "Клієнт", minWidth: 200, flex: 3 },
-    { field: "datetime", headerName: "Час створення", minWidth: 180 },
-  ])
+      // { field: "number", headerName: "№ чека" },
+      { field: "departament_id", hide: true }, //Прихований(hide) рядок
+      { field: "departament", headerName: "Підрозділ" },
+      { field: "place", headerName: "Каса" },
+      { field: "user_id", hide: true }, //Прихований(hide) рядок
+      { field: "user", headerName: "Касир" },
+      { field: "client_id", hide: true }, //Прихований(hide) рядок
+      { field: "client", headerName: "Клієнт", minWidth: 200, flex: 3 },
+      { field: "datetime", headerName: "Час створення", minWidth: 180 },
+    ],
+    []
+  )
 
   const defaultColDef = {
     flex: 1,
@@ -352,9 +355,17 @@ function GDocCheckHead({ data }) {
           <>
             <button className="agrid_head-nav-button" onClick={changeTheme} title="Зміна теми">
               {themeTypeLight ? (
-                <IconMoon_border width="15" height="15" colorFill={theme.colors.tableIcon} />
+                <IconMoon_border
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               ) : (
-                <IconSun_border width="15" height="15" colorFill={theme.colors.tableIcon} />
+                <IconSun_border
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               )}
             </button>
             <button
@@ -363,24 +374,28 @@ function GDocCheckHead({ data }) {
               title="Відновлення початкового стану колонок"
             >
               <IconTable_c2
-                width="15"
-                height="15"
+                width={theme.size.tableIcon}
+                height={theme.size.tableIcon}
                 colorFill={theme.colors.tableIcon}
                 colorFill1={theme.colors.tableIcon1}
               />
               {/* Колонки */}
             </button>
             <button className="agrid_head-nav-button" onClick={refreshState} title="Обновити дані">
-              <IconRefresh width="15" height="15" colorFill={theme.colors.tableIcon} />
+              <IconRefresh
+                width={theme.size.tableIcon}
+                height={theme.size.tableIcon}
+                colorFill={theme.colors.tableIcon}
+              />
             </button>
             <button className="agrid_head-nav-button" onClick={onAdd} title="Добавити">
-              <IconAdd width="15" height="15" colorFill={theme.colors.tableIcon} />
+              <IconAdd width={theme.size.tableIcon} height={theme.size.tableIcon} colorFill={theme.colors.tableIcon} />
             </button>
             {countSelectedRows === 1 ? (
               <button className="agrid_head-nav-button" onClick={onEdit} title="Редагувати">
                 <IconPencil_c3
-                  width="15"
-                  height="15"
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
                   colorFill={theme.colors.tableIcon}
                   colorFill1={theme.colors.tableIcon1}
                   colorFill2={theme.colors.tableIcon2}
@@ -392,8 +407,8 @@ function GDocCheckHead({ data }) {
             {countSelectedRows > 0 ? (
               <button className="agrid_head-nav-button" onClick={onDelete} title="Видалити">
                 <IconTrash
-                  width="15"
-                  height="15"
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
                   colorFill={theme.colors.tableIcon}
                   colorFill1={theme.colors.tableIcon}
                 />
@@ -431,19 +446,23 @@ function GDocCheckHead({ data }) {
             <div style={{ display: "flex" }}>
               <button className="agrid_head-nav-button" onClick={onPrint} title="Друк на принтер">
                 <IconPrinter_c2
-                  width="15"
-                  height="15"
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
                   colorFill={theme.colors.tableIcon}
                   colorFill1={theme.colors.tableIcon1}
                 />
               </button>
               <button className="agrid_head-nav-button" onClick={onExportExcel} title="Експорт в Excel">
-                <IconExport width="15" height="15" colorFill={theme.colors.tableIcon} />
+                <IconExport
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               </button>
             </div>
           </div>
           <button className="agrid_head-nav-button" onClick={onCancel} title="Вийти">
-            <IconCancel width="15" height="18" colorFill={theme.colors.tableIcon} />
+            <IconCancel width={theme.size.tableIcon} height="18" colorFill={theme.colors.tableIcon} />
           </button>
         </div>
       </div>
@@ -519,9 +538,12 @@ function GDocCheckHead({ data }) {
           display: none;
         }
         .agrid_head-nav-button {
-          width: ${theme.size.dialogIconBorder};
-          height: ${theme.size.dialogIconBorder};
-          border-radius: ${theme.size.dialogIconBorder};
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: ${theme.size.tableIconBorder};
+          height: ${theme.size.tableIconBorder};
+          border-radius: ${theme.size.tableIconBorder};
           color: ${theme.colors.tableIcon};
           border: 2px solid ${theme.colors.tableIconBorder};
           background-color: ${theme.colors.tableHeadBackground};

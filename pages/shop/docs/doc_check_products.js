@@ -197,34 +197,37 @@ function GDocCheckProducts({
   }
 
   //   const [columnDefs, setColumnDefs] = useState([
-  const columnDefs = useMemo(() => [
-    //??? Якщо включено sizeColumnsToFit, то не працює параметр flex:1/flex:2...
-    {
-      //   headerName: "#",
-      //   field: "id",
-      minWidth: 20,
-      maxWidth: 20,
-      checkboxSelection: true, //
-      headerCheckboxSelection: true, //Добавляє в шапку
-      sortable: false,
-      suppressMenu: true,
-      filter: false,
-      resizable: false,
-      lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
-      suppressMovable: true, //Заборона перетягнути заголовок стовпця.
-      suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
-    },
-    { field: "product_id", hide: true }, //Прихований(hide) рядок
-    { field: "name", headerName: "Назва товару", minWidth: 230, flex: 5 }, //Прихований(hide) рядок
-    { field: "quantity", headerName: "Кількість", type: "numericColumn", minWidth: 110 },
-    { field: "ov_id", hide: true }, //Прихований(hide) рядок
-    { field: "ov", headerName: "Од.вим.", minWidth: 110 },
-    { field: "price", headerName: "Ціна(грн)", type: "numericColumn", minWidth: 100, flex: 2 },
-    { valueGetter: tatalValueGetter, headerName: "*Сума(грн)", type: "numericColumn", minWidth: 100, flex: 2 },
-    { field: "discount", headerName: "Знижка(грн)", type: "rightAligned", minWidth: 100, flex: 2 },
-    // { field: "datetime", headerName: "Час створення", minWidth: 160, flex: 2 }, //Прихований(hide) рядок
-    // { field: "check_id", headerName: "№чека", minWidth: 60 },
-  ])
+  const columnDefs = useMemo(
+    () => [
+      //??? Якщо включено sizeColumnsToFit, то не працює параметр flex:1/flex:2...
+      {
+        //   headerName: "#",
+        //   field: "id",
+        minWidth: 20,
+        maxWidth: 20,
+        checkboxSelection: true, //
+        headerCheckboxSelection: true, //Добавляє в шапку
+        sortable: false,
+        suppressMenu: true,
+        filter: false,
+        resizable: false,
+        lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
+        suppressMovable: true, //Заборона перетягнути заголовок стовпця.
+        suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
+      },
+      { field: "product_id", hide: true }, //Прихований(hide) рядок
+      { field: "name", headerName: "Назва товару", minWidth: 230, flex: 5 }, //Прихований(hide) рядок
+      { field: "quantity", headerName: "Кількість", type: "numericColumn", minWidth: 110 },
+      { field: "ov_id", hide: true }, //Прихований(hide) рядок
+      { field: "ov", headerName: "Од.вим.", minWidth: 110 },
+      { field: "price", headerName: "Ціна(грн)", type: "numericColumn", minWidth: 100, flex: 2 },
+      { valueGetter: tatalValueGetter, headerName: "*Сума(грн)", type: "numericColumn", minWidth: 100, flex: 2 },
+      { field: "discount", headerName: "Знижка(грн)", type: "rightAligned", minWidth: 100, flex: 2 },
+      // { field: "datetime", headerName: "Час створення", minWidth: 160, flex: 2 }, //Прихований(hide) рядок
+      // { field: "check_id", headerName: "№чека", minWidth: 60 },
+    ],
+    []
+  )
 
   const defaultColDef = {
     flex: 1,
@@ -849,10 +852,11 @@ function GDocCheckProducts({
         }
         .agrid_head-nav-button {
           display: flex;
+          justify-content: center;
           align-items: center;
-          width: ${theme.size.dialogIconBorder};
-          height: ${theme.size.dialogIconBorder};
-          border-radius: ${theme.size.dialogIconBorder};
+          width: ${theme.size.tableIconBorder};
+          height: ${theme.size.tableIconBorder};
+          border-radius: ${theme.size.tableIconBorder};
           color: ${theme.colors.tableIcon};
           border: 2px solid ${theme.colors.tableIconBorder};
           background-color: ${theme.colors.tableHeadBackground};

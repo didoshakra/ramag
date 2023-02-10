@@ -42,27 +42,30 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
   const [isAdd, setIsAdd] = useState(false) //Щоб знати для чого заходилось у форму(добавл чи кориг)
 
   //*** параметри і ф-ції AG_Grid **************************************** */
-  const columnDefs = useMemo(() => [
-    //   const [columnDefs, setColumnDefs] = useState([
-    {
-      //   headerName: "#",
-      //   field: "id",
-      minWidth: 30,
-      maxWidth: 100,
-      checkboxSelection: isDovidnuk ? false : true, //
-      headerCheckboxSelection: isDovidnuk ? false : true, //Добавляє в шапку
-      sortable: false,
-      suppressMenu: true,
-      filter: false,
-      resizable: false,
-      lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
-      suppressMovable: true, //Заборона перетягнути заголовок стовпця.
-      suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
-    },
-    { field: "id", headerName: "id/Код" },
-    { field: "name", headerName: "Категорія", width: 200, minWidth: 200, flex: 4 },
-    // { field: "kuda", headerName: "Куди входить", minWidth: 90 },
-  ])
+  const columnDefs = useMemo(
+    () => [
+      //   const [columnDefs, setColumnDefs] = useState([
+      {
+        //   headerName: "#",
+        //   field: "id",
+        minWidth: 30,
+        maxWidth: 100,
+        checkboxSelection: isDovidnuk ? false : true, //
+        headerCheckboxSelection: isDovidnuk ? false : true, //Добавляє в шапку
+        sortable: false,
+        suppressMenu: true,
+        filter: false,
+        resizable: false,
+        lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
+        suppressMovable: true, //Заборона перетягнути заголовок стовпця.
+        suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
+      },
+      { field: "id", headerName: "id/Код" },
+      { field: "name", headerName: "Категорія", width: 200, minWidth: 200, flex: 4 },
+      // { field: "kuda", headerName: "Куди входить", minWidth: 90 },
+    ],
+    [isDovidnuk]
+  )
 
   const defaultColDef = {
     flex: 1,
@@ -289,16 +292,28 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
           {isDovidnuk ? (
             <>
               <button className="agrid_head-nav-button" onClick={toDov} title="Вибрати">
-                <IconSelect width="15" height="15" colorFill={theme.colors.tableIcon} />
+                <IconSelect
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               </button>
             </>
           ) : (
             <>
               <button className="agrid_head-nav-button" onClick={changeTheme} title="Зміна теми">
                 {themeTypeLight ? (
-                  <IconMoon_border width="15" height="15" colorFill={theme.colors.tableIcon} />
+                  <IconMoon_border
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
+                    colorFill={theme.colors.tableIcon}
+                  />
                 ) : (
-                  <IconSun_border width="15" height="15" colorFill={theme.colors.tableIcon} />
+                  <IconSun_border
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
+                    colorFill={theme.colors.tableIcon}
+                  />
                 )}
               </button>
               <button
@@ -307,19 +322,27 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
                 title="Відновлення початкового стану колонок"
               >
                 <IconTable_c2
-                  width="15"
-                  height="15"
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
                   colorFill={theme.colors.tableIcon}
                   colorFill1={theme.colors.tableIcon1}
                 />
                 {/* Колонки */}
               </button>
               <button className="agrid_head-nav-button" onClick={refreshState} title="Обновити дані">
-                <IconRefresh width="15" height="15" colorFill={theme.colors.tableIcon} />
+                <IconRefresh
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               </button>
               {countSelectedRows === 0 ? (
                 <button className="agrid_head-nav-button" onClick={onAdd} title="Добавити">
-                  <IconAdd width="15" height="15" colorFill={theme.colors.tableIcon} />
+                  <IconAdd
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
+                    colorFill={theme.colors.tableIcon}
+                  />
                 </button>
               ) : (
                 ""
@@ -327,8 +350,8 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
               {countSelectedRows === 1 ? (
                 <button className="agrid_head-nav-button" onClick={onEdit} title="Редагувати">
                   <IconPencil_c3
-                    width="15"
-                    height="15"
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
                     colorFill={theme.colors.tableIcon}
                     colorFill1={theme.colors.tableIcon1}
                     colorFill2={theme.colors.tableIcon2}
@@ -340,8 +363,8 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
               {countSelectedRows > 0 ? (
                 <button className="agrid_head-nav-button" onClick={onDelete} title="Видалити">
                   <IconTrash
-                    width="15"
-                    height="15"
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
                     colorFill={theme.colors.tableIcon}
                     colorFill1={theme.colors.tableIcon1}
                   />
@@ -381,20 +404,24 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
               <div style={{ display: "flex" }}>
                 <button className="agrid_head-nav-button" onClick={onPrint} title="Друк на принтер">
                   <IconPrinter_c2
-                    width="15"
-                    height="15"
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
                     colorFill={theme.colors.tableIcon}
                     colorFill1={theme.colors.tableIcon1}
                   />
                 </button>
                 <button className="agrid_head-nav-button" onClick={onExportExcel} title="Експорт в Excel">
-                  <IconExport width="15" height="15" colorFill={theme.colors.tableIcon} />
+                  <IconExport
+                    width={theme.size.tableIcon}
+                    height={theme.size.tableIcon}
+                    colorFill={theme.colors.tableIcon}
+                  />
                 </button>
               </div>
             </>
           )}
           <button className="agrid_head-nav-button" onClick={onCancel} title="Вийти">
-            <IconCancel width="15" height="18" colorFill={theme.colors.tableIcon} />
+            <IconCancel width={theme.size.tableIcon} height="18" colorFill={theme.colors.tableIcon} />
           </button>
         </div>
       </div>
@@ -466,10 +493,11 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
         }
         .agrid_head-nav-button {
           display: flex;
+          justify-content: center;
           align-items: center;
-          width: ${theme.size.dialogIconBorder};
-          height: ${theme.size.dialogIconBorder};
-          border-radius: ${theme.size.dialogIconBorder};
+          width: ${theme.size.tableIconBorder};
+          height: ${theme.size.tableIconBorder};
+          border-radius: ${theme.size.tableIconBorder};
           color: ${theme.colors.tableIcon};
           border: 2px solid ${theme.colors.tableIconBorder};
           background-color: ${theme.colors.tableHeadBackground};

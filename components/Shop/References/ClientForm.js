@@ -52,7 +52,7 @@ export default function ClientForm({ onCloseForm, toFormData }) {
         {/*---- */}
         <div className="formBody">
           <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
-            <label className="label">Ім'я</label>
+            <label className="label">Імя</label>
             <input className="input" {...register("name", { maxLength: 30 })} required />
             <div className="errorMsg">{errors.name?.type === "maxLength" && "Ім'я >30симв."}</div>
           </div>

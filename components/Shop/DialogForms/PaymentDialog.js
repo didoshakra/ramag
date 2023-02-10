@@ -56,7 +56,12 @@ export default function PaymentDialog({ setIsPaymentDialog, exitPaymentDialog, t
               onClick={onCancel}
               title="Вийти"
             >
-              <IconCancel className="icon" width="15" height="15" colorFill={theme.colors.formIcon} />
+              <IconCancel
+                className="icon"
+                width={theme.size.tableIcon}
+                height={theme.size.tableIcon}
+                colorFill={theme.colors.formIcon}
+              />
             </button>
           </div>
           {/* <input className="input" onKeyDown={(e) => onCesh(e)} type="text" id="cesh" /> */}

@@ -14,7 +14,7 @@ const MyHomePage = () => {
       {/* елемент слайдеру */}
       <div className="slider-item image1">
         {/* overlay/перекривати-Робить тінь */}
-        <div className="overlay"></div>
+        {/* <div className="overlay"></div> */}
         <div className="slider-text">
           {/* <h1>Ми пропонуємо свіжі овочі та фрукти</h1> */}
           <h1>Гори кличуть, і я мушу йти! </h1>
@@ -24,7 +24,7 @@ const MyHomePage = () => {
       {/* елемент слайдеру */}
       <div className="slider-item image2">
         {/* overlay/перекривати-Робить тінь */}
-        <div className="overlay"></div>
+        {/* <div className="overlay"></div> */}
         <div className="slider-text">
           <h1>Тримай своє обличчя до сонця, і ти ніколи не побачиш тіней</h1>
           <h2 className="subheading">Хелен Келлер</h2>

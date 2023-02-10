@@ -7,27 +7,8 @@ import { ComponentContext } from "../../context/ComponentContext"
 import IconCancel from "../ui/svg/head/IconCancel" //рисочки (грубі)
 import IconMenu from "../ui/svg/head/IconMenu" //рисочки
 
-// //*** Хук для клік поза елементом *//https://www.youtube.com/watch?v=pE4bwPykUF4&ab_channel=AyubBegimkulov
-// function useOutsideClick(outRef,element, onOpened) {
-//   useEffect(() => {
-//     const handleClick = (e) => {
-//         console.log("****outRef=", outRef, "element=", element, " e.target=", e.target)
-//       //   if (!outRef.current) return //Чи відрендерений елемент на якиім стоїть ref={outRef}
-//       // contains="true"якщо сам елемент і всі вкладені елементи
-//       if (!outRef.current.contains(e.target)) {
-//         console.log("+++++outRef=", outRef, "element=", element, " e.target=", e.target)
-//         //   if (!outRef.current.contains(e.target) && e.target.element != element) {
-//         onOpened()
-//       }
-//     }
-//     document.addEventListener("click", handleClick)
-//     return () => {
-//       document.removeEventListener("click", handleClick)
-//     }
-//   }, [outRef, element, onOpened])
-// }
 //***************************************************************** */
-function Drawer({ drawerOpen, onOpened }) {
+function FuncDrawer({ drawerOpen, onOpened }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
   //   console.log("***Drawer/drawerOpen=", drawerOpen)
@@ -198,7 +179,7 @@ export default function Drawer() {
           />
         )}
       </div>
-      <Drawer drawerOpen={drawerOpen} onOpened={onOpened} />
+      <FuncDrawer drawerOpen={drawerOpen} onOpened={onOpened} />
       {/* ============================================================================ */}
       <style jsx>{`
         .drawer {

@@ -1,5 +1,5 @@
 //doc_check_products.js //Товари в чеку
-//Є PaymentDialo/ClientDialog/ExitDialog
+//Є PaymentDialo/ClientDialog/BackDialog
 //Початкові дані для agGrid з БД !!!
 //Добавлення в БД, але для agGrid оновлюю  масив setRowData(rows1)
 //При добаленні не створюєм шапку документа doc_check_head, а входим в документ(doc_check_products)
@@ -15,7 +15,7 @@ import { AgGridReact } from "ag-grid-react"
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 // import "ag-grid-community/dist/styles/ag-theme-balham.css"
-// 
+//
 import { dbHost } from "../../../config/dbHost"
 import { ComponentContext } from "../../../context/ComponentContext"
 import IconAdd from "../../../components/ui/svg/table/IconAdd"
@@ -33,7 +33,7 @@ import IconPrinter_c2 from "../../../components/ui/svg/head/IconPrinter_c2" //П
 import DocCheckProductsForm from "../../../components/Shop/Docs/DocCheckProductsForm"
 import PaymentDialog from "../../../components/Shop/DialogForms/PaymentDialog"
 import ClientDialog from "../../../components/Shop/DialogForms/ClientDialog"
-import ExitDialog from "../../../components/Shop/DialogForms/ExitDialog"
+import BackDialog from "../../../components/Shop/DialogForms/BackDialog"
 
 //*************************************************************************************** */
 const urlAPI = "/api/shop/docs/doc_check_products/" // Для useSWR/getServerSideProp i...
@@ -103,7 +103,7 @@ function GDocCheckProducts({
   const [isAdd, setIsAdd] = useState(false) //Щоб знати для чого заходилось у форму(добавл чи кориг)
   const [isPaymentDialog, setIsPaymentDialog] = useState(false) //Діалог оплати
   const [isClientDialog, setIsClientDialog] = useState(false) //Діалог введення клієнта
-  const [isExitDialog, setIsExitDialog] = useState(false) //Діалог виходу з програми
+  const [isBackDialog, setIsBackDialog] = useState(false) //Діалог виходу з програми
   const [toFormData, setToFormData] = useState({}) //Початкове значення для форми
 
   //--- Голова документа
@@ -190,34 +190,37 @@ function GDocCheckProducts({
   }
 
   //   const [columnDefs, setColumnDefs] = useState([
-  const columnDefs = useMemo(() => [
-    //??? Якщо включено sizeColumnsToFit, то не працює параметр flex:1/flex:2...
-    {
-      //   headerName: "#",
-      //   field: "id",
-      minWidth: 20,
-      maxWidth: 20,
-      checkboxSelection: true, //
-      headerCheckboxSelection: true, //Добавляє в шапку
-      sortable: false,
-      suppressMenu: true,
-      filter: false,
-      resizable: false,
-      lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
-      suppressMovable: true, //Заборона перетягнути заголовок стовпця.
-      suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
-    },
-    { field: "product_id", hide: true }, //Прихований(hide) рядок
-    { field: "name", headerName: "Назва товару", minWidth: 230, flex: 5 }, //Прихований(hide) рядок
-    { field: "quantity", headerName: "Кількість", type: "numericColumn", minWidth: 110 },
-    { field: "ov_id", hide: true }, //Прихований(hide) рядок
-    { field: "ov", headerName: "Од.вим.", minWidth: 110 },
-    { field: "price", headerName: "Ціна(грн)", type: "numericColumn", minWidth: 100, flex: 2 },
-    { valueGetter: tatalValueGetter, headerName: "*Сума(грн)", type: "numericColumn", minWidth: 100, flex: 2 },
-    { field: "discount", headerName: "Знижка(грн)", type: "rightAligned", minWidth: 100, flex: 2 },
-    // { field: "datetime", headerName: "Час створення", minWidth: 160, flex: 2 }, //Прихований(hide) рядок
-    // { field: "check_id", headerName: "№чека", minWidth: 60 },
-  ])
+  const columnDefs = useMemo(
+    () => [
+      //??? Якщо включено sizeColumnsToFit, то не працює параметр flex:1/flex:2...
+      {
+        //   headerName: "#",
+        //   field: "id",
+        minWidth: 20,
+        maxWidth: 20,
+        checkboxSelection: true, //
+        headerCheckboxSelection: true, //Добавляє в шапку
+        sortable: false,
+        suppressMenu: true,
+        filter: false,
+        resizable: false,
+        lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
+        suppressMovable: true, //Заборона перетягнути заголовок стовпця.
+        suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
+      },
+      { field: "product_id", hide: true }, //Прихований(hide) рядок
+      { field: "name", headerName: "Назва товару", minWidth: 230, flex: 5 }, //Прихований(hide) рядок
+      { field: "quantity", headerName: "Кількість", type: "numericColumn", minWidth: 110 },
+      { field: "ov_id", hide: true }, //Прихований(hide) рядок
+      { field: "ov", headerName: "Од.вим.", minWidth: 110 },
+      { field: "price", headerName: "Ціна(грн)", type: "numericColumn", minWidth: 100, flex: 2 },
+      { valueGetter: tatalValueGetter, headerName: "*Сума(грн)", type: "numericColumn", minWidth: 100, flex: 2 },
+      { field: "discount", headerName: "Знижка(грн)", type: "rightAligned", minWidth: 100, flex: 2 },
+      // { field: "datetime", headerName: "Час створення", minWidth: 160, flex: 2 }, //Прихований(hide) рядок
+      // { field: "check_id", headerName: "№чека", minWidth: 60 },
+    ],
+    []
+  )
 
   const defaultColDef = {
     flex: 1,
@@ -395,7 +398,7 @@ function GDocCheckProducts({
       // якщо HTTP-статус в диапазоне 200-299
       const resRow = await response.json() //повертає тіло відповіді json
       //   console.log("Product.js/rowAdd/try/esponse.ok/resRow=", resRow)
-        alert(`Запис успішно добавленo`)
+      alert(`Запис успішно добавленo`)
 
       if (resRow === 1) rowAddArray(formData) //Додавання рядка до масиву а не обновлення запитом
       return resRow
@@ -528,7 +531,7 @@ function GDocCheckProducts({
   // Вихід з форми(Виклик діалогу виходу)
   const onCancel = () => {
     // alert("onCancel")
-    setIsExitDialog(true) //Виклик діалогу виходу
+    setIsBackDialog(true) //Виклик діалогу виходу
   }
 
   // Вихід з форми без збереження даних
@@ -550,7 +553,7 @@ function GDocCheckProducts({
     setIsPaymentDialog(true)
   }
 
-  // Дії(Функція) після виходу з діалогів(PaymentDialog/ExitDialog)
+  // Дії(Функція) після виходу з діалогів(PaymentDialog/BackDialog)
   const dialogAction = (par) => {
     // alert("dialogAction",par)
     if (par === 1) {
@@ -573,7 +576,7 @@ function GDocCheckProducts({
         />
       )}
       {isClientDialog && <ClientDialog setIsClientDialog={setIsClientDialog} setHeadData={setHeadData} />}
-      {isExitDialog && <ExitDialog setIsExitDialog={setIsExitDialog} dialogAction={dialogAction} />}
+      {isBackDialog && <BackDialog setIsBackDialog={setIsBackDialog} dialogAction={dialogAction} />}
       <div className="agrid_head-container">
         <div className="agrid_head-container-left">
           <>
@@ -761,10 +764,11 @@ function GDocCheckProducts({
         }
         .agrid_head-nav-button {
           display: flex;
+          justify-content: center;
           align-items: center;
-          width: ${theme.size.dialogIconBorder};
-          height: ${theme.size.dialogIconBorder};
-          border-radius: ${theme.size.dialogIconBorder};
+          width: ${theme.size.tableIconBorder};
+          height: ${theme.size.tableIconBorder};
+          border-radius: ${theme.size.tableIconBorder};
           color: ${theme.colors.tableIcon};
           border: 2px solid ${theme.colors.tableIconBorder};
           background-color: ${theme.colors.tableHeadBackground};

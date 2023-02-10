@@ -18,7 +18,7 @@ const Layout = ({ children, PageTitle, PageDescription }) => {
   return (
     <div className="site-wrapper">
       <Head>
-        <title>"RAMAG" | {PageTitle ? `${PageTitle}  ` : ""}</title>
+        <title>RAMAG | {PageTitle ? {PageTitle} : ""}</title>
         {PageDescription ? <meta name="description" content={PageDescription} /> : null}
         {/* <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> */}

@@ -17,8 +17,8 @@ const HomeSlaider = () => {
         <div className="overlay"></div>
         <div className="slider-text">
           {/* <h1>Ми пропонуємо свіжі овочі та фрукти</h1> */}
-          <h1>("Ми пропонуємо широкий вибір продукції та її багату палітру."</h1>
-          <h2 className="subheading">"100% якісна і надійна продукція від виробника"</h2>
+          <h1>Ми пропонуємо широкий вибір продукції та її багату палітру.</h1>
+          <h2 className="subheading">100% якісна і надійна продукція від виробника</h2>
           <Link href={`/`} className="button">
            Докладніше
           </Link>
@@ -29,8 +29,8 @@ const HomeSlaider = () => {
         {/* overlay/перекривати-Робить тінь */}
         <div className="overlay"></div>
         <div className="slider-text">
-          <h1>"У нас ви знайдете товари для будь-якого приміщення"</h1>
-          <h2 className="subheading">"100% якісна і надійна продукція від виробника"</h2>
+          <h1>У нас ви знайдете товари для будь-якого приміщення</h1>
+          <h2 className="subheading">100% якісна і надійна продукція від виробника</h2>
           {/* <a href="#" className="button" onClick={buttonClick2}> */}
           <a
             href={`/`}

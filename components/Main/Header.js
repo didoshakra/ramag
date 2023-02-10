@@ -80,44 +80,23 @@ const Header = () => {
     },
     {
       a: "Магазин",
-      link: "/shop",
+      link: "/",
+      //   link: "/shop-rolety/home",
     },
     {
       a: "Про нас",
-      link: "/begin/about",
+      link: "/",
+      //   link: "/begin/about",
     },
     {
       a: "Блог",
-      link: "/begin/blog",
+      //   link: "/begin/blog",
     },
     {
       a: "Контакти",
-      link: "/begin/contacts",
+      link: "/",
+      //   link: "/begin/contacts",
     },
-    // {
-    //   a: "icon.js",
-    //   link: "/ui/icons_svg",
-    // },
-    // {
-    //   a: "flex_center",
-    //   link: "/examples_style/flex_center",
-    // },
-    // {
-    //   a: "flexbox",
-    //   link: "/examples_style/flexbox",
-    // },
-    // {
-    //   a: "grid",
-    //   link: "/examples_style/grid",
-    // },
-    // {
-    //   a: "fonts_module_css",
-    //   link: "/examples_style/fonts/fonts_module_css",
-    // },
-    // {
-    //   a: "fonts",
-    //   link: "/examples_style/fonts/fonts_jss",
-    // },
   ]
 
   return (

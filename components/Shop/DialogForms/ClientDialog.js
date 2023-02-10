@@ -63,7 +63,7 @@ export default function ClientDialog({ setIsClientDialog, discountRecalc }) {
     } else {
       const err = await response.json() //повертає тіло відповіді json
       alert(`Помилка запиту! ${err.message} / ${err.stack}`)
-    //   console.log(`ClientDialog.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
+      //   console.log(`ClientDialog.js/rowAdd/try/else/\ Помилка при добавленні запису\ ${err.message} / ${err.stack} `)
     }
   }
 
@@ -101,7 +101,12 @@ export default function ClientDialog({ setIsClientDialog, discountRecalc }) {
               onClick={onCancel}
               title="Вийти"
             >
-              <IconCancel className="icon" width="15" height="15" colorFill={theme.colors.formIcon} />
+              <IconCancel
+                className="icon"
+                width={theme.size.tableIcon}
+                height={theme.size.tableIcon}
+                colorFill={theme.colors.formIcon}
+              />
             </button>
           </div>
           <input className="input" id="client" type="text" onKeyDown={(e) => onClientSkod(e)} />

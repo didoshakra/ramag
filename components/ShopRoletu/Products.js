@@ -97,8 +97,8 @@ const Products = () => {
                 <div className="products-container_icons-container">
                   <div className="products-container_icon">
                     <IconMenu
-                      width="15"
-                      height="15"
+                      width={theme.size.tableIcon}
+                      height={theme.size.tableIcon}
                       colorFill="#fff"
                       colorFill1="#fff"
                       colorFill2="#fff"
@@ -109,8 +109,8 @@ const Products = () => {
                   </div>
                   <div className="products-container_icon">
                     <IconCart_с8
-                      width="15"
-                      height="15"
+                      width={theme.size.tableIcon}
+                      height={theme.size.tableIcon}
                       colorFill="#fff"
                       colorFill1="#fff"
                       colorFill2="#fff"
@@ -123,7 +123,12 @@ const Products = () => {
                     />
                   </div>
                   <div className="products-container_icon">
-                    <IconHeart_с2 width="15" height="15" colorFill="#fff" colorStroke="#fff" />
+                    <IconHeart_с2
+                      width={theme.size.tableIcon}
+                      height={theme.size.tableIcon}
+                      colorFill="#fff"
+                      colorStroke="#fff"
+                    />
                   </div>
                 </div>
               </div>

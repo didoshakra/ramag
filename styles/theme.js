@@ -19,13 +19,13 @@ export const themeLith = {
     decorative: "Trattatello,fantasy", //декоративні шрифти, для назв
   },
   size: {
-    tableIcon: "15px",
-    tableIconBorder: "30",
+    tableIcon: "20px",
+    tableIconBorder: "30px",
     //
-    formIcon: "15px",
-    formIconBorder: "25px",
+    formIcon: "20px",
+    formIconBorder: "30px",
     //
-    dialogIcon: "15px",
+    dialogIcon: "20px",
     dialogIconBorder: "30px",
   },
   colors: {
@@ -161,13 +161,13 @@ export const themeDark = {
     decorative: "Trattatello,fantasy", //декоративні шрифти, для назв
   },
   size: {
-    tableIcon: "15px",
+    tableIcon: "20px",
     tableIconBorder: "30",
     //
-    formIcon: "15px",
-    formIconBorder: "25px",
+    formIcon: "20px",
+    formIconBorder: "30px",
     //
-    dialogIcon: "15px",
+    dialogIcon: "20px",
     dialogIconBorder: "30px",
   },
   colors: {

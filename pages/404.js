@@ -13,7 +13,7 @@ export default function Error() {
   return (
     <Loyout title="Error">
       <h1 className={classes.error}>Error 404</h1>
-      <h2>" Сторінка не найдена..."</h2>
+      <h2> Сторінка не найдена...</h2>
     </Loyout>
   )
 }
