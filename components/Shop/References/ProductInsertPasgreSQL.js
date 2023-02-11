@@ -17,9 +17,9 @@ export default function ProductInsertPasgreSQL(dJson) {
   }
   //****************************************************************** */
 
-  useEffect(() => {
-    toPostgreSQL(dJson)
-  }, [dJson])
+//   useEffect(() => {
+//     toPostgreSQL(dJson)
+//   }, [dJson])
 
   //--- Добавалення(create) запису(запит)
   const rowAdd = async (formData) => {

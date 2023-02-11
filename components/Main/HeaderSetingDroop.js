@@ -5,6 +5,7 @@
 // і відключення у всіх onClick(*togle) в самомк об'єкті.
 //********************************************************************************** */
 import { useState, useContext, useRef, useEffect } from "react"
+import Image from "next/image"
 import { ComponentContext } from "../../context/ComponentContext"
 import UserSwitcherDroop from "./UserSwitcherDroop"
 import IconSeting from "../ui/svg/head/IconSetting_border"
@@ -165,8 +166,8 @@ const HeaderSetingDroop = () => {
           {/* // Від цього об'єкту li відраховуються відступи в випадаючих меню мов  */}
           <p>
             {profile === "admin" ? (
-              //   <img className="UserSwitcher__avatar" alert="avatar" />
-              <img className="UserSwitcher__avatar" src="/avatar/2.jpg" alert="avatar" />
+
+              <Image className="UserSwitcher__avatar" width={40} height={40} src="/avatar/2.jpg" alt="avatar" />
             ) : (
               <NotAuthenticated width={iconSize} height={iconSize} colorFill={theme.colors.headIcon} />
             )}

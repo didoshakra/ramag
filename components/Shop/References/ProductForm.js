@@ -1,5 +1,6 @@
 //users_form.js / без схеми/ schema = yup
 import { useState, useContext } from "react"
+import Image from "next/image"
 import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test', { required: true })} />
 import IconCancel from "../../ui/svg/head/IconCancel"
 import IconRefresh from "../../ui/svg/table/IconRefresh"
@@ -86,21 +87,21 @@ export default function ProductForm({ onCloseForm, toFormData }) {
 
           <div className="inputBody" style={{ width: 130, margin: "0 1px" }}>
             <div className="inputImgContainer">
-              <img style={{ width: 15, height: 15 }} src="/icons/png/Book24_24.png" />
+              <Image style={{ width: 15, height: 15 }} src="/icons/png/Book24_24.png" alt="book" />
               <label className="label">Категорія</label>
             </div>
             <input onClick={onCategory} className="input" {...register("category")} />
           </div>
           <div className="inputBody" style={{ width: 150, margin: "0 1px" }}>
             <div className="inputImgContainer">
-              <img style={{ width: 15, height: 15 }} src="/icons/png/Book24_24.png" />
+              <Image style={{ width: 15, height: 15 }} src="/icons/png/Book24_24.png" alt="book" />
               <label className="label">Бренд</label>
             </div>
             <input onClick={onBrand} className="input" {...register("brand")} />
           </div>
           <div className="inputBody" style={{ width: 80, margin: "0 1px" }}>
             <div className="inputImgContainer">
-              <img style={{ width: 15, height: 15 }} src="/icons/png/Book24_24.png" />
+              <Image style={{ width: 15, height: 15 }} src="/icons/png/Book24_24.png" alt="book" />
               <label className="label">Од.виміру</label>
             </div>
             <input onClick={onOv} className="input" {...register("ov")} />

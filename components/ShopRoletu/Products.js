@@ -87,7 +87,7 @@ const Products = () => {
               ) : (
                 ""
               )}
-              <img className="products__img" src={products.image} alt="img" />
+              <Image className="products__img" src={products.image} alt="img" />
               {/* Розмита(blur) загорузка картинки */}
               {/* <Image className="products__img" src={rImage} width={400} height={350} alt="img" placeholder="blur" /> */}
               <h3>

@@ -1,6 +1,7 @@
 //d_product.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
 //??? Все ОК, крім асинхронного виводу добавлення записів в PostgreSQL
 
+import Image from "next/image"
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import * as XLSX from "xlsx"
 import { useEffect, useContext, useMemo, useState, useCallback, useRef } from "react"

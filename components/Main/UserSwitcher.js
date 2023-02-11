@@ -2,6 +2,7 @@
 //Іконка мови окремо (випадаючий список викликається)
 
 import { useState, useContext, useRef, useEffect } from "react"
+import Image from "next/image"
 import { ComponentContext } from "../../context/ComponentContext"
 import NotAuthenticated from "../ui/svg/head/IconUser_border"
 
@@ -35,7 +36,7 @@ const UserSwitcher = () => {
   }
 
   return (
-    <div  className="userSwitcher">
+    <div className="userSwitcher">
       {/* іконка зміни користувача */}
       <div
         className="userSwitcher__iconWraper"
@@ -45,7 +46,7 @@ const UserSwitcher = () => {
         onMouseLeave={toggleNotHover}
       >
         {profile === "admin" ? (
-          <img className="userSwitcher__avatar" />
+          <image className="userSwitcher__avatar" width={40} height={40} alt="avatar" />
         ) : (
           <NotAuthenticated
             width={iconSize}

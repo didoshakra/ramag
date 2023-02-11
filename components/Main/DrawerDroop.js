@@ -2,6 +2,7 @@
 //Для кожного APP інший
 
 import { useState, useContext } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { ComponentContext } from "../../context/ComponentContext"
 import IconCancel from "../ui/svg/head/IconCancel" //хрестик
@@ -162,8 +163,7 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
       <div className="DrawerDroop-header">
         <div className="DrawerDroop-header_logo">
           <Link href="/">
-            {/* <img title="ramag" src="/images/head/sun_man_hands-oval-ra-red.png" alert="logo" width="40" /> */}
-            <img title="ramag" src="/images/head/sun_man_mount-380.png" alert="logo" width="80" />
+            <Image title="ramag" width={80} height={80} src="/images/head/sun_man_mount-380.png" alt="logo" />
           </Link>
           <Link href="/" legacyBehavior>
             <a className="DrawerDroop-header_text" title="RAMAG">

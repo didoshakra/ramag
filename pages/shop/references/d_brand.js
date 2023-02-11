@@ -62,23 +62,23 @@ export default function Brand({
   return <>{isDovidnuk ? <Dovidnuk /> : <NeDovidnuk />}</>
 }
 
-//= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
-export async function getServerSideProps(context) {
-  //   export async function getStaticProps(context) {
-  const response = await fetch(`${dbHost}/api/shop/references/d_brand/select-all`)
-  //   const response = await fetch("http://localhost:3000/api/shop/references/d_brand/select-all")
-  const data = await response.json()
-  //   const data = null //
-  //Якщо (!data)-видасть помилку 404
-  if (!data) {
-    return {
-      notFound: true,
-    }
-  }
-  return {
-    props: { serverData: data }, // буде передано компоненту сторінки як атрибути
-  }
-}
+// //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
+// export async function getServerSideProps(context) {
+//   //   export async function getStaticProps(context) {
+//   const response = await fetch(`${dbHost}/api/shop/references/d_brand/select-all`)
+//   //   const response = await fetch("http://localhost:3000/api/shop/references/d_brand/select-all")
+//   const data = await response.json()
+//   //   const data = null //
+//   //Якщо (!data)-видасть помилку 404
+//   if (!data) {
+//     return {
+//       notFound: true,
+//     }
+//   }
+//   return {
+//     props: { serverData: data }, // буде передано компоненту сторінки як атрибути
+//   }
+// }
 
 //*************************************************************************************** */
 function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {

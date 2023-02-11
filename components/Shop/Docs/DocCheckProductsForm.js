@@ -1,5 +1,6 @@
 //DocCheckProductsForm.js / без схеми/ schema = yup
 import { useState, useContext, useEffect } from "react"
+import Image from "next/image"
 import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test', { required: true })} />
 import IconCancel from "../../ui/svg/head/IconCancel"
 import IconRefresh from "../../ui/svg/table/IconRefresh"
@@ -132,7 +133,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
     setTimeout(() => {
       setFocus("skod", { shouldSelect: true })
     }, 300)
-  }, [])
+  }, [setFocus])
 
   return (
     <div className="modal-overley">
@@ -192,10 +193,10 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
               className="input"
               required
               //   type="text"
-            //   type="number"
-            //   step="1"
-            //   min="0.001"
-            //   max="99999999.99"
+              //   type="number"
+              //   step="1"
+              //   min="0.001"
+              //   max="99999999.99"
               {...register("quantity", {
                 pattern: {
                   value: /^\d*\.?\d{0,3}$/g, //(.) 2-а знаки після коми\ Не виводить повідомлення
@@ -227,7 +228,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
           {/*  */}
           <div className="inputBody" style={{ width: 380, margin: "0 1px" }}>
             <div className="inputImgContainer">
-              <img style={{ width: 15, height: 15 }} src="/icons/png/Book24_24.png" />
+              <Image style={{ width: 15, height: 15 }} src="/icons/png/Book24_24.png" alt="book" />
               <label className="label">Назва товару</label>
             </div>
             <input className="input" required onClick={onProduct} {...register("name")} />

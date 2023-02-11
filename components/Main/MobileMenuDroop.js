@@ -13,9 +13,7 @@ const MobileMenuDroop = (props) => {
   const wRef_MobileMenuDroop = useRef(null) //Для клацання поза обєктом
   //https://qna.habr.com/q/855061
   useEffect(() => {
-    const onClick = (e) =>
-      wRef_MobileMenuDroop.current.contains(e.target) ||
-      (props.mobileMenuToggle(false))
+    const onClick = (e) => wRef_MobileMenuDroop.current.contains(e.target) || props.mobileMenuToggle(false)
     //, console.log("MobileMenuDroop: клік поза компонентом"))
     document.addEventListener("click", onClick, true)
     document.addEventListener("scroll", onClick, true)
