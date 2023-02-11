@@ -89,7 +89,7 @@ function GDocCheckHead({ data }) {
   //Початкове значення вибраного рядка для форми і док
   const [headData, setHeadData] = useState({
     newDoc: false, //Якщо документ добавляється
-    id: 0, //doc_check_head.id = doc_check_products.check_id
+    id: 1, //doc_check_head.id = doc_check_products.check_id
     total: 0,
     discount_proc: 0,
     discount: 0, //Знижка в гривнях

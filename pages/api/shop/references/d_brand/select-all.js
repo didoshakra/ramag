@@ -1,10 +1,10 @@
 //pages/api/references/d_brend/select-all.js
 // select-all-PoolAll-rob-Працює pool(notPromise+Promise)
 //https://stackoverflow.com/questions/50497583/when-to-disconnect-and-when-to-end-a-pg-client-or-pool
-//https://node-postgres.com/features/pooling 
+//https://node-postgres.com/features/pooling
 
 import { pool } from "../../../../../config/dbShop"
-
+  
 // пул із повідомленням про помилку від імені будь-яких неактивних клієнтів
 // містить дані про помилку серверної частини чи розділення мережі
 pool.on("error", (err, client) => {

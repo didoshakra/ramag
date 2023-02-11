@@ -1,7 +1,6 @@
 ///pages/api/psql-users/delete.js
 
 import { pool } from "../../../../../config/dbShop"
-// pgclient.connect();
 
 export default function handler(req, resp) {
   // console.log("api/admin/product/delete.js//handler/req.method=", req.method);
@@ -17,7 +16,7 @@ export default function handler(req, resp) {
       if (err) {
         // console.log("api/admin/product/delete.js/Помилка запиту до posgreSQL",err.stack);
         let error = {
-          stack: err.stack,  
+          stack: err.stack,
           message: "Помилка запиту до БД posgreSQL",
         }
         resp.status(400).json(error)

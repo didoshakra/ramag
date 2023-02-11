@@ -2,7 +2,6 @@
 //node-postgres.com/features/queries
 
 import { pool } from "../../../../../config/dbShop"
-// pgclient.connect();
 
 export default function handler(req, resp) {
   console.log("+++insert.js/handler34/req.method=", req.method)
@@ -26,7 +25,6 @@ export default function handler(req, resp) {
   ]
   try {
     // Без Promise(працює);
-    // pgclient.query("insert into  users(first_name, last_name) sqlvalues('Ром','Дід') returning *",(err, results) => {
     pool.query(sqltext, sqlvalues, (err, results) => {
       if (err) {
         // console.log("+++api/users/DEL/Помилка запиту до posgreSQL",err.stack);

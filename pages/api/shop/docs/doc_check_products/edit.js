@@ -1,7 +1,6 @@
 ///pages/api/admin/product/edit.js
 
 import { pool } from "../../../../../config/dbShop"
-// pgclient.connect();
 
 export default function handler(req, resp) {
   const data = JSON.parse(req.body) //Для feth- не треба переиворення json ->obj

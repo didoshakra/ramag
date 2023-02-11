@@ -1,7 +1,6 @@
 ///pages/api/shop/docs/doc_check_products/insert.js
 
 import { pool } from "../../../../../config/dbShop"
-// pgclient.connect();
 
 export default function handler(req, resp) {
   console.log("d_doc_check_products/insert.js/req.method=", req.method)
@@ -24,7 +23,7 @@ export default function handler(req, resp) {
   ]
   try {
     // Без Promise(працює);
-    // pgclient.query("insert into  users(first_name, last_name) sqlvalues('Ром','Дід') returning *",(err, results) => {
+    // .query("insert into  users(first_name, last_name) sqlvalues('Ром','Дід') returning *",(err, results) => {
     pool.query(sqltext, sqlvalues, (err, results) => {
       if (err) {
         // console.log("+++api/users/insert/Помилка запиту до posgreSQL",err.stack);

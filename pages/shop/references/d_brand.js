@@ -64,7 +64,7 @@ export default function Brand({
 
 // //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 // export async function getServerSideProps(context) {
-//   //   export async function getStaticProps(context) {
+// export async function getStaticProps(context) {
 //   const response = await fetch(`${dbHost}/api/shop/references/d_brand/select-all`)
 //   //   const response = await fetch("http://localhost:3000/api/shop/references/d_brand/select-all")
 //   const data = await response.json()
