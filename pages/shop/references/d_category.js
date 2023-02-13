@@ -535,7 +535,7 @@ export async function getServerSideProps(context) {
   //   const data = await response.json()
   //Якщо (!data)-видасть помилку 404
   //**************************** */
-  const data={}
+ let data={}
   const res = await pool.connect((err, client, done) => {
     const sql = "select * from d_category ORDER BY id DESC"
     if (err) throw err //видає опис помилки підключення
