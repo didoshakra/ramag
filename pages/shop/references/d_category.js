@@ -531,7 +531,11 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
 //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
   //   export async function getStaticProps(context) {
+  //   const response = await fetch(`${process.env.PGSQL_HOST}/api/shop/references/d_category/select-all`)
+//   const response = await fetch(`/api/shop/references/d_category/select-all`)
+//   console.log("***DCategory.js/getServerSideProps/response=", response)
   const response = await fetch(`${dbHost}/api/shop/references/d_category/select-all`)
+  // console.log("DCategory.js/getServerSideProps/response=", response)
   //   const response = await fetch("http://localhost:3000/api/shop/references/d_category/select-all")
   const data = await response.json()
   //   const data = null //
@@ -554,8 +558,8 @@ export default function DCategory({
   setDovActive, //Назва довідника
   setValue, //Для зміни Input в формі вводу даних
 }) {
-  // export default function DCategory({ serverData }) {
   //   console.log("DCategory.js/")
+
   //= Загрузка даних на фронтенді useSWR ================================================================*/
   const { data, error } = useSWR("/api/shop/references/d_category/select-all", fetcher, { initialData: serverData })
   if (error) return <div>не вдалося завантажити</div>

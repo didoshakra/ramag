@@ -14,6 +14,10 @@ export const pool = new Pool({
   database: process.env.PGSQL_DATABASE,
   user: process.env.PGSQL_USER,
   password: process.env.PGSQL_PASSWORD,
+  //Це для HEROKY //https://stackoverflow.com/questions/72728573/cannot-connect-postgresql-with-next-js-api-route
+//   ssl: {
+//     rejectUnauthorized: false, //HERE!
+//   },
 })
 
 // export const pgclient = new Client({
