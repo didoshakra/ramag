@@ -43,8 +43,8 @@ export default function DProduct({
   setFocus, //Для передачі вибраних змінних в Form
 }) {
   //= Загрузка даних на фронтенді useSWR ================================================================*/
-//   const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, { initialData: serverData, refreshInterval: 1000 })
-  const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, {  refreshInterval: 100 })
+  const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, { initialData: serverData, refreshInterval: 1000 })
+//   const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, {  refreshInterval: 100 })
 
   if (error) return <div>не вдалося завантажити</div>
   if (!data) return <p>Loading/Завантаження ...</p>
@@ -82,8 +82,10 @@ export default function DProduct({
 
 //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
-  //onst response = await fetch("http://localhost:3000/api/shop/docs/doc_check_head/")
+// export async function getStaticProps(context) {
+//   onst response = await fetch("http://localhost:3000/api/shop/docs/doc_check_head/")
   const url = `${dbHost}${urlAPI}select-all` //->/[...slug].js
+
   const response = await fetch(url)
   const data = await response.json()
 
