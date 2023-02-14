@@ -37,7 +37,10 @@ export default function Brand({
   setValue, //Для зміни Input в формі вводу даних
 }) {
   //= Загрузка даних на фронтенді useSWR ================================================================*/
-  const { data, error } = useSWR("/api/shop/references/d_brand/select-all", fetcher, { initialData: serverData })
+  const { data, error } = useSWR("/api/shop/references/d_brand/select-all", fetcher, {
+    initialData: serverData,
+    refreshInterval: 100,
+  })
   if (error) return <div>не вдалося завантажити</div>
   if (!data) return <p>Loading/Завантаження ...</p>
   //**============================================================================================= */

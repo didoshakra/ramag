@@ -45,7 +45,7 @@ export default function DProduct({
   setFocus, //Для передачі вибраних змінних в Form
 }) {
   //= Загрузка даних на фронтенді useSWR ================================================================*/
-  const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, { initialData: serverData, refreshInterval: 1000 })
+  const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, { initialData: serverData, refreshInterval: 100 })
 //   const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, {  refreshInterval: 100 })
 
   if (error) return <div>не вдалося завантажити</div>

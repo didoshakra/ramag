@@ -575,7 +575,10 @@ export default function DOv({
   // export default function DOv({ serverData }) {
   //   console.log("DOv.js/")
   //= Загрузка даних на фронтенді useSWR ================================================================*/
-  const { data, error } = useSWR("/api/shop/references/d_ov/select-all", fetcher, { initialData: serverData })
+  const { data, error } = useSWR("/api/shop/references/d_ov/select-all", fetcher, {
+    initialData: serverData,
+    refreshInterval: 100,
+  })
   if (error) return <div>не вдалося завантажити</div>
   if (!data) return <p>Loading/Завантаження ...</p>
   //**============================================================================================= */

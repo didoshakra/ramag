@@ -18,6 +18,8 @@ import "ag-grid-community/styles/ag-theme-alpine.css"
 // import "ag-grid-community/dist/styles/ag-theme-balham.css"
 //
 import { dbHost } from "../../../config/dbHost"
+import { pool } from "../../../config/dbShop"
+
 import { ComponentContext } from "../../../context/ComponentContext"
 import IconAdd from "../../../components/ui/svg/table/IconAdd"
 import IconPencil_c3 from "../../../components/ui/svg/table/IconPencil_c3"
@@ -49,6 +51,7 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
   const { data, error } = useSWR(`${urlAPI}${headData.id}`, fetcher, {
     //   const { data, error } = useSWR(`${urlAPI}33`, fetcher, {
     initialData: serverData,
+    refreshInterval: 100,
   })
 
   if (error) return <div>не вдалося завантажити</div>
@@ -63,12 +66,27 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
 }
 //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
-  // const response = await fetch("http://localhost:3000/api/shop/docs/doc_check_products/select-all")
-  const url = `${dbHost}${urlAPI}${headData.id}` //->/[...slug].js
-  //   const url = `${dbHost}${urlAPI}33` //->/[...slug].js
-  const response = await fetch(url)
-  const data = await response.json()
-
+//   const url = `${dbHost}${urlAPI}${headData.id}` //->/[...slug].js
+//   const response = await fetch(url)
+//   const data = await response.json()
+  //**************************** */
+  let data = {}
+  const res = await pool.connect((err, client, done) => {
+    const sql = `SELECT doc_check_products.id,COALESCE(to_char(datetime, 'MM-DD-YYYY HH24:MI:SS'), '') AS datetime,check_id,doc_check_products.ov_id,doc_check_products.price,quantity,discount,round((doc_check_products.price*quantity-discount),2) AS total,d_product.name AS name,d_ov.name AS ov FROM doc_check_products JOIN d_product ON d_product.id = doc_check_products.product_id JOIN d_ov ON d_ov.id = doc_check_products.ov_id WHERE doc_check_products.check_id = ${headData.id} ORDER BY id DESC`
+    // const sql = "select * from d_category ORDER BY id DESC"
+    if (err) throw err //видає опис помилки підключення
+    data = client.query(sql, (err, result) => {
+      //   console.log("Category.js/getServerSideProps/result.rows=", result.rows)
+      done() // call `done()` to release the client back to the pool
+      if (err) {
+        console.log("error running query", err)
+      } else {
+        return result.rows
+        // resp.status(200).json(result.rows)
+      }
+    })
+  })
+  //**************************** */
   //Якщо (!data)-видасть помилку 404
   if (!data) {
     return {
@@ -535,38 +553,38 @@ function GDocCheckProducts({
       setToFormData(selectRow) //Дані з вибраного запису в форму
       setFormActive(true) //Відкриваємо форму для занесення інфи
       // rowEdit(formData)// переніс в onCloseForm, бо зразу спрацьовувало
-        console.log("GDocCheckProducts/onEdit/selectRow  = ", selectRow)
-        console.log("GDocCheckProducts/onEdit/selectRow1  = ", selectRow1)
+      console.log("GDocCheckProducts/onEdit/selectRow  = ", selectRow)
+      console.log("GDocCheckProducts/onEdit/selectRow1  = ", selectRow1)
       //****************************************** */
     } else {
       alert("Не вибрано ні одного запису для коригуввання")
     }
   }
 
-//   //== Коригування запису(запит)
-//   const rowEdit = async (newRow) => {
-//     // console.log("/agrid_users-pg/rowEdit//newRow= ", newRow)
-//     //Запит до сервера БД
-//     const url = "/api/shop/docs/doc_check_products/edit" //вибрати все-працює
-//     const options = {
-//       method: "PUT",
-//       body: JSON.stringify(newRow),
-//       // headers: {
-//       //   "Content-Type": "application/json", //Вказує на тип контенту
-//       // },
-//     }
-//     const response = await fetch(url, options)
-//     // alert("+++psql-...-fetch.js/PUT/response.status= " + response.status);
-//     if (response.ok) {
-//       // если HTTP-статус в диапазоне 200-299
-//       const resEdit = await response.json() //повертає тіло відповіді json
-//       alert(`Змінено ${resEdit} записів`)
-//     } else {
-//       const err = await response.json() //повертає тіло відповіді json
-//       alert(`Помилка зміни записів! ${err.message} / ${err.stack}`)
-//       // console.log(`+++psql-...-fetch.js/UPDATE/ ${err.message} / ${err.stack} `);
-//     }
-//   }
+  //   //== Коригування запису(запит)
+  //   const rowEdit = async (newRow) => {
+  //     // console.log("/agrid_users-pg/rowEdit//newRow= ", newRow)
+  //     //Запит до сервера БД
+  //     const url = "/api/shop/docs/doc_check_products/edit" //вибрати все-працює
+  //     const options = {
+  //       method: "PUT",
+  //       body: JSON.stringify(newRow),
+  //       // headers: {
+  //       //   "Content-Type": "application/json", //Вказує на тип контенту
+  //       // },
+  //     }
+  //     const response = await fetch(url, options)
+  //     // alert("+++psql-...-fetch.js/PUT/response.status= " + response.status);
+  //     if (response.ok) {
+  //       // если HTTP-статус в диапазоне 200-299
+  //       const resEdit = await response.json() //повертає тіло відповіді json
+  //       alert(`Змінено ${resEdit} записів`)
+  //     } else {
+  //       const err = await response.json() //повертає тіло відповіді json
+  //       alert(`Помилка зміни записів! ${err.message} / ${err.stack}`)
+  //       // console.log(`+++psql-...-fetch.js/UPDATE/ ${err.message} / ${err.stack} `);
+  //     }
+  //   }
 
   //== Коригування запису(запит)
   const rowEdit = async (newRow) => {

@@ -34,6 +34,7 @@ export default function DocCheckHead({ serverData }) {
   //--- Загрузка даних на фронтенді useSWR
   const { data, error } = useSWR(`${urlAPI}${par.p1}/${par.p2}`, fetcher, {
     initialData: serverData,
+    refreshInterval: 100,
   })
 
   if (error) return <div>не вдалося завантажити</div>

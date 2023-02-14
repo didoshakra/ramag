@@ -48,6 +48,7 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
   const { data, error } = useSWR(`${urlAPI}${headData.id}`, fetcher, {
     //   const { data, error } = useSWR(`${urlAPI}33`, fetcher, {
     initialData: serverData,
+    refreshInterval: 100,
   })
 
   if (error) return <div>не вдалося завантажити</div>

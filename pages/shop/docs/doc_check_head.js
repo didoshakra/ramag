@@ -4,6 +4,8 @@
 import Layout from "../../../components/Main/Layout"
 //*** Для agGrid **** */ */
 import { dbHost } from "../../../config/dbHost"
+import { pool } from "../../../config/dbShop"
+//
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import { useContext, useMemo, useState, useCallback, useRef } from "react"
 import { useRouter } from "next/router"
@@ -34,7 +36,7 @@ const par = { p1: 1, p2: 1 } //Параметри до select /Департам�
 export default function DocCheckHead({ serverData }) {
   //--- Загрузка даних на фронтенді useSWR
   const { data, error } = useSWR(`${urlAPI}${par.p1}/${par.p2}`, fetcher, {
-    initialData: serverData,
+    initialData: serverData, refreshInterval: 100
   })
 
   if (error) return <div>не вдалося завантажити</div>
@@ -54,9 +56,25 @@ export default function DocCheckHead({ serverData }) {
 //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
   //onst response = await fetch("http://localhost:3000/api/shop/docs/doc_check_head/")
-  const url = `${dbHost}${urlAPI}${par.p1}/${par.p2}` //->/[...slug].js
-  const response = await fetch(url)
-  const data = await response.json()
+//   const url = `${dbHost}${urlAPI}${par.p1}/${par.p2}` //->/[...slug].js
+//   const response = await fetch(url)
+//   const data = await response.json()
+  //**************************** */
+  let data = {}
+  const res = await pool.connect((err, client, done) => {
+     const sql = `SELECT doc_check_head.id,place,user_id,client_id,total,discount,COALESCE(to_char(datetime, 'MM-DD-YYYY HH24:MI:SS'), '') AS datetime,d_departament.name AS departament,d_user.name AS user,d_client.name AS client FROM doc_check_head JOIN d_departament ON d_departament.id = doc_check_head.departament_id JOIN d_user ON d_user.id = doc_check_head.user_id JOIN d_client ON d_client.id = doc_check_head.client_id WHERE doc_check_head.departament_id = ${par.p1} AND place = ${par.p2}  ORDER BY id DESC`
+    if (err) throw err //видає опис помилки підключення
+    data = client.query(sql, (err, result) => {
+      done() // call `done()` to release the client back to the pool
+      if (err) {
+        console.log("error running query", err)
+      } else {
+        return result.rows
+        // resp.status(200).json(result.rows)
+      }
+    })
+  })
+  //**************************** */
 
   //Якщо (!data)-видасть помилку 404
   if (!data) {
