@@ -65,15 +65,15 @@ export default function Brand({
 
 // //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
-//   const response = await fetch(`${dbHost}/api/shop/references/d_brand/select-all`)
-//   const data = await response.json()
- //**************************** */
- let data={}
+  //   const response = await fetch(`${dbHost}/api/shop/references/d_brand/select-all`)
+  //   const data = await response.json()
+  //**************************** */
+  let data = {}
   const res = await pool.connect((err, client, done) => {
     const sql = "select * from d_brand ORDER BY id DESC"
     if (err) throw err //видає опис помилки підключення
     data = client.query(sql, (err, result) => {
-    //   console.log("Category.js/getServerSideProps/result.rows=", result.rows)
+      //   console.log("Category.js/getServerSideProps/result.rows=", result.rows)
       done() // call `done()` to release the client back to the pool
       if (err) {
         console.log("error running query", err)
