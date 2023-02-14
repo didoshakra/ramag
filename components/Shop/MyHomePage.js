@@ -17,8 +17,10 @@ const MyHomePage = () => {
         {/* <div className="overlay"></div> */}
         <div className="slider-text">
           {/* <h1>Ми пропонуємо свіжі овочі та фрукти</h1> */}
-          <h1>Гори кличуть, і я мушу йти! </h1>
-          <h2 className="subheading">Джон Мьюр</h2>
+          {/* <h1>Гори кличуть, і я мушу йти! </h1>
+          <h2 className="subheading">Джон Мьюр</h2> */}
+          <h1>Підніміться над бурею, і ви знайдете сонце </h1>
+          <h2 className="subheading">Маріо Фернандес</h2>
         </div>
       </div>
       {/* елемент слайдеру */}
