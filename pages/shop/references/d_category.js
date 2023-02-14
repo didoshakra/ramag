@@ -508,7 +508,7 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
           background-color: ${theme.colors.tableIconBackgroundHover};
         }
 
-        @media (min-width: 960px) {
+        @media (min-width: 600px) {
           .agrid_head-title-mobi {
             display: none;
           }
