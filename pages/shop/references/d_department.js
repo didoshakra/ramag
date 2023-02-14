@@ -512,7 +512,7 @@ function Department({ data, isDovidnuk = false, setDovActive, setValue }) {
           background-color: ${theme.colors.tableIconBackgroundHover};
         }
 
-        @media (min-width: 360px) {
+        @media (min-width: 480px) {
           .agrid_head-title-mobi {
             display: none;
           }
