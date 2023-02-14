@@ -533,7 +533,6 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
 export async function getServerSideProps(context) {
   //   const response = await fetch(`${dbHost}/api/shop/references/d_category/select-all`)
   //   const data = await response.json()
-  //Якщо (!data)-видасть помилку 404
   //**************************** */
  let data={}
   const res = await pool.connect((err, client, done) => {

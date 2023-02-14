@@ -3,6 +3,7 @@ import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import Layout from "../../../components/Main/Layout"
 // import Brand from "../../../components/Shop//References/Brand"
 import { dbHost } from "../../../config/dbHost"
+import { pool } from "../../../config/dbShop"
 //********************************************************** */
 import { useEffect, useContext, useMemo, useState, useCallback, useRef } from "react"
 import { useRouter } from "next/router"
@@ -63,22 +64,35 @@ export default function Brand({
 }
 
 // //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
-// export async function getServerSideProps(context) {
-// export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
 //   const response = await fetch(`${dbHost}/api/shop/references/d_brand/select-all`)
-//   //   const response = await fetch("http://localhost:3000/api/shop/references/d_brand/select-all")
 //   const data = await response.json()
-//   //   const data = null //
-//   //Якщо (!data)-видасть помилку 404
-//   if (!data) {
-//     return {
-//       notFound: true,
-//     }
-//   }
-//   return {
-//     props: { serverData: data }, // буде передано компоненту сторінки як атрибути
-//   }
-// }
+ //**************************** */
+ let data={}
+  const res = await pool.connect((err, client, done) => {
+    const sql = "select * from d_brand ORDER BY id DESC"
+    if (err) throw err //видає опис помилки підключення
+    data = client.query(sql, (err, result) => {
+    //   console.log("Category.js/getServerSideProps/result.rows=", result.rows)
+      done() // call `done()` to release the client back to the pool
+      if (err) {
+        console.log("error running query", err)
+      } else {
+        return result.rows
+        // resp.status(200).json(result.rows)
+      }
+    })
+  })
+  //**************************** */
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
+  return {
+    props: { serverData: data }, // буде передано компоненту сторінки як атрибути
+  }
+}
 
 //*************************************************************************************** */
 function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
