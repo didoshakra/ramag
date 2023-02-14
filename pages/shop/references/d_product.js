@@ -3,6 +3,8 @@
 
 import Layout from "../../../components/Main/Layout"
 import { dbHost } from "../../../config/dbHost"
+import { pool } from "../../../config/dbShop"
+//
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import * as XLSX from "xlsx"
 import { useContext, useMemo, useState, useCallback, useRef } from "react"
@@ -82,14 +84,26 @@ export default function DProduct({
 
 //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
-// export async function getStaticProps(context) {
-//   onst response = await fetch("http://localhost:3000/api/shop/docs/doc_check_head/")
-  const url = `${dbHost}${urlAPI}select-all` //->/[...slug].js
-
-  const response = await fetch(url)
-  const data = await response.json()
-
-  //Якщо (!data)-видасть помилку 404
+//   const url = `${dbHost}${urlAPI}select-all` //
+//   const response = await fetch(url)
+//   const data = await response.json()
+  //**************************** */
+  let data = {}
+  const res = await pool.connect((err, client, done) => {
+    const sql = "select * from d_product ORDER BY id DESC"
+    if (err) throw err //видає опис помилки підключення
+    data = client.query(sql, (err, result) => {
+      //   console.log("Category.js/getServerSideProps/result.rows=", result.rows)
+      done() // call `done()` to release the client back to the pool
+      if (err) {
+        console.log("error running query", err)
+      } else {
+        return result.rows
+        // resp.status(200).json(result.rows)
+      }
+    })
+  })
+  //**************************** */
   if (!data) {
     return {
       notFound: true,
