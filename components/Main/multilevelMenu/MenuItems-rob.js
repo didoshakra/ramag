@@ -39,6 +39,7 @@ const MenuItems = ({ items, depthLevel }) => {
   //     dropdown && setDropdown(false)
   //   }
   const onClick = () => {
+    //новий синтаксис if(dropdown) setDropdown(false)
     setDropdown(true)
   }
 
@@ -52,7 +53,6 @@ const MenuItems = ({ items, depthLevel }) => {
       onClick={onClick}
       //   onClick={onMouseEnter}
     >
-      {/*Субменю з посилання(рідко буває)*/}
       {items.url && items.submenu ? (
         <>
           <button
@@ -62,7 +62,6 @@ const MenuItems = ({ items, depthLevel }) => {
             aria-expanded={dropdown ? "true" : "false"} //елемент розгорнутий чи згорнутий
             onClick={() => setDropdown((prev) => !prev)}
           >
-            {/*depthLevel-Глибина рівнів входження */}
             {depthLevel === 0 ? (
               items.title
             ) : (
@@ -70,42 +69,23 @@ const MenuItems = ({ items, depthLevel }) => {
                 <a className="menu-items-a">{items.title}</a>
               </Link>
             )}
+
             {/* &raquo=">>", className="arrow"=стрілка вниз */}
             {depthLevel > 0 ? <span className="submenu-chevron">&raquo;</span> : <span className="arrow" />}
           </button>
           <Dropdown depthLevel={depthLevel} submenus={items.submenu} dropdown={dropdown} />
         </>
-      ) : // Верхнє меню(субменю) без посилання
-      !items.url && items.submenu && depthLevel === 0 ? (
+      ) : !items.url && items.submenu ? (
         <>
           <button
-            className="menu-items-button-main"
+            className="menu-items-button1"
             type="button"
             aria-haspopup="menu" //тип інтерактивного спливаючого елемента
             aria-expanded={dropdown ? "true" : "false"} //елемент розгорнутий чи згорнутий
             onClick={() => setDropdown((prev) => !prev)}
           >
             {items.title}
-            {/*depthLevel-Глибина рівнів входження */}
-            {/* {depthLevel > 0 ? <span className="submenu-chevron">&raquo;</span> : <span className="arrow" />} */}
-            <span className="arrow" />
-          </button>
-          <Dropdown depthLevel={depthLevel} submenus={items.submenu} dropdown={dropdown} />
-        </>
-      ) : // Субменю без посилання
-      !items.url && items.submenu && depthLevel > 0 ? (
-        <>
-          <button
-            className="menu-items-button"
-            type="button"
-            aria-haspopup="menu" //тип інтерактивного спливаючого елемента
-            aria-expanded={dropdown ? "true" : "false"} //елемент розгорнутий чи згорнутий
-            onClick={() => setDropdown((prev) => !prev)}
-          >
-            {items.title}
-            {/*depthLevel-Глибина рівнів входження */}
-            {/* {depthLevel > 0 ? <span className="submenu-chevron">&raquo;</span> : <span className="arrow" />} */}
-            <span className="submenu-chevron">&raquo;</span>
+            {depthLevel > 0 ? <span className="submenu-chevron">&raquo;</span> : <span className="arrow" />}
           </button>
           <Dropdown depthLevel={depthLevel} submenus={items.submenu} dropdown={dropdown} />
         </>
@@ -123,7 +103,7 @@ const MenuItems = ({ items, depthLevel }) => {
         //
         .menu-items-a,
         .menu-items-button,
-        .menu-items-button-main {
+        .menu-items-button1 {
           text-align: left;
           padding: 0.05rem 1rem;
           text-decoration: none;
@@ -138,23 +118,22 @@ const MenuItems = ({ items, depthLevel }) => {
 
         //Підменю
         .menu-items-button,
-        .menu-items-button-main {
+        .menu-items-button1 {
           display: flex;
           font-size: 18px;
-          //   font-size: inherit; //Успадкований font-size
+        //   font-size: inherit; //Успадкований font-size
           border: none;
-          background-color: transparent; //прозорий фон
-          //   background-color: ${theme.colors.drawerDropdownMenuBackground};
+            background-color: transparent; //прозорий фон
+        //   background-color: ${theme.colors.drawerDropdownMenuBackground};
         }
 
         .menu-items-button {
-          color: ${theme.colors.drawerDropdownMenuSubmenu};
-          //   color: grey;
+          color: grey;
         }
 
-        //submenu/верхнє меню зі стрілкою
-        .menu-items-button-main {
-          color: ${theme.colors.drawerDropdownMenuSubmenuMain};
+        //submenu+верхнє меню зі стрілкою
+        .menu-items-button1 {
+          color: ${theme.colors.drawerDropdownMenuSubmenu};
         }
 
         button span {

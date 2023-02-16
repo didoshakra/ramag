@@ -68,6 +68,17 @@ export const themeLith = {
     headMenuBackgroundActive: "red",
     headMenuBackgroundHoverGoriz: "#f64532",
     //----------------------------------------------
+    // drawerDropdownMenuBackground: "yellow", //Підменю
+    drawerDropdownMenuSubmenu: "#6B8E23", //Підменю
+    // drawerDropdownMenuSubmenuMain: "#6B8E23", //Головне(верхнє) підменю
+    drawerDropdownMenuSubmenuMain: "#0092ff", //Головне(верхнє) підменю
+    drawerDropdownMenuItem: "green", // Стрілка верхньогоменю
+    drawerDropdownMenuItemHover: "#f64532", // Стрілка верхньогоменю
+    drawerDropdownMenuSubmenuChevron: "#0092ff", //Субменю/подвійна стрілка-шеврон
+    // drawerDropdownMenuSubmenuChevron: "#f64532", //Субменю/подвійна стрілка-шеврон
+    drawerDropdownMenuArrow: "#f64532", // Стрілка верхньогоменю
+    drawerDropHr: "#6B8E23", // Лінії розмежування
+    //----------------------------------------------
     headDroopMenuText: "#82AE46",
     headDroopMenuTextHover: "#fff",
     headDroopMenuBackground: "#F4F4EB", //"#DCDCDC","#fff",

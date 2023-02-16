@@ -1,7 +1,7 @@
 export const menuAdmin = [
   {
     title: "Меню адміністратора",
-    submenu: [
+    submenu: [ 
       {
         title: "Довідники",
         submenu: [

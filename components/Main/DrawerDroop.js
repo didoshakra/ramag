@@ -186,16 +186,15 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
         </div>
       </div>
       {/* --- Список меню ----------------------------------------- */}
-      <hr width="100%" color="red" />
+      {/* <hr className="DrawerDroop-hr" width="100%" /> */}
       <Navbar multilevelMenu={menuAdmin} />
       {/* ----------------------------------------------------------- */}
-      <hr width="100%" color="red" />
-      <Navbar multilevelMenu={menuDocuments} />
-      {/* ----------------------------------------------------------- */}
       {/* Divider/Роздільник */}
-      <hr width="100%" color="red" />
+      <hr className="DrawerDroop-hr" />
+      <Navbar multilevelMenu={menuDocuments} />
+      <hr className="DrawerDroop-hr" />
+      {/* ----------------------------------------------------------- */}
       {/* <RenderMenu title={"external/зовнішні"} menu={footerList} /> */}
-      <hr width="100%" color="red" />
       <style jsx>
         {`
           .DrawerDroop {
@@ -313,6 +312,12 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
             color: ${theme.colors.headIconHover};
             background: ${theme.colors.headIconBackgroundHover};
             cursor: pointer;
+          }
+          .DrawerDroop-hr {
+            // bottom: 10px;
+            height: 5px;
+            width="100%"
+            background: ${theme.colors.drawerDropHr};
           }
         `}
       </style>

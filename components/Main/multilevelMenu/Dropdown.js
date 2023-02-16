@@ -1,6 +1,6 @@
 import MenuItems from "./MenuItems"
 const Dropdown = ({ submenus, dropdown, depthLevel }) => {
-  depthLevel = depthLevel + 1
+  depthLevel = depthLevel + 1 //Глибина рівнів входження
   const dropdownClass = depthLevel > 1 ? "dropdown-submenu" : ""
   return (
     <ul className={`dropdown ${dropdownClass} ${dropdown ? "show" : ""}`}>
@@ -35,13 +35,13 @@ const Dropdown = ({ submenus, dropdown, depthLevel }) => {
           display: block;
         }
 
-        .dropdown .dropdown-submenu {
-          //   position: absolute;
-          //   top: -7px;
-          //   left: 100%;
-          // left: 30px;
-          // padding-left: 10px;
-        }
+        // .dropdown .dropdown-submenu {
+        //     position: absolute;
+        //     top: -7px;
+        //     left: 100%;
+        //   left: 30px;
+        //   padding-left: 10px;
+        // }
       `}</style>
     </ul>
   )
