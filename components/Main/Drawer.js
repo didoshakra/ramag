@@ -47,9 +47,7 @@ function FuncDrawer({ drawerOpen, onOpened }) {
       {menu.map((item, index) => {
         return (
           <li className="drawer_item" key={index}>
-            <Link href={`${item.link}`} >
-              {item.a}
-            </Link>
+            <Link href={`${item.link}`}>{item.a}</Link>
           </li>
         )
       })}
@@ -64,8 +62,8 @@ function FuncDrawer({ drawerOpen, onOpened }) {
             padding: 0;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             // z-index: 10;
-            color: ${theme.colors.headDroopMenuText};
-            background: ${theme.colors.headDroopMenuBackground};
+            color: ${theme.colors.drawerHeadMenuText};
+            background: ${theme.colors.drawerHeadMenuBackground};
             margin: 0;
             left: -20px;
             top: 50px;
@@ -101,12 +99,12 @@ function FuncDrawer({ drawerOpen, onOpened }) {
             font-family: ${theme.fontFamily.serif};
             list-style-type: none; /**Отменяет маркеры для списка. */
             text-decoration: none;
-            color: ${theme.colors.headDroopMenuText};
-            background: ${theme.colors.headDroopMenuBackground};
+            color: ${theme.colors.drawerHeadMenuText};
+            background: ${theme.colors.drawerHeadMenuBackground};
           }
           .drawer_item:hover {
-            color: ${theme.colors.headDroopMenuTextHover};
-            background: ${theme.colors.headDroopMenuBackgroundHover};
+            color: ${theme.colors.drawerHeadMenuTextHover};
+            background: ${theme.colors.drawerHeadMenuBackgroundHover};
             cursor: pointer;
           }
         `}
@@ -164,11 +162,11 @@ export default function Drawer() {
         {/* іконка мобільного меню */}
         {drawerOpen ? (
           <IconCancel
-            // width={iconSize}
-            // height={iconSize}
-            width="20"
-            height="20"
-            colorFill={iconHover ? theme.colors.headIconHover : theme.colors.headIcon}
+            width={iconSize}
+            height={iconSize}
+            // width="20"
+            // height="20"
+            colorFill={iconHover ? theme.colors.headIconHover : theme.colors.drawerHeadIcon}
           />
         ) : (
           <IconMenu

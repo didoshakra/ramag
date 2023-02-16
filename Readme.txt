@@ -73,11 +73,11 @@
     При добавленні рядка  враховується поточни знижка
 
  2023.02.04 / в doc_check_products- товари в чеках:
-    Запис в БД doc_check_products товарів з масиву і doc_check_head ???
+    Запис в БД doc_check_products і doc_check_head / з масиву і doc_check_head ???
 
-2023.02.06  / Підключив PostgreSQL до зовнішнього сервера
+2023.02.06  / Підключив PostgreSQL до зовнішнього сервера/Veles
 
-2023.02.07 / Обновив  "next": "^13.1.6",- мусів міняти без <a>
+2023.02.07 / Обновив  "next": "^13.1.6",- мусів міняти <Link <a>
     <Link href={`${items.url}`} legacyBehavior>
         <a className="menu-items-a">{items.title}</a>
         </Link>
@@ -86,4 +86,5 @@
     Почистив від лишніх модулів
     Deploy to Versal
 
+2023.02.16. / Добавив налаштування кольорів теми в multilevelMenu(MenuItems.jsб)
 

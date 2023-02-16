@@ -33,33 +33,37 @@ export const themeLith = {
     background: "#fff", //білий/
     errorMsg: "#f21e08",
     backgroundEclipse: "rgba(0, 0, 0, 0.4)", //Затемнення екрану
-    //----------------------------------------------
+
+    //-- headTape --------------------------------------------
     headTapeText: "#fff",
     headTapeBackground: "#6B8E23", //1 "#82AE46",
     headTapeTextHover: "red",
     headTapeTextBackgroundHover: "#82AE46",
-    //----------------------------------------------
+
+    //-- head --------------------------------------------
     headText: "#6B8E23", //1 "#82AE46",
     headBackground: "#E7F4E0", // "#F4F4EB", "#fff", //білий
     headTextHover: "#fff",
     headBackgroundHover: "#82AE46",
-    //----------------------------------------------
+    //-- headLogo --------------------------------------------
     headLogoText: "#6B8E23", //1 "#82AE46",
     headLogoTextHover: "red",
-    //----------------------------------------------
-    headMobileText: "#82AE46",
-    headMobileTextHover: "red",
-    headMobileBackground: "rgba(65,69,69,1)",
-    headMobiletBackgroundHover: "#fff", //білий
-    headMobileIcon: "red",
-    //----------------------------------------------
+    //--  headIcon --------------------------------------------
     headIcon: "#6B8E23", //1 "#82AE46", "rgba(23,25,25,1)",
     headIconHover: "red",
     headIconBackground: "rgba(65,69,69,1)",
     headIconBackgroundHover: "#82AE46",
     headIconBorderWidht: "0px",
     headIconBorderStyle: "dotted",
-    //----------------------------------------------
+
+    //-- headMobile --------------------------------------------
+    headMobileText: "#82AE46",
+    headMobileTextHover: "red",
+    headMobileBackground: "rgba(65,69,69,1)",
+    headMobiletBackgroundHover: "#fff", //білий
+    headMobileIcon: "red",
+
+    //-- headMenu --------------------------------------------
     headMenuText: "#6B8E23", //1  "#82AE46",
     headMenuTextHover: "#fff",
     headMenuBackground: "#E7F4E0",
@@ -67,24 +71,35 @@ export const themeLith = {
     headMenuActive: "#fff",
     headMenuBackgroundActive: "red",
     headMenuBackgroundHoverGoriz: "#f64532",
-    //----------------------------------------------
-    // drawerDropdownMenuBackground: "yellow", //Підменю
-    drawerDropdownMenuSubmenu: "#6B8E23", //Підменю
-    // drawerDropdownMenuSubmenuMain: "#6B8E23", //Головне(верхнє) підменю
-    drawerDropdownMenuSubmenuMain: "#0092ff", //Головне(верхнє) підменю
-    drawerDropdownMenuItem: "green", // Стрілка верхньогоменю
-    drawerDropdownMenuItemHover: "#f64532", // Стрілка верхньогоменю
-    drawerDropdownMenuSubmenuChevron: "#0092ff", //Субменю/подвійна стрілка-шеврон
-    // drawerDropdownMenuSubmenuChevron: "#f64532", //Субменю/подвійна стрілка-шеврон
-    drawerDropdownMenuArrow: "#f64532", // Стрілка верхньогоменю
-    drawerDropHr: "#6B8E23", // Лінії розмежування
-    //----------------------------------------------
+
+    //-- headDroopMenu --------------------------------------------
     headDroopMenuText: "#82AE46",
     headDroopMenuTextHover: "#fff",
     headDroopMenuBackground: "#F4F4EB", //"#DCDCDC","#fff",
     headDroopMenuBackgroundHover: "#A5E189",
     headDroopMenuBackgroundActive: "red",
-    //----------------------------------------------
+
+    //-- drawer --------------------------------------------
+    drawerHeadIcon: "#6B8E23", //Іконка шапки drawer
+    drawerHeadIconHover: "red", //Іконка шапки drawer
+    drawerHeadMenuText: "#6B8E23", //Підменю
+    drawerHeadMenuTextHover: "#fff", //Підменю
+    drawerHeadMenuBackground: "#F4F4EB", //Підменю
+    drawerHeadMenuBackgroundHover: "#A5E189", //Підменю
+    drawerMenuText: "#6B8E23", //Підменю
+    drawerDropMenu: "#6B8E23", //Підменю
+    drawerDropHr: "#6B8E23", // Лінії розмежування
+
+    //-- drawer\multilevelMenu --------------------------------------------
+    // drawerDropdownMenuBackground: "yellow", //Підменю
+    drawerDropdownMenuSubmenu: "#6B8E23", //Підменю
+    drawerDropdownMenuSubmenuMain: "#0092ff", //Головне(верхнє) підменю
+    drawerDropdownMenuItem: "green", // Стрілка верхньогоменю
+    drawerDropdownMenuItemHover: "#f64532", // Стрілка верхньогоменю
+    drawerDropdownMenuSubmenuChevron: "#0092ff", //Субменю/подвійна стрілка-шеврон
+    drawerDropdownMenuArrow: "#f64532", // Стрілка верхньогоменю
+
+    //-- docHead --------------------------------------------
     docHeadTitle: "#6B8E23", //1 "#fff",
     docHeadLable: "#f64532", //"#6B8E23", //1"#fff",
     docHeadBackground: "#f8f8f8;", //agGrid-шапка
@@ -93,7 +108,8 @@ export const themeLith = {
     // docHeadBackground: "#9ACD32",
     // docHeadBackground: "rgba(154, 205, 50, 0.8)",
     // docHeadBackground: "hsla(120,100%,50%,0.6)",
-    //----------------------------------------------
+
+    //-- table--------------------------------------------
     tableHeadTitle: "#6B8E23", //1 "#82AE46",
     tableHeadText: "#000",
     tableHeadBorder: "#babfc7", //ag_Grid border(шапка)
@@ -112,7 +128,8 @@ export const themeLith = {
     tableIconBackgroundHover: "#E7F4E0",
     tableIcon1: "black",
     tableIcon2: "#f64532",
-    //-----------------------------------------------
+
+    //-- form---------------------------------------------
     formTitle: "green", //"#6B8E23", //1"#82AE46",
     formLabel: "#f64532",
     formBorder: "green",
@@ -128,7 +145,8 @@ export const themeLith = {
     formIconBackgroundHover: "#E7F4E0",
     formIcon1: "black",
     formIcon2: "#f64532",
-    //-----------------------------------------------
+
+    //-- dialog ---------------------------------------------
     dialogTitle: "#f64532", //"#6B8E23", //"#82AE46",
     dialogLabel1: "#6B8E23",
     dialogLabel2: "grey",
@@ -151,12 +169,14 @@ export const themeLith = {
     // dialogIconBackgroundHover: "#9ACD32",
     dialogIcon1: "black",
     dialogIcon2: "#f64532",
-    // -----------------------------------------------
+
+    //-- paper---------------------------------------------
     paperBackground: "rgb(223, 222, 222)",
     paperBoxShadow: "2px 2px 2px rgba(0, 0, 0, 0.6)",
     paperHeadBackground: "rgba(187,190,190,1)",
     paperHeadBoxShadow: "2px 2px 2px rgba(0, 0, 0, 0.6)",
-    //----------------------------------------------------
+
+    //-- card --------------------------------------------------
     cardBackground: "rgba(187,190,190,0.5)",
     cardBoxShadow: "2px 2px 2px rgba(0, 0, 0, 0.6)",
   },
@@ -172,6 +192,9 @@ export const themeDark = {
     decorative: "Trattatello,fantasy", //декоративні шрифти, для назв
   },
   size: {
+    headIcon: "20px",
+    headIconBorder: "30",
+    
     tableIcon: "20px",
     tableIconBorder: "30",
     //
@@ -186,36 +209,39 @@ export const themeDark = {
     background: "rgba(65,69,69,1)",
     errorMsg: "#f21e08",
     backgroundEclipse: "rgba(0, 0, 0, 0.4)", //Затемнення екрану
-    //----------------------------------------------
+
+    //-- headTape --------------------------------------------
     headTapeText: "#6B8E23", //1"#82AE46",
     headTapeBackground: "#000", //"rgba(65,69,69,1)",
     headTapeTextHover: "red",
     headTapeTextBackgroundHover: "rgba(65,69,69,1)",
-    //----------------------------------------------
+
+    //-- head --------------------------------------------
     headText: "#fff", //білий
     headBackground: "rgba(23,25,25,1)",
     // headBackground: "rgba(65,69,69,1)",
     // headBackground: "rgba(0, 0, 0, 0.5)",
     headTextHover: "rgba(23,25,25,1)",
     headTextBackgroundHover: "#fff", //білий
-    //----------------------------------------------
-    // headLogoText: "#82AE46",
-    headLogoText: "#6B8E23", //1
-    headLogoTextHover: "red",
-    //----------------------------------------------
-    headMobileText: "#82AE46", //білий
-    headMobileTextHover: "red",
-    headMobileBackground: "rgba(65,69,69,1)",
-    headMobileBackgroundHover: "#fff", //білий
-    headMobileIcon: "red", //білий,
-    //----------------------------------------------
+    //-- headIcon --------------------------------------------
     headIcon: "#6B8E23", //1""#82AE46","#fff", //білий
     headIconHover: "red",
     headIconBackgroun: "rgba(65,69,69,1)", //білий
     headIconBackgroundHover: "#82AE46",
     headIconBorderWidht: "0px",
     headIconBorderStyle: "dotted",
-    //----------------------------------------------
+    //-- headLogo --------------------------------------------
+    // headLogoText: "#82AE46",
+    headLogoText: "#6B8E23", //1
+    headLogoTextHover: "red",
+    //-- headMobile --------------------------------------------
+    headMobileText: "#82AE46", //білий
+    headMobileTextHover: "red",
+    headMobileBackground: "rgba(65,69,69,1)",
+    headMobileBackgroundHover: "#fff", //білий
+    headMobileIcon: "red", //білий,
+
+    //-- headMenu --------------------------------------------
     headMenuText: "#6B8E23", //1"#82AE46",
     headMenuTextHover: "#fff",
     // headMenuBackground: "rgba(65,69,69,1)", //білий
@@ -224,20 +250,43 @@ export const themeDark = {
     headMenuActive: "#fff",
     headMenuBackgroundActive: "red",
     headMenuBackgroundHoverGoriz: "#f64532",
-    //----------------------------------------------
+
+    //-- headDroopMenu --------------------------------------------
     headDroopMenuText: "#82AE46",
     headDroopMenuTextHover: "#fff",
     headDroopMenuBackground: "rgba(65,69,69,1)",
     headDroopMenuBackgroundHover: "#82AE46",
     headDroopMenuBackgroundActive: "red",
-    //----------------------------------------------
+
+    //-- drawer --------------------------------------------
+    drawerHeadIcon: "#6B8E23", //Іконка шапки drawer
+    drawerHeadIconHover: "red", //Іконка шапки drawer
+    drawerHeadMenuText: "#6B8E23", //Підменю
+    drawerHeadMenuTextHover: "#fff", //Підменю
+    drawerHeadMenuBackground: "#F4F4EB", //Підменю
+    drawerHeadMenuBackgroundHover: "#A5E189", //Підменю
+    drawerMenuText: "#6B8E23", //Підменю
+    drawerDropMenu: "#6B8E23", //Підменю
+    drawerDropHr: "#6B8E23", // Лінії розмежування
+
+    //-- drawer\multilevelMenu --------------------------------------------
+    // drawerDropdownMenuBackground: "yellow", //Підменю
+    drawerDropdownMenuSubmenu: "#6B8E23", //Підменю
+    drawerDropdownMenuSubmenuMain: "#0092ff", //Головне(верхнє) підменю
+    drawerDropdownMenuItem: "green", // Стрілка верхньогоменю
+    drawerDropdownMenuItemHover: "#f64532", // Стрілка верхньогоменю
+    drawerDropdownMenuSubmenuChevron: "#0092ff", //Субменю/подвійна стрілка-шеврон
+    drawerDropdownMenuArrow: "#f64532", // Стрілка верхньогоменю
+
+    //-- doc --------------------------------------------
     // docHeadTitle: "#fff",
     docHeadTitle: "#6B8E23", //1
     docHeadLable: "#f64532",
     // docHeadLable: "#6B8E23", //1
     // docHeadBackground: "#000",
     docHeadBackground: "#222628", //agGrid head
-    //----------------------------------------------
+
+    //-- table --------------------------------------------
     tableHeadTitle: "#6B8E23", //1 "#82AE46",
     tableHeadText: "#FFFF",
     tableHeadBorder: "#babfc7", //ag_Grid border(шапка)
@@ -250,7 +299,8 @@ export const themeDark = {
     tableIconBackgroundHover: "#E7F4E0",
     tableIcon1: "gray",
     tableIcon2: "#f64532",
-    //----------------------------------------------
+
+    //-- form --------------------------------------------
     // formTitle: "#82AE46",
     formTitle: "#6B8E23", //1
     // formLabel: "#f64532",
@@ -268,7 +318,8 @@ export const themeDark = {
     formIconBackgroundHover: "#6B8E23",
     formIcon1: "black",
     formIcon2: "#f64532",
-    //----------------------------------------------
+
+    //-- dialog --------------------------------------------
     dialogTitle: "#f64532", //"#6B8E23",  "#82AE46",
     dialogLabel1: "#6B8E23",
     dialogLabel2: "grey",
@@ -289,11 +340,12 @@ export const themeDark = {
     dialogIconBackgroundHover: "#E7F4E0", //"#9ACD32",
     dialogIcon1: "black",
     dialogIcon2: "#f64532",
-    // -----------------------------------------------paperBackground: "rgba(65,69,69,1)",
+
+    //-- paper ---------------------------------------------paperBackground: "rgba(65,69,69,1)",
     paperBoxShadow: "2px 2px 2px rgba(0, 0, 0, 0.5)",
     paperHeadBackground: "rgba(0, 0, 0, 0.5)", //"rgba(64,61,51,1)",
     paperHeadBoxShadow: "2px 2px 2px rgba(23,25,25,0.9)",
-    //------------------------------------------------
+    //-- card ----------------------------------------------
     cardBackground: "rgba(64,61,51,0.6)",
     cardBoxShadow: "2px 2px 2px rgba(23,25,25,0.9)",
   },
