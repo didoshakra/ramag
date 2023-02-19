@@ -42,11 +42,11 @@ export default function DProduct({
   isDovidnuk = false, //Чи відкривати як довідник
   setDovActive, //Назва довідника
   setValue, //Для зміни Input в формі вводу даних
-  setFocus, //Для передачі вибраних змінних в Form
+  setFocus, //Для передачі заданого  фокусу в Form
 }) {
   //= Загрузка даних на фронтенді useSWR ================================================================*/
   const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, { initialData: serverData, refreshInterval: 100 })
-//   const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, {  refreshInterval: 100 })
+  //   const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, {  refreshInterval: 100 })
 
   if (error) return <div>не вдалося завантажити</div>
   if (!data) return <p>Loading/Завантаження ...</p>
@@ -84,9 +84,9 @@ export default function DProduct({
 
 //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
-//   const url = `${dbHost}${urlAPI}select-all` //
-//   const response = await fetch(url)
-//   const data = await response.json()
+  //   const url = `${dbHost}${urlAPI}select-all` //
+  //   const response = await fetch(url)
+  //   const data = await response.json()
   //**************************** */
   let data = {}
   const res = await pool.connect((err, client, done) => {
@@ -158,6 +158,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
         //   field: "id",
         minWidth: 30,
         maxWidth: 30,
+        hide: isDovidnuk ? true : false, //Не прв doc_check_products- товари в чеках:казувати стовбець
         checkboxSelection: isDovidnuk ? false : true, //
         headerCheckboxSelection: isDovidnuk ? false : true, //Добавляє в шапку
         sortable: false,
@@ -169,7 +170,6 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
         suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
       },
 
-      { field: "price", headerName: "Ціна(грн)", minWidth: 120, type: "numericColumn", filter: "agNumberColumnFilter" },
       {
         field: "name",
         headerName: "Назва",
@@ -181,6 +181,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
         //     debounceMs: 200,
         //   },
       },
+      { field: "price", headerName: "Ціна(грн)", minWidth: 120, type: "numericColumn", filter: "agNumberColumnFilter" },
       { field: "ov_id", hide: true }, //Прихований(hide) рядок
       { field: "ov", headerName: "Од.вим.", minWidth: 110 },
 
@@ -246,11 +247,12 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
   const onGridReady = (params) => {
     if (gridApi) {
       //Якщо включено sizeColumnsToFit, то не працює параметр flex:1/flex:2...
+    console.log("d_product.js/onGridReady")
       gridApi.sizeColumnsToFit() //Розмір стовпців відповідно до встановленого розміру(width).Якщо width не встановлено то воно береться з defaultColDef
     }
     setGridApi(params.api)
     setRowData(data) //з сервера Pg
-    document.querySelector("#filterTextBox")?.focus() //Передати фокус в швидкий фільтер
+    document.querySelector("#filterTextBox")?.focus() //Передати фокус в швидкий пошук
 
     // Тестові дані з зовнішного сервера
     // fetch("https://www.ag-grid.com/example-assets/olympic-winners.json")
@@ -550,7 +552,8 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
   const onPrint = () => {
     alert("onPrint")
   }
-  //
+
+  //Швидкий пошук
   const onFilterTextBoxChanged = useCallback(() => {
     gridRef.current.api.setQuickFilter(document.getElementById("filterTextBox").value)
     //
@@ -714,7 +717,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
         <p>{titleTable}</p>
       </div>
       {/* PrintQuickFilterTexts */}
-      <div className="filter-header">
+      <div className="quick-filter">
         Швидкий пошук: <input type="text" id="filterTextBox" placeholder="Filter..." onInput={onFilterTextBoxChanged} />
         {/* <button style={{ marginLeft: "20px" }} onClick={onPrintQuickFilterTexts}>
           Print Quick Filter Cache Texts
@@ -741,7 +744,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
           // onRowSelected={onRowSelected} ////Для вибору даних використовую ф-цію selectedRowState
           onSelectionChanged={onSelectionChanged} //Вибір клацанням на рядок
           onRowDoubleClicked={onDoubleClicke} //Подвійниц клік на рядку
-          cacheQuickFilter={true}
+          cacheQuickFilter={true} //Швидкий пошук
           frameworkComponents={frameworkComponents} //Для checkBox
         ></AgGridReact>
       </div>
@@ -801,6 +804,13 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
           cursor: pointer;
           background-color: ${theme.colors.tableIconBackgroundHover};
         }
+        .quick-filter {
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
+          font-size: 12px;
+          font-weight: bold;
+          // margin-left: 5px;
+          background-color: ${theme.colors.tableHeadBackground};
+        }
 
         @media (min-width: 960px) {
           .agrid_head-title-mobi {
@@ -815,14 +825,6 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
             justify-content: space-end; //   притискає до країв
             // align-items: center;
             // background-color: ${theme.colors.tableHeadBackground};
-          }
-          //
-          .filter-header {
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-size: 12px;
-            font-weight: bold;
-            margin-left: 5px;
-            background-color: ${theme.colors.tableHeadBackground};
           }
         }
       `}</style>

@@ -61,8 +61,8 @@ export default function DrawerSwitcher() {
         onMouseLeave={toggleNotHover}
       >
         <IconMenu
-          width={iconSize}
-          height={iconSize}
+          width={theme.size.headIcon}
+          height={theme.size.headIcon}
           onMouseEnter={toggleHover}
           colorFill={iconHover ? theme.colors.headIconHover : theme.colors.headIcon}
         />

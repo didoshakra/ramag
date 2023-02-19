@@ -283,6 +283,7 @@ const Products = () => {
           background: #82ae46;
         }
         .products__img {
+        .products__img {
           padding: 2vw 0;
           width: 100%;
           //height: 270px;//Висота вирахлвуються при маштабуванні картинки(для cover треба 2-а розміри)

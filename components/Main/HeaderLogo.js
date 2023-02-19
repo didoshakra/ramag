@@ -13,7 +13,6 @@ const HeaderLogo = () => {
     <div className="headerLogo">
       <Link href="/" className="headerLogo__icon">
         <Image title="ramag" width={70} height={50} src="/images/head/sun_man_hands-oval-ra-red.png" alt="logo" />
-        {/* <Image title="ramag" width={70} height={50} src="/images/head/sun_man_mount-380.png" alert="logo" /> */}
         {/* <Image title="raui" width={50} height={50} src="/images/head/sun_man_hands-oval-ra.png" alert="logo" /> */}
         {/* <Image title="raui" width={60} height={50} src="/images/head/Ra-oval.png" alert="logo" /> */}
       </Link>

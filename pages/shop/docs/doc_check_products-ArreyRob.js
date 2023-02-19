@@ -653,7 +653,11 @@ function GDocCheckProducts({
             <button className="agrid_head-nav-button" onClick={changeTheme} title="Зміна теми">
               {themeTypeLight ? (
                 // <IconMoon_border width="18" height="18" colorFill={theme.colors.tableIcon} />
-                <IconMoon_border width={iconSize} height={iconSize} colorFill={theme.colors.tableIcon} />
+                <IconMoon_border
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               ) : (
                 <IconSun_border width={iconSize} height={iconSize} colorFill={theme.colors.tableIcon} />
               )}

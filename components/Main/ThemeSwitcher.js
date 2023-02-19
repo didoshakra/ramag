@@ -45,15 +45,15 @@ const ThemeSwitche = () => {
       >
         {themeTypeLight ? (
           <IconMoon
-            width={iconSize}
-            height={iconSize}
+            width={theme.size.headIcon}
+            height={theme.size.headIcon}
             colorFill={iconHover ? theme.colors.headIconHover : theme.colors.headIcon}
             // colorFill={theme.colors.headIcon}
           />
         ) : (
           <IconSun
-            width={iconSize}
-            height={iconSize}
+            width={theme.size.headIcon}
+            height={theme.size.headIcon}
             colorFill={iconHover ? theme.colors.headIconHover : theme.colors.headIcon}
             // colorFill={theme.colors.headIcon}
           />

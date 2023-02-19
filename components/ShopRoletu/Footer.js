@@ -17,7 +17,7 @@ const Footer = () => {
         <a href="#" className="footer-mouse-icon">
           <div className="footer-mouse-wheel">
             <span className="ion-ios-arrow-up">
-              <IconShevronUp width="14" height="14" />
+              <IconShevronUp width={theme.size.headIcon} height={theme.size.headIcon} />
             </span>
           </div>
         </a>
@@ -34,14 +34,14 @@ const Footer = () => {
             <li>
               <a href="https://www.instagram.com/roletydaynight">
                 <span className="icon-social">
-                  <IconInstagram_с2 width="26" height="26" />
+                  <IconInstagram_с2 width={theme.size.headIcon} height={theme.size.headIcon} />
                 </span>
               </a>
             </li>
             <li>
               <a href="https://www.facebook.com/profile.php?id=100080681993195">
                 <span className="icon-social">
-                  <IconFacebook width="26" height="26" />
+                  <IconFacebook width={theme.size.headIcon} height={theme.size.headIcon} />
                 </span>
               </a>
             </li>

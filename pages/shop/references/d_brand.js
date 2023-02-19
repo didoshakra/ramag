@@ -124,6 +124,7 @@ function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
         //   field: "id",
         minWidth: 30,
         maxWidth: 100,
+        hide: isDovidnuk ? true : false, //Не прв doc_check_products- товари в чеках:казувати стовбець
         checkboxSelection: isDovidnuk ? false : true, //
         headerCheckboxSelection: isDovidnuk ? false : true, //Добавляє в шапку
         sortable: false,
@@ -134,8 +135,8 @@ function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
         suppressMovable: true, //Заборона перетягнути заголовок стовпця.
         suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
       },
-      { field: "id", headerName: "id/Код" },
       { field: "name", headerName: "Бренд / марка товару", minWidth: 200, flex: 2 },
+      { field: "id", headerName: "id/Код" },
     ],
     [isDovidnuk]
   )
@@ -163,6 +164,8 @@ function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
   const onGridReady = (params) => {
     setGridApi(params.api)
     setRowData(data) //з сервера Pg
+    console.log("Brand.js/onGridReady")
+    document.querySelector("#filterTextBox")?.focus() //Передати фокус в швидкий фільтер
 
     // setRowData(dataMake) //Тестові дані з dataMake
     // Тестові дані з зовнішного сервера
@@ -208,6 +211,8 @@ function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
     gridRef.current.api.paginationSetPageSize(Number(value))
   }, [])
 
+
+//** */
   // Вихід з форми
   const onCancel = () => {
     //якщо не довідник
@@ -357,11 +362,37 @@ function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
     // Router.back()//На попередню сторінку
   }
 
+  const onCellClicked=()=>{
+    alert("onCellClicked")
+  }
+  const onRowEditingStarted = useCallback((event) => {
+    console.log("never called - not doing row editing")
+  }, [])
+
+  const onRowEditingStopped = useCallback((event) => {
+    console.log("never called - not doing row editing")
+  }, [])
+
+  const onCellEditingStarted = useCallback((event) => {
+    console.log("cellEditingStarted")
+  }, [])
+
+  const onCellEditingStopped = useCallback((event) => {
+    console.log("cellEditingStopped")
+  }, [])
+
+
   //******************************************************************* */
   //--- На друк
   const onPrint = () => {
     alert("onPrint")
   }
+
+  //Швидкий пошук
+  const onFilterTextBoxChanged = useCallback(() => {
+    gridRef.current.api.setQuickFilter(document.getElementById("filterTextBox").value)
+    //
+  }, [])
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
@@ -507,6 +538,13 @@ function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
       <div className="agrid_head-title-mobi">
         <p>{titleTable}</p>
       </div>
+      {/* PrintQuickFilterTexts */}
+      <div className="quick-filter">
+        Швидкий пошук: <input type="text" id="filterTextBox" placeholder="Filter..." onInput={onFilterTextBoxChanged} />
+        {/* <button style={{ marginLeft: "20px" }} onClick={onPrintQuickFilterTexts}>
+          Print Quick Filter Cache Texts
+        </button> */}
+      </div>
       {/*  */}
       <div
         style={{ height: "calc(100% - 37px)" }}
@@ -528,6 +566,13 @@ function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
           // onRowSelected={onRowSelected} ////Для вибору даних використовую ф-цію selectedRowState
           onSelectionChanged={onSelectionChanged} //Вибір клацанням на рядок
           onRowDoubleClicked={onDoubleClicke} //Подвійниц клік на рядку
+          //   suppressCellFocus={true}//Длокує навігацію клавішами
+          cacheQuickFilter={true} //Швидкий пошук
+          onCellClicked={onCellClicked} //
+          onRowEditingStarted={onRowEditingStarted}
+          onRowEditingStopped={onRowEditingStopped}
+          onCellEditingStarted={onCellEditingStarted}
+          onCellEditingStopped={onCellEditingStopped}
         ></AgGridReact>
       </div>
       {formActive && <BrandForm onCloseForm={onCloseForm} toFormData={toFormData} />}
@@ -584,6 +629,13 @@ function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
         .agrid_head-nav-button:hover {
           cursor: pointer;
           background-color: ${theme.colors.tableIconBackgroundHover};
+        }
+        .quick-filter {
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
+          font-size: 12px;
+          font-weight: bold;
+          //   margin-left: 5px;
+          background-color: ${theme.colors.tableHeadBackground};
         }
 
         @media (min-width: 480px) {

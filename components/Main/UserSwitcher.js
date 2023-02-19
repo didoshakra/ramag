@@ -46,7 +46,7 @@ const UserSwitcher = () => {
         onMouseLeave={toggleNotHover}
       >
         {profile === "admin" ? (
-          <image className="userSwitcher__avatar" width={40} height={40} alt="avatar" />
+          <Image className="userSwitcher__avatar" width={40} height={40} alt="avatar" />
         ) : (
           <NotAuthenticated
             width={iconSize}

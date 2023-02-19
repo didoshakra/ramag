@@ -35,18 +35,18 @@ export default function CategoryForm({ onCloseForm, toFormData }) {
       <form className="dataForm" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-nav">
           <button className="head-nav-button" type="button" onClick={() => reset()} title="Оновити ввід">
-            <IconRefresh width="12" height="12" colorFill={theme.colors.formIcon} />
+            <IconRefresh width={theme.size.formIcon} height={theme.size.formIcon} colorFill={theme.colors.formIcon} />
           </button>
           <input className="inputSubmit" type="submit" />
           <button className="head-nav-button" type="button" onClick={onCancel} title="Вийти без збереження">
-            <IconCancel width="12" height="12" colorFill={theme.colors.formIcon} />
+            <IconCancel width={theme.size.formIcon} height={theme.size.formIcon} colorFill={theme.colors.formIcon} />
           </button>
         </div>
         <div className="formBody">
           <div className="inputBody" style={{ weight: "250px", margin: "0 10px" }}>
             <label className="label">Назва категорії</label>
             <input className="input" {...register("name", { maxLength: 50 })} required />
-            <div lassName="errorMsg">{errors.name?.type === "maxLength" && "Назва >50симв."}</div>
+            <div className="errorMsg">{errors.name?.type === "maxLength" && "Назва >50симв."}</div>
           </div>
         </div>
       </form>

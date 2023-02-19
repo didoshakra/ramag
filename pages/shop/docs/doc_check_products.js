@@ -66,9 +66,9 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
 }
 //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
-//   const url = `${dbHost}${urlAPI}${headData.id}` //->/[...slug].js
-//   const response = await fetch(url)
-//   const data = await response.json()
+  //   const url = `${dbHost}${urlAPI}${headData.id}` //->/[...slug].js
+  //   const response = await fetch(url)
+  //   const data = await response.json()
   //**************************** */
   let data = {}
   const res = await pool.connect((err, client, done) => {
@@ -689,9 +689,17 @@ function GDocCheckProducts({
             <button className="agrid_head-nav-button" onClick={changeTheme} title="Зміна теми">
               {themeTypeLight ? (
                 // <IconMoon_border width="18" height="18" colorFill={theme.colors.tableIcon} />
-                <IconMoon_border width={iconSize} height={iconSize} colorFill={theme.colors.tableIcon} />
+                <IconMoon_border
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               ) : (
-                <IconSun_border width={iconSize} height={iconSize} colorFill={theme.colors.tableIcon} />
+                <IconSun_border
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               )}
             </button>
             <button
@@ -700,19 +708,27 @@ function GDocCheckProducts({
               title="Відновлення початкового стану колонок"
             >
               <IconTable_c2
-                width={iconSize}
-                height={iconSize}
+                width={theme.size.tableIcon}
+                height={theme.size.tableIcon}
                 colorFill={theme.colors.tableIcon}
                 colorFill1={theme.colors.tableIcon1}
               />
               {/* Колонки */}
             </button>
             <button className="agrid_head-nav-button" onClick={redrawAllRows} title="Обновити дані">
-              <IconRefresh width={iconSize} height={iconSize} colorFill={theme.colors.tableIcon} />
+              <IconRefresh
+                width={theme.size.tableIcon}
+                height={theme.size.tableIcon}
+                colorFill={theme.colors.tableIcon}
+              />
             </button>
             {countSelectedRows === 0 ? (
               <button className="agrid_head-nav-button" onClick={onAdd} title="Добавити">
-                <IconAdd width={iconSize} height={iconSize} colorFill={theme.colors.tableIcon} />
+                <IconAdd
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               </button>
             ) : (
               ""
@@ -720,8 +736,8 @@ function GDocCheckProducts({
             {countSelectedRows === 1 ? (
               <button className="agrid_head-nav-button" onClick={onEdit} title="Редагувати">
                 <IconPencil_c3
-                  width={iconSize}
-                  height={iconSize}
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
                   colorFill={theme.colors.tableIcon}
                   colorFill1={theme.colors.tableIcon1}
                   colorFill2={theme.colors.tableIcon2}
@@ -733,8 +749,8 @@ function GDocCheckProducts({
             {countSelectedRows > 0 ? (
               <button className="agrid_head-nav-button" onClick={onDelete} title="Видалити">
                 <IconTrash
-                  width={iconSize}
-                  height={iconSize}
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
                   colorFill={theme.colors.tableIcon}
                   colorFill1={theme.colors.tableIcon}
                 />
@@ -774,26 +790,38 @@ function GDocCheckProducts({
             <div style={{ display: "flex" }}>
               <button className="agrid_head-nav-button" onClick={onPrint} title="Друк на принтер">
                 <IconPrinter_c2
-                  width={iconSize}
-                  height={iconSize}
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
                   colorFill={theme.colors.tableIcon}
                   colorFill1={theme.colors.tableIcon1}
                 />
               </button>
               <button className="agrid_head-nav-button" onClick={onExportExcel} title="Експорт в Excel">
-                <IconExport width={iconSize} height={iconSize} colorFill={theme.colors.tableIcon} />
+                <IconExport
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
               </button>
             </div>
           </div>
           <button className="agrid_head-nav-button" onClick={onPaymentDialog} title="Оплата">
-            <IconPaymentMethod width={iconSize} height={iconSize} colorFill={theme.colors.tableIcon} />
+            <IconPaymentMethod
+              width={theme.size.tableIcon}
+              height={theme.size.tableIcon}
+              colorFill={theme.colors.tableIcon}
+            />
           </button>
           <button className="agrid_head-nav-button" onClick={onClient} title="Клієнт">
-            <IconClientMale width={iconSize} height={iconSize} colorFill={theme.colors.tableIcon} />
+            <IconClientMale
+              width={theme.size.tableIcon}
+              height={theme.size.tableIcon}
+              colorFill={theme.colors.tableIcon}
+            />
           </button>
           {/* <button className="agrid_head-nav-button" onClick={onCancelPaymentDialog} title="Вийти"> */}
           <button className="agrid_head-nav-button" onClick={onCancel} title="Вийти">
-            <IconCancel width={iconSize} height={iconSize} colorFill={theme.colors.tableIcon} />
+            <IconCancel width={theme.size.tableIcon} height={theme.size.tableIcon} colorFill={theme.colors.tableIcon} />
           </button>
         </div>
       </div>

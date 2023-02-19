@@ -51,6 +51,7 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
         //   field: "id",
         minWidth: 30,
         maxWidth: 100,
+        hide: isDovidnuk ? true : false, //Не прв doc_check_products- товари в чеках:казувати стовбець
         checkboxSelection: isDovidnuk ? false : true, //
         headerCheckboxSelection: isDovidnuk ? false : true, //Добавляє в шапку
         sortable: false,
@@ -61,8 +62,8 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
         suppressMovable: true, //Заборона перетягнути заголовок стовпця.
         suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
       },
-      { field: "id", headerName: "id/Код" },
       { field: "name", headerName: "Категорія", width: 200, minWidth: 200, flex: 4 },
+      { field: "id", headerName: "id/Код" },
       // { field: "kuda", headerName: "Куди входить", minWidth: 90 },
     ],
     [isDovidnuk]
@@ -91,6 +92,7 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
   const onGridReady = (params) => {
     setGridApi(params.api)
     setRowData(data) //з сервера Pg
+    document.querySelector("#filterTextBox")?.focus() //Передати фокус в швидкий пошук
 
     // setRowData(dataMake) //Тестові дані з dataMake
     // Тестові дані з зовнішного сервера
@@ -286,6 +288,12 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
     alert("onPrint")
   }
 
+  //Швидкий пошук
+  const onFilterTextBoxChanged = useCallback(() => {
+    gridRef.current.api.setQuickFilter(document.getElementById("filterTextBox").value)
+    //
+  }, [])
+
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <div className="agrid_head-container">
@@ -429,6 +437,13 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
       <div className="agrid_head-title-mobi">
         <p>{titleTable}</p>
       </div>
+      {/* PrintQuickFilterTexts */}
+      <div className="quick-filter">
+        Швидкий пошук: <input type="text" id="filterTextBox" placeholder="Filter..." onInput={onFilterTextBoxChanged} />
+        {/* <button style={{ marginLeft: "20px" }} onClick={onPrintQuickFilterTexts}>
+          Print Quick Filter Cache Texts
+        </button> */}
+      </div>
       {/*  */}
       <div
         style={{ height: "calc(100% - 37px)" }}
@@ -450,6 +465,7 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
           // onRowSelected={onRowSelected} ////Для вибору даних використовую ф-цію selectedRowState
           onSelectionChanged={onSelectionChanged} //Вибір клацанням на рядок
           onRowDoubleClicked={onDoubleClicke} //Подвійниц клік на рядку
+          cacheQuickFilter={true} //Швидкий пошук
         ></AgGridReact>
       </div>
       {formActive && <CategoryForm onCloseForm={onCloseForm} toFormData={toFormData} />}
@@ -506,6 +522,13 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
         .agrid_head-nav-button:hover {
           cursor: pointer;
           background-color: ${theme.colors.tableIconBackgroundHover};
+        }
+        .quick-filter {
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
+          font-size: 12px;
+          font-weight: bold;
+          // margin-left: 5px;
+          background-color: ${theme.colors.tableHeadBackground};
         }
 
         @media (min-width: 600px) {

@@ -90,6 +90,7 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
   const onGridReady = (params) => {
     setGridApi(params.api)
     setRowData(data) //з сервера Pg
+    document.querySelector("#filterTextBox")?.focus() //Передати фокус в швидкий пошук
 
     // setRowData(dataMake) //Тестові дані з dataMake
     // Тестові дані з зовнішного сервера
@@ -290,6 +291,12 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
     alert("onPrint")
   }
 
+  //Швидкий пошук
+  const onFilterTextBoxChanged = useCallback(() => {
+    gridRef.current.api.setQuickFilter(document.getElementById("filterTextBox").value)
+    //
+  }, [])
+
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <div className="agrid_head-container">
@@ -426,12 +433,19 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
             </>
           )}
           <button className="agrid_head-nav-button" onClick={onCancel} title="Вийти">
-            <IconCancel width={theme.size.tableIcon} height="18" colorFill={theme.colors.tableIcon} />
+            <IconCancel width={theme.size.tableIcon} height={theme.size.tableIcon} colorFill={theme.colors.tableIcon} />
           </button>
         </div>
       </div>
       <div className="agrid_head-title-mobi">
         <p>{titleTable}</p>
+      </div>
+      {/* PrintQuickFilterTexts */}
+      <div className="quick-filter">
+        Швидкий пошук: <input type="text" id="filterTextBox" placeholder="Filter..." onInput={onFilterTextBoxChanged} />
+        {/* <button style={{ marginLeft: "20px" }} onClick={onPrintQuickFilterTexts}>
+          Print Quick Filter Cache Texts
+        </button> */}
       </div>
       {/*  */}
       <div
@@ -454,6 +468,7 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
           // onRowSelected={onRowSelected} ////Для вибору даних використовую ф-цію selectedRowState
           onSelectionChanged={onSelectionChanged} //Вибір клацанням на рядок
           onRowDoubleClicked={onDoubleClicke} //Подвійниц клік на рядку
+          cacheQuickFilter={true} //Швидкий пошук
         ></AgGridReact>
       </div>
       {formActive && <OvForm onCloseForm={onCloseForm} toFormData={toFormData} />}
@@ -511,6 +526,13 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
           cursor: pointer;
           background-color: ${theme.colors.tableIconBackgroundHover};
         }
+        .quick-filter {
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
+          font-size: 12px;
+          font-weight: bold;
+          // margin-left: 5px;
+          background-color: ${theme.colors.tableHeadBackground};
+        }
 
         @media (min-width: 960px) {
           .agrid_head-title-mobi {
@@ -535,8 +557,8 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
 //*************************************************************************************** */
 //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
-//   const response = await fetch(`${dbHost}/api/shop/references/d_ov/select-all`)
-//   const data = await response.json()
+  //   const response = await fetch(`${dbHost}/api/shop/references/d_ov/select-all`)
+  //   const data = await response.json()
   //**************************** */
   let data = {}
   const res = await pool.connect((err, client, done) => {

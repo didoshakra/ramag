@@ -163,7 +163,14 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
       <div className="DrawerDroop-header">
         <div className="DrawerDroop-header_logo">
           <Link href="/">
-            <Image title="ramag" width={80} height={80} src="/images/head/sun_man_mount-380.png" alt="logo" />
+            <Image
+              title="ramag"
+              width={80}
+            //   width={auto}
+              height={80}
+              src="/images/head/sun_man_mount-380.png"
+              alt="logo"
+            />
           </Link>
           <Link href="/" legacyBehavior>
             <a className="DrawerDroop-header_text" title="RAMAG">
@@ -179,8 +186,8 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
           onMouseLeave={toggleNotHover}
         >
           <IconCancel
-            width={iconSize}
-            height={iconSize}
+            width={theme.size.headIcon}
+            height={theme.size.headIcon}
             colorFill={iconHover ? theme.colors.headIconHover : theme.colors.headIcon}
           />
         </div>
@@ -215,7 +222,6 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
             z-index: 5;
             color: ${theme.colors.headDroopMenuText};
             // background: ${theme.colors.headBackground};
-            // background: url("/images/head/sun_man_mount-380.png") 100% 100% no-repeat;
             background: ${theme.colors.headBackground};
 
             //*** Збільшується (зліва/Зміна width)

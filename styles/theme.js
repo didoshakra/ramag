@@ -19,6 +19,9 @@ export const themeLith = {
     decorative: "Trattatello,fantasy", //декоративні шрифти, для назв
   },
   size: {
+    headIcon: "20px",
+    headIconBorder: "30px",
+    //
     tableIcon: "20px",
     tableIconBorder: "30px",
     //
@@ -194,7 +197,7 @@ export const themeDark = {
   size: {
     headIcon: "20px",
     headIconBorder: "30",
-    
+
     tableIcon: "20px",
     tableIconBorder: "30",
     //

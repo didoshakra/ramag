@@ -39,7 +39,7 @@ export default function DProduct({
   isDovidnuk = false, //Чи відкривати як довідник
   setDovActive, //Назва довідника
   setValue, //Для зміни Input в формі вводу даних
-  setFocus, //Для передачі вибраних змінних в Form
+  setFocus, //Для передачі фокусу
 }) {
   //= Загрузка даних на фронтенді useSWR ================================================================*/
   const { data, error } = useSWR("/api/shop/references/d_product/select-all", fetcher, {
@@ -649,7 +649,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
             </>
           )}
           <button className="agrid_head-nav-button" onClick={onCancel} title="Вийти">
-            <IconCancel width={theme.size.tableIcon} height="18" colorFill={theme.colors.tableIcon} />
+            <IconCancel width={theme.size.tableIcon} height={theme.size.tableIcon} colorFill={theme.colors.tableIcon} />
           </button>
         </div>
         {/*  */}
@@ -658,7 +658,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
         <p>{titleTable}</p>
       </div>
       {/* PrintQuickFilterTexts */}
-      <div className="filter-header">
+      <div className="quick-filter">
         Швидкий пошук: <input type="text" id="filterTextBox" placeholder="Filter..." onInput={onFilterTextBoxChanged} />
         {/* <button style={{ marginLeft: "20px" }} onClick={onPrintQuickFilterTexts}>
           Print Quick Filter Cache Texts
@@ -759,7 +759,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
             // background-color: ${theme.colors.tableHeadBackground};
           }
           //
-          .filter-header {
+          .quick-filter {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             font-size: 12px;
             font-weight: bold;

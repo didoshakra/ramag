@@ -126,8 +126,8 @@ const HeaderSetingDroop = () => {
         onMouseLeave={toggleIconSetingNotHover}
       >
         <IconSeting
-          width={iconSize}
-          height={iconSize}
+          width={theme.size.headIcon}
+          height={theme.size.headIcon}
           colorFill={iconSetingHover ? theme.colors.headIconHover : theme.colors.headIcon}
         />
       </div>
@@ -148,14 +148,14 @@ const HeaderSetingDroop = () => {
           >
             {themeTypeLight ? (
               <IconMoon
-                width={iconSize}
-                height={iconSize}
+                width={theme.size.headIcon}
+                height={theme.size.headIcon}
                 colorFill={iconThemeHover ? theme.colors.headIconHover : theme.colors.headIcon}
               />
             ) : (
               <IconSun
-                width={iconSize}
-                height={iconSize}
+                width={theme.size.headIcon}
+                height={theme.size.headIcon}
                 colorFill={iconThemeHover ? theme.colors.headIconHover : theme.colors.headIcon}
               />
             )}
@@ -166,7 +166,6 @@ const HeaderSetingDroop = () => {
           {/* // Від цього об'єкту li відраховуються відступи в випадаючих меню мов  */}
           <p>
             {profile === "admin" ? (
-
               <Image className="UserSwitcher__avatar" width={40} height={40} src="/avatar/2.jpg" alt="avatar" />
             ) : (
               <NotAuthenticated width={iconSize} height={iconSize} colorFill={theme.colors.headIcon} />

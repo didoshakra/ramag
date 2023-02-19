@@ -116,8 +116,8 @@ const HeaderSetingDroop = () => {
         onMouseLeave={toggleIconSetingNotHover}
       >
         <IconSeting
-          width={iconSize}
-          height={iconSize}
+          width={theme.size.headIcon}
+          height={theme.size.headIcon}
           colorFill={iconSetingHover ? theme.colors.headIconHover : theme.colors.headIcon}
         />
       </div>
@@ -138,14 +138,14 @@ const HeaderSetingDroop = () => {
           >
             {themeTypeLight ? (
               <IconMoon
-                width={iconSize}
-                height={iconSize}
+                width={theme.size.headIcon}
+                height={theme.size.headIcon}
                 colorFill={iconThemeHover ? theme.colors.headIconHover : theme.colors.headIcon}
               />
             ) : (
               <IconSun
-                width={iconSize}
-                height={iconSize}
+                width={theme.size.headIcon}
+                height={theme.size.headIcon}
                 colorFill={iconThemeHover ? theme.colors.headIconHover : theme.colors.headIcon}
               />
             )}
@@ -163,14 +163,13 @@ const HeaderSetingDroop = () => {
           <LocaleSwitcherDroop langMenuOpen={langMenuOpen} setLangMenuOpen={setLangMenuOpen} />
           <p>
             <IconGlobe
-              width={iconSize}
-              height={iconSize}
+              width={theme.size.headIcon}
+              height={theme.size.headIcon}
               colorFill={iconGlobeHover ? theme.colors.headIconHover : theme.colors.headIcon}
             />
           </p>
           <p>Мови</p>
         </li>
-
       </ul>
       <style jsx global>{`
         .headerSetingDroop {
@@ -231,7 +230,7 @@ const HeaderSetingDroop = () => {
           background: ${theme.colors.headBackground};
         }
         .headerSetingDroop__dropdown__item:hover {
-        //   color: ${theme.colors.headIconHover};
+          //   color: ${theme.colors.headIconHover};
           background: ${theme.colors.headMenuBackgroundHover};
           cursor: pointer;
         }

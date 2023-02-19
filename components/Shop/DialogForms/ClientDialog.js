@@ -98,7 +98,7 @@ export default function ClientDialog({ setIsClientDialog, discountRecalc }) {
               className="head-nav-button"
               // style={{ width:"30px",height:"30px" }}
               type="button"
-              onClick={onCancel}
+              onClick={onCancel} 
               title="Вийти"
             >
               <IconCancel

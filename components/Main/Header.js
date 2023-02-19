@@ -177,7 +177,7 @@ const Header = () => {
             // width: 100%;
             width: 100vw;
             transition: top 0.4s ease-in;
-            z-index: 100;
+            z-index: 2;
           }
         }
       `}</style>

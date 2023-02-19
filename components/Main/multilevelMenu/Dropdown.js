@@ -18,7 +18,6 @@ const Dropdown = ({ submenus, dropdown, depthLevel }) => {
           //   left: 50px;
           //   box-shadow: 0 10px 15px -3px rgba(46, 41, 51, 0.08), 0 4px 6px -2px rgba(71, 63, 79, 0.16);
           font-size: 0.9rem;
-        //   font-size: 0.875rem;
           z-index: 9999;
           min-width: 10rem;
           padding: 0;

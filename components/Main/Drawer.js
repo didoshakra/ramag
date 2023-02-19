@@ -161,17 +161,15 @@ export default function Drawer() {
       >
         {/* іконка мобільного меню */}
         {drawerOpen ? (
-          <IconCancel
-            width={iconSize}
-            height={iconSize}
-            // width="20"
-            // height="20"
+          <IconCancel 
+            width={theme.size.headIcon}
+            height={theme.size.headIcon}
             colorFill={iconHover ? theme.colors.headIconHover : theme.colors.drawerHeadIcon}
           />
         ) : (
           <IconMenu
-            width={iconSize}
-            height={iconSize}
+            width={theme.size.headIcon}
+            height={theme.size.headIcon}
             onMouseEnter={toggleHover}
             colorFill={iconHover ? theme.colors.headIconHover : theme.colors.headIcon}
           />

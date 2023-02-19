@@ -9,7 +9,7 @@ const MobileMenuIcon = (props) => {
   const { state } = useContext(ComponentContext)
   const { theme } = state
  const [iconHover, setIconHover] = useState(false) //Для тоого щоб працював hover
- const iconSize = "25"
+//  const iconSize = "25"
 
  //Для тоого щоб працював hover
  //Повинні бути і toggleHover і toggleNotHover бо інакше iconHover уде мінятись через раз
@@ -33,8 +33,8 @@ const MobileMenuIcon = (props) => {
       >
         {/* <FontAwesomeIcon icon={faList} /> */}
         <IconList
-          width={iconSize}
-          height={iconSize}
+          width={theme.size.headIcon}
+          height={theme.size.headIcon}
           colorFill={iconHover ? theme.colors.headIconHover : theme.colors.headIcon}
           // colorFill={theme.colors.headIcon}
         />

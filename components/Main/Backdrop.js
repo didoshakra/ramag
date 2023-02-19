@@ -14,7 +14,7 @@ export default function Backdrop({ setDrawerOpen }) {
           width: 100vw;
           height: 100vh;
           background: rgba(0, 0, 0, 0.7);
-          z-index: 0;
+          z-index: 1;
         }
       `}</style>
     </div>
