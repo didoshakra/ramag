@@ -166,7 +166,7 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
             <Image
               title="ramag"
               width={80}
-            //   width={auto}
+              //   width={auto}
               height={80}
               src="/images/head/sun_man_mount-380.png"
               alt="logo"
@@ -220,9 +220,8 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
             // border-radius: 0 0 5px 5px;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 5;
-            color: ${theme.colors.headDroopMenuText};
-            // background: ${theme.colors.headBackground};
-            background: ${theme.colors.headBackground};
+            color: ${theme.colors.drawerDropMenuText};
+            background: ${theme.colors.drawerDropMenuBackground};
 
             //*** Збільшується (зліва/Зміна width)
             width: ${drawerOpen ? driwerWidht : "0px"};
@@ -276,26 +275,23 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #3b6a3d;
+            background-color: ${theme.colors.drawerHeadBackground};
           }
 
           .DrawerDroop-header_logo {
             padding: 0 1vw;
             display: flex;
             align-items: center;
-            // background-color: red;
-            background-color: #3b6a3d;
-            // background: ${theme.colors.headBackground};
+            background-color: ${theme.colors.drawerHeadBackground};
+            // background-color: #3b6a3d;
           }
           .DrawerDroop-header_text {
             padding: 0 1vw;
             font-family: ${theme.fontFamily.sansSerif};
             font-size: 20px;
             font-weight: 800;
-            color: #3bff3d;
-            color: ${theme.colors.headLogoText};
-            background-color: #3b6a3d;
-            // background: ${theme.colors.headBackground};
+            color: ${theme.colors.drawerHeadText};
+            background-color: ${theme.colors.drawerHeadBackground};
           }
           .DrawerDroop-header_text:hover {
             color: ${theme.colors.headLogoTextHover};

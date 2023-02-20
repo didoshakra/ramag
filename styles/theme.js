@@ -83,24 +83,27 @@ export const themeLith = {
     headDroopMenuBackgroundActive: "red",
 
     //-- drawer --------------------------------------------
+    drawerHeadText: "#6B8E23", //
+    drawerHeadBackground: "#3b6a3d", //
     drawerHeadIcon: "#6B8E23", //Іконка шапки drawer
     drawerHeadIconHover: "red", //Іконка шапки drawer
     drawerHeadMenuText: "#6B8E23", //Підменю
     drawerHeadMenuTextHover: "#fff", //Підменю
     drawerHeadMenuBackground: "#F4F4EB", //Підменю
     drawerHeadMenuBackgroundHover: "#A5E189", //Підменю
-    drawerMenuText: "#6B8E23", //Підменю
-    drawerDropMenu: "#6B8E23", //Підменю
+    //
+    drawerDropMenuText: "#6B8E23", //Текст випадаючого меню
+    drawerDropMenuBackground: "#E7F4E0", // "#F4F4EB",
     drawerDropHr: "#6B8E23", // Лінії розмежування
 
     //-- drawer\multilevelMenu --------------------------------------------
     // drawerDropdownMenuBackground: "yellow", //Підменю
+    drawerDropdownMenuSubmenuMain: "green", //"#82AE46", //Головне(верхнє) підменю
+    drawerDropdownMenuArrow: "#82AE46", // Стрілка верхньогоменю
     drawerDropdownMenuSubmenu: "#6B8E23", //Підменю
-    drawerDropdownMenuSubmenuMain: "#0092ff", //Головне(верхнє) підменю
-    drawerDropdownMenuItem: "green", // Стрілка верхньогоменю
+    drawerDropdownMenuSubmenuChevron: "#6B8E23", //Субменю/подвійна стрілка-шеврон
+    drawerDropdownMenuItem: "#82AE46", // Стрілка верхньогоменю
     drawerDropdownMenuItemHover: "#f64532", // Стрілка верхньогоменю
-    drawerDropdownMenuSubmenuChevron: "#0092ff", //Субменю/подвійна стрілка-шеврон
-    drawerDropdownMenuArrow: "#f64532", // Стрілка верхньогоменю
 
     //-- docHead --------------------------------------------
     docHeadTitle: "#6B8E23", //1 "#fff",
@@ -262,24 +265,27 @@ export const themeDark = {
     headDroopMenuBackgroundActive: "red",
 
     //-- drawer --------------------------------------------
+    drawerHeadText: "#6B8E23", //
+    drawerHeadBackground: "#3b6a3d", //
     drawerHeadIcon: "#6B8E23", //Іконка шапки drawer
     drawerHeadIconHover: "red", //Іконка шапки drawer
     drawerHeadMenuText: "#6B8E23", //Підменю
     drawerHeadMenuTextHover: "#fff", //Підменю
     drawerHeadMenuBackground: "#F4F4EB", //Підменю
     drawerHeadMenuBackgroundHover: "#A5E189", //Підменю
-    drawerMenuText: "#6B8E23", //Підменю
-    drawerDropMenu: "#6B8E23", //Підменю
+    //
+    drawerDropMenuText: "#6B8E23", //Текст випадаючого меню
+    drawerDropMenuBackground: "#222628", // "#F4F4EB",
     drawerDropHr: "#6B8E23", // Лінії розмежування
 
     //-- drawer\multilevelMenu --------------------------------------------
     // drawerDropdownMenuBackground: "yellow", //Підменю
+    drawerDropdownMenuSubmenuMain: "green", //"#82AE46", //Головне(верхнє) підменю
+    drawerDropdownMenuArrow: "#82AE46", // Стрілка верхньогоменю
     drawerDropdownMenuSubmenu: "#6B8E23", //Підменю
-    drawerDropdownMenuSubmenuMain: "#0092ff", //Головне(верхнє) підменю
-    drawerDropdownMenuItem: "green", // Стрілка верхньогоменю
+    drawerDropdownMenuSubmenuChevron: "#6B8E23", //Субменю/подвійна стрілка-шеврон
+    drawerDropdownMenuItem: "#82AE46", // Стрілка верхньогоменю
     drawerDropdownMenuItemHover: "#f64532", // Стрілка верхньогоменю
-    drawerDropdownMenuSubmenuChevron: "#0092ff", //Субменю/подвійна стрілка-шеврон
-    drawerDropdownMenuArrow: "#f64532", // Стрілка верхньогоменю
 
     //-- doc --------------------------------------------
     // docHeadTitle: "#fff",

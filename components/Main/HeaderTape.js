@@ -61,7 +61,7 @@ const HeaderTape = () => {
         </a>
         {/* </Link> */}
       </span>
-      <span className="headerTape__announce">Від виробника під замовлення</span>
+      <span className="headerTape__announce">Тільки якісні товари</span>
       {/* ======================================================================== */}
       <style jsx>{`
         .headerTape-section {
