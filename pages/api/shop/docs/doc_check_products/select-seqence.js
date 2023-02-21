@@ -1,5 +1,5 @@
 //pages/api/doc_check_products/select-seqence.js
-//Отримати код з послідовності// SELECT nextval('doc_check_products_id_seq')
+//Отримати код з послідовності(для майбутного id)// SELECT nextval('doc_check_products_id_seq')//Не зробив
 
 import { pool } from "../../../../../config/dbShop"
 

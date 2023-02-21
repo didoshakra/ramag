@@ -84,11 +84,10 @@ export const themeLith = {
 
     //-- drawer --------------------------------------------
     drawerHeadText: "#6B8E23", //
+    drawerHeadTextHover: "#fff", //Підменю
     drawerHeadBackground: "#3b6a3d", //
     drawerHeadIcon: "#6B8E23", //Іконка шапки drawer
     drawerHeadIconHover: "red", //Іконка шапки drawer
-    drawerHeadMenuText: "#6B8E23", //Підменю
-    drawerHeadMenuTextHover: "#fff", //Підменю
     drawerHeadMenuBackground: "#F4F4EB", //Підменю
     drawerHeadMenuBackgroundHover: "#A5E189", //Підменю
     //
@@ -266,13 +265,12 @@ export const themeDark = {
 
     //-- drawer --------------------------------------------
     drawerHeadText: "#6B8E23", //
+    drawerHeadTextHover: "#fff",
     drawerHeadBackground: "#3b6a3d", //
     drawerHeadIcon: "#6B8E23", //Іконка шапки drawer
     drawerHeadIconHover: "red", //Іконка шапки drawer
-    drawerHeadMenuText: "#6B8E23", //Підменю
-    drawerHeadMenuTextHover: "#fff", //Підменю
-    drawerHeadMenuBackground: "#F4F4EB", //Підменю
-    drawerHeadMenuBackgroundHover: "#A5E189", //Підменю
+    drawerHeadMenuBackground: "#F4F4EB",
+    drawerHeadMenuBackgroundHover: "#A5E189",
     //
     drawerDropMenuText: "#6B8E23", //Текст випадаючого меню
     drawerDropMenuBackground: "#222628", // "#F4F4EB",
@@ -284,7 +282,7 @@ export const themeDark = {
     drawerDropdownMenuArrow: "#82AE46", // Стрілка верхньогоменю
     drawerDropdownMenuSubmenu: "#6B8E23", //Підменю
     drawerDropdownMenuSubmenuChevron: "#6B8E23", //Субменю/подвійна стрілка-шеврон
-    drawerDropdownMenuItem: "#82AE46", // Стрілка верхньогоменю
+    drawerDropdownMenuItem: "#82AE46", //Елемент меню
     drawerDropdownMenuItemHover: "#f64532", // Стрілка верхньогоменю
 
     //-- doc --------------------------------------------

@@ -3,25 +3,25 @@
 import { pool } from "../../../../../config/dbShop"
 
 export default function handler(req, resp) {
-  // console.log("api/admin/product/delete.js//handler/req.method=", req.method);
-  //   console.log("api/admin/product/delete.js//handler/req.body=", req.body);
+  // console.log("api/admin/doc_check_head/delete.js//handler/req.method=", req.method);
+  //   console.log("api/admin/doc_check_head/delete.js//handler/req.body=", req.body);
   //** */
   const rowsid = JSON.parse(req.body) //Для запитів до серверів використовувати формат JSON
   // const rowsid = req.body; //таж зпрацює якщо при відпрпвціі його не перетворювати;
-  console.log(`api/admin/product/delete.js/rowsid= ${rowsid}`)
-  const sql = `DELETE FROM d_product WHERE id IN (${rowsid})`
+  console.log(`api/.../doc_check_head/delete.js/rowsid= ${rowsid}`)
+  const sql = `DELETE FROM doc_check_head WHERE id IN (${rowsid})`
   try {
     pool.query(sql, (err, result) => {
-      // console.log("api/admin/product/delete.js/result.rowCount", result.rowCount); //Якщо в запиті нема RETURNING *
+      // console.log("api/admin/doc_check_head/delete.js/result.rowCount", result.rowCount); //Якщо в запиті нема RETURNING *
       if (err) {
-        // console.log("api/admin/product/delete.js/Помилка запиту до posgreSQL",err.stack);
+        // console.log("api/admin/doc_check_head/delete.js/Помилка запиту до posgreSQL",err.stack);
         let error = {
           stack: err.stack,
           message: "Помилка запиту до БД posgreSQL",
         }
         resp.status(400).json(error)
       } else {
-        // console.log("api/admin/product/delete.js/!err/result=", result);
+        // console.log("api/admin/doc_check_head/delete.js/!err/result=", result);
         resp.status(200).json(result.rowCount) //rowCount-к-кість успішних рядків
       }
     })

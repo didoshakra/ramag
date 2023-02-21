@@ -36,7 +36,8 @@ const par = { p1: 1, p2: 1 } //Параметри до select /Департам�
 export default function DocCheckHead({ serverData }) {
   //--- Загрузка даних на фронтенді useSWR
   const { data, error } = useSWR(`${urlAPI}${par.p1}/${par.p2}`, fetcher, {
-    initialData: serverData, refreshInterval: 100
+    initialData: serverData,
+    refreshInterval: 30000,
   })
 
   if (error) return <div>не вдалося завантажити</div>
@@ -56,13 +57,13 @@ export default function DocCheckHead({ serverData }) {
 //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
   //onst response = await fetch("http://localhost:3000/api/shop/docs/doc_check_head/")
-//   const url = `${dbHost}${urlAPI}${par.p1}/${par.p2}` //->/[...slug].js
-//   const response = await fetch(url)
-//   const data = await response.json()
+  //   const url = `${dbHost}${urlAPI}${par.p1}/${par.p2}` //->/[...slug].js
+  //   const response = await fetch(url)
+  //   const data = await response.json()
   //**************************** */
   let data = {}
   const res = await pool.connect((err, client, done) => {
-     const sql = `SELECT doc_check_head.id,place,user_id,client_id,total,discount,COALESCE(to_char(datetime, 'MM-DD-YYYY HH24:MI:SS'), '') AS datetime,d_departament.name AS departament,d_user.name AS user,d_client.name AS client FROM doc_check_head JOIN d_departament ON d_departament.id = doc_check_head.departament_id JOIN d_user ON d_user.id = doc_check_head.user_id JOIN d_client ON d_client.id = doc_check_head.client_id WHERE doc_check_head.departament_id = ${par.p1} AND place = ${par.p2}  ORDER BY id DESC`
+    const sql = `SELECT doc_check_head.id,place,user_id,client_id,total,discount,COALESCE(to_char(datetime, 'MM-DD-YYYY HH24:MI:SS'), '') AS datetime,d_departament.name AS departament,d_user.name AS user,d_client.name AS client FROM doc_check_head JOIN d_departament ON d_departament.id = doc_check_head.departament_id JOIN d_user ON d_user.id = doc_check_head.user_id JOIN d_client ON d_client.id = doc_check_head.client_id WHERE doc_check_head.departament_id = ${par.p1} AND place = ${par.p2}  ORDER BY id DESC`
     if (err) throw err //видає опис помилки підключення
     data = client.query(sql, (err, result) => {
       done() // call `done()` to release the client back to the pool
@@ -321,32 +322,32 @@ function GDocCheckHead({ data }) {
 
   //   //--- Вилучення записів(кнопка)
   const onDelete = () => {
-    //     if (countSelectedRows > 0) {
-    //       const selRowsID = selectedRowState.map((item) => +item.id) // Створюємо(+) масив id-рядків для вилучення /
-    //       //   console.log("GDocCheckHead/onDelete/selRowsID  = ", selRowsID)
-    //       rowsDelete(selRowsID)
-    //     }
-    //   }
-    //   //--- Вилучення записів(запит)
-    //   const rowsDelete = async (rows) => {
-    //     // console.log("+++++f2-flex-table-psql.js/App/onDelete/rowDelete/rows=", rows);
-    //     const url = "/api/shop/docs/doc_check_head/delete" //працює
-    //     const options = {
-    //       method: "DELETE",
-    //       body: JSON.stringify(rows), //Для запитів до серверів використовувати формат JSON
-    //       //headers: { //не треба header
-    //     }
-    //     const response = await fetch(url, options)
-    //     if (response.ok) {
-    //       // якщо HTTP-статус в диапазоне 200-299
-    //       const resDelete = await response.json() //повертає тіло відповіді json
-    //       alert(`Вилучено ${resDelete} записів`)
-    //       // console.log(`psql-...-fetch.js/Вилучено ${resDelete} записів`);
-    //     } else {
-    //       const err = await response.json() //повертає тіло відповіді json
-    //       alert(`Помилка вилучення записів! ${err.message} / ${err.stack}`)
-    //       // console.log(`+++psql-...-fetch.js/DELETE/ ${err.message} / ${err.stack} `);
-    //   }
+    if (countSelectedRows > 0) {
+      const selRowsID = selectedRowState.map((item) => +item.id) // Створюємо(+) масив id-рядків для вилучення /
+      //   console.log("GDocCheckHead/onDelete/selRowsID  = ", selRowsID)
+      rowsDelete(selRowsID)
+    }
+  }
+  //--- Вилучення записів(запит)
+  const rowsDelete = async (rows) => {
+    // console.log("+++++f2-flex-table-psql.js/App/onDelete/rowDelete/rows=", rows);
+    const url = "/api/shop/docs/doc_check_head/delete" //працює
+    const options = {
+      method: "DELETE",
+      body: JSON.stringify(rows), //Для запитів до серверів використовувати формат JSON
+      //headers: { //не треба header
+    }
+    const response = await fetch(url, options)
+    if (response.ok) {
+      // якщо HTTP-статус в диапазоне 200-299
+      const resDelete = await response.json() //повертає тіло відповіді json
+      alert(`Вилучено ${resDelete} записів`)
+      // console.log(`psql-...-fetch.js/Вилучено ${resDelete} записів`);
+    } else {
+      const err = await response.json() //повертає тіло відповіді json
+      alert(`Помилка вилучення записів! ${err.message} / ${err.stack}`)
+      // console.log(`+++psql-...-fetch.js/DELETE/ ${err.message} / ${err.stack} `);
+    }
   }
 
   //--- При двойному кліку по рядку вибрати значення з довідника і передати в input форми

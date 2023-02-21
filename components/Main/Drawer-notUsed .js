@@ -1,5 +1,4 @@
-//Drawer.js
-//Для кожного APP інший
+//Drawer.js //Не використовується
 
 import { useState, useContext, useRef, useEffect } from "react"
 import Link from "next/link"
@@ -62,7 +61,7 @@ function FuncDrawer({ drawerOpen, onOpened }) {
             padding: 0;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             // z-index: 10;
-            color: ${theme.colors.drawerHeadMenuText};
+            color: ${theme.colors.drawerHeadText};
             background: ${theme.colors.drawerHeadMenuBackground};
             margin: 0;
             left: -20px;
@@ -99,11 +98,11 @@ function FuncDrawer({ drawerOpen, onOpened }) {
             font-family: ${theme.fontFamily.serif};
             list-style-type: none; /**Отменяет маркеры для списка. */
             text-decoration: none;
-            color: ${theme.colors.drawerHeadMenuText};
+            color: ${theme.colors.drawerHeadText};
             background: ${theme.colors.drawerHeadMenuBackground};
           }
           .drawer_item:hover {
-            color: ${theme.colors.drawerHeadMenuTextHover};
+            color: ${theme.colors.drawerHeadTextHover};
             background: ${theme.colors.drawerHeadMenuBackgroundHover};
             cursor: pointer;
           }
@@ -139,8 +138,8 @@ export default function Drawer() {
   //https://qna.habr.com/q/855061   \\https://qna.habr.com/q/852169
   useEffect(() => {
     // const onClick = (e) => drawerRef.current.contains(e.target) || setDrawerOpen(false) //Закриваємо
-    const onClick = (e) => drawerRef.current.contains(e.target)  //Закриваємо
-    document.addEventListener("click", onClick,true)
+    const onClick = (e) => drawerRef.current.contains(e.target) //Закриваємо
+    document.addEventListener("click", onClick, true)
     document.addEventListener("scroll", onClick, true)
     // document.addEventListener("mousedown", onClick) // віджали кнопку миші на елементі.
     return () => {
@@ -161,7 +160,7 @@ export default function Drawer() {
       >
         {/* іконка мобільного меню */}
         {drawerOpen ? (
-          <IconCancel 
+          <IconCancel
             width={theme.size.headIcon}
             height={theme.size.headIcon}
             colorFill={iconHover ? theme.colors.headIconHover : theme.colors.drawerHeadIcon}

@@ -2,10 +2,12 @@
 //Є PaymentDialo/ClientDialog/BackDialog
 //Добавлення в масив і для agGrid оновлюю  масив setRowData(rows1)
 //Початкові дані для agGrid з БД !!!
+// Перерахунок знижки по клієнту
 //При добаленні не створюєм шапку документа doc_check_head, а входим в документ(doc_check_products)
-//№ чеку для check_id,беремо з select-seqence (SELECT nextval('doc_check_head_id_seq')`)
-//Не зміг реалізувати добвлення в doc_check_head з зарезервованим check_id(nextval)-> cannot insert a non-DEFAULT value into column "id" / undefined
-//Перерахунок знижки по клієнту
+// ****** не раалізував ****
+// № чеку для check_id,беремо з select-seqence (SELECT nextval('doc_check_head_id_seq')`)/ Не зміг реалізувати добвлення в doc_check_head з зарезервованим check_id(nextval)-> cannot insert a non-DEFAULT value into column "id" / undefined
+//****************************************************************************** */
+//При збереженні документа, в циклі добавляю шапку документа в doc_check_head з усіма даними з масивів  і отримавши doc_check_head.id  добавляю дані в таблицю doc_check_products, де nom_check=doc_check_head.id
 
 //*** Для agGrid **** */ */
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
@@ -51,7 +53,7 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
   const { data, error } = useSWR(`${urlAPI}${headData.id}`, fetcher, {
     //   const { data, error } = useSWR(`${urlAPI}33`, fetcher, {
     initialData: serverData,
-    refreshInterval: 100,
+    // refreshInterval: 30000,
   })
 
   if (error) return <div>не вдалося завантажити</div>
@@ -72,7 +74,8 @@ export async function getServerSideProps(context) {
   //**************************** */
   let data = {}
   const res = await pool.connect((err, client, done) => {
-    const sql = `SELECT doc_check_products.id,COALESCE(to_char(datetime, 'MM-DD-YYYY HH24:MI:SS'), '') AS datetime,check_id,doc_check_products.ov_id,doc_check_products.price,quantity,discount,round((doc_check_products.price*quantity-discount),2) AS total,d_product.name AS name,d_ov.name AS ov FROM doc_check_products JOIN d_product ON d_product.id = doc_check_products.product_id JOIN d_ov ON d_ov.id = doc_check_products.ov_id WHERE doc_check_products.check_id = ${headData.id} ORDER BY id DESC`
+    const sql = `SELECT id,COALESCE(to_char(datetime, 'MM-DD-YYYY HH24:MI:SS'), '') AS datetime,check_id,doc_check_products.ov_id,doc_check_products.price,quantity,discount,round((doc_check_products.price*quantity-discount),2) AS total,d_product.name AS name,d_ov.name AS ov FROM doc_check_products JOIN d_product ON d_product.id = doc_check_products.product_id JOIN d_ov ON d_ov.id = doc_check_products.ov_id WHERE doc_check_products.check_id = ${headData.id} ORDER BY id DESC`
+    // const sql = `SELECT doc_check_products.id,COALESCE(to_char(datetime, 'MM-DD-YYYY HH24:MI:SS'), '') AS datetime,check_id,doc_check_products.ov_id,doc_check_products.price,quantity,discount,round((doc_check_products.price*quantity-discount),2) AS total,d_product.name AS name,d_ov.name AS ov FROM doc_check_products JOIN d_product ON d_product.id = doc_check_products.product_id JOIN d_ov ON d_ov.id = doc_check_products.ov_id WHERE doc_check_products.check_id = ${headData.id} ORDER BY id DESC`
     // const sql = "select * from d_category ORDER BY id DESC"
     if (err) throw err //видає опис помилки підключення
     data = client.query(sql, (err, result) => {
@@ -233,7 +236,8 @@ function GDocCheckProducts({
         suppressMovable: true, //Заборона перетягнути заголовок стовпця.
         suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
       },
-      { field: "product_id", hide: true }, //Прихований(hide) рядок
+      { field: "id", hide: true }, //Прихований(hide) рядок
+      //   { field: "product_id", hide: true }, //Прихований(hide) рядок
       { field: "name", headerName: "Назва товару", minWidth: 230, flex: 5 }, //Прихований(hide) рядок
       { field: "quantity", headerName: "Кількість", type: "numericColumn", minWidth: 110 },
       { field: "ov_id", hide: true }, //Прихований(hide) рядок
@@ -615,7 +619,7 @@ function GDocCheckProducts({
 
   //== Вилучення записів(запит)
   const rowsDelete = async (rows) => {
-    // console.log("+++++f2-flex-table-psql.js/App/onDelete/rowDelete/rows=", rows);
+    console.log("+++++f2-flex-table-psql.js/App/onDelete/rowDelete/rows=", rows)
     const url = "/api/shop/docs/doc_check_products/delete" //працює
     const options = {
       method: "DELETE",

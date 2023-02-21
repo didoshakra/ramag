@@ -604,7 +604,7 @@ export default function DUser({
   //= Загрузка даних на фронтенді useSWR ================================================================*/
   const { data, error } = useSWR("/api/shop/references/d_user/select-all", fetcher, {
     initialData: serverData,
-    refreshInterval: 100,
+    refreshInterval: 30000,
   })
   if (error) return <div>не вдалося завантажити</div>
   if (!data) return <p>Loading/Завантаження ...</p>

@@ -1,5 +1,4 @@
 //Drawer.js
-//Для кожного APP інший
 
 import { useState, useContext } from "react"
 import Image from "next/image"
@@ -17,7 +16,6 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
   const [iconHover, setIconHover] = useState(false) //Для тоого щоб працював hover
-  const iconSize = "15"
   //   const driwerLeft = "-370px"
   const driwerWidht = "80vw"
   const driwerHeight = "80vh"
@@ -80,83 +78,83 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
     },
   ]
 
-  //********************************************************************** */
-//   const RenderMenu = ({ menu, title = "" }) => (
-//     <ul className="DrawerDroop-itemWraper">
-//       <p className="DrawerDroop-itemTitle">{title}</p>
-//       {menu.map((item, index) => {
-//         return (
-//           <li className="DrawerDroop-item" key={index}>
-//             <img src={item.img} alert="logo" top="5" height="20" />
-//             {item.link ? (
-//             //   <Link href={`${item.link}`}>
-//             //     <a title={item.title ? item.title : item.a}>{item.a}</a>
-//             //   </Link>
-//               <Link href={`${item.link}`}>
-//                 <a title={item.title ? item.title : item.a}>{item.a}</a>
-//               </Link>
-//             ) : (
-//               <a title={item.a} href={`${item.url}`}>
-//                 {item.a}
-//               </a>
-//             )}
-//           </li>
-//         )
-//       })}
-//       <style jsx>
-//         {`
-//           //*** item ******************************
-//           .DrawerDroop-itemWraper {
-//             padding: 0;
-//             margin: 0;
-//             // width: 150px;
-//             background: ${theme.colors.headMenuBackground};
-//           }
-//           .DrawerDroop-itemTitle {
-//             font-size: 14px;
-//             font-weight: 400;
-//           }
+//********************************************************************** */
+  const SocialMenu = ({ menu, title = "" }) => (
+    <ul className="DrawerDroop-itemWraper">
+      <p className="DrawerDroop-itemTitle">{title}</p>
+      {menu.map((item, index) => {
+        return (
+          <li className="DrawerDroop-item" key={index}>
+            <img src={item.img} alert="logo" top="5" height="20" />
+            {item.link ? (
+              //   <Link href={`${item.link}`}>
+              //     <a title={item.title ? item.title : item.a}>{item.a}</a>
+              //   </Link>
+              <Link href={`${item.link}`}>
+                <a title={item.title ? item.title : item.a}>{item.a}</a>
+              </Link>
+            ) : (
+              <a title={item.a} href={`${item.url}`}>
+                {item.a}
+              </a>
+            )}
+          </li>
+        )
+      })}
+      <style jsx>
+        {`
+          //*** item ******************************
+          .DrawerDroop-itemWraper {
+            padding: 0;
+            margin: 0;
+            // width: 150px;
+            background: ${theme.colors.headMenuBackground};
+          }
+          .DrawerDroop-itemTitle {
+            font-size: 14px;
+            font-weight: 400;
+          }
 
-//           .DrawerDroop-item {
-//             //position: relative;
-//             display: flex;
-//             margin: 0;
-//             padding: 5px 10px;
-//             font-size: 18px;
-//             font-weight: 100;
-//             font-family: ${theme.fontFamily.serif};
-//             list-style-type: none;
-//             align-items: center;
-//             text-decoration: none;
-//             color: ${theme.colors.headText};
-//             background: ${theme.colors.headMenuBackground};
-//             // background: ${theme.colors.headBackground};
-//           }
-//           .DrawerDroop-item:hover {
-//             //   color: ${theme.colors.headIconHover};
-//             background: ${theme.colors.headMenuBackgroundHover};
-//             cursor: pointer;
-//           }
+          .DrawerDroop-item {
+            //position: relative;
+            display: flex;
+            margin: 0;
+            padding: 5px 10px;
+            font-size: 18px;
+            font-weight: 100;
+            font-family: ${theme.fontFamily.serif};
+            list-style-type: none;
+            align-items: center;
+            text-decoration: none;
+            color: ${theme.colors.headText};
+            background: ${theme.colors.headMenuBackground};
+            // background: ${theme.colors.headBackground};
+          }
+          .DrawerDroop-item:hover {
+            //   color: ${theme.colors.headIconHover};
+            background: ${theme.colors.headMenuBackgroundHover};
+            cursor: pointer;
+          }
 
-//           //DrawerDroop-item:hover:hover спрацьовує дочірне <a>
-//           .DrawerDroop-item:hover a {
-//             color: ${theme.colors.headMenuTextHover};
-//             background: ${theme.colors.headMenuBackgroundHover};
-//           }
+          //DrawerDroop-item:hover:hover спрацьовує дочірне <a>
+          .DrawerDroop-item:hover a {
+            color: ${theme.colors.headMenuTextHover};
+            background: ${theme.colors.headMenuBackgroundHover};
+          }
 
-//           .DrawerDroop-item a {
-//             margin-left: 10px;
-//             padding: 0;
-//             display: flex;
-//             align-items: center; //Y Вирівнювання
-//             color: ${theme.colors.headMobileText};
-//             //   background: ${theme.colors.headMobileBackground};
-//             background: ${theme.colors.headBackground};
-//           }
-//         `}
-//       </style>
-//     </ul>
-//   )
+          .DrawerDroop-item a {
+            margin-left: 10px;
+            padding: 0;
+            display: flex;
+            align-items: center; //Y Вирівнювання
+            color: ${theme.colors.headMobileText};
+            //   background: ${theme.colors.headMobileBackground};
+            background: ${theme.colors.headBackground};
+          }
+        `}
+      </style>
+    </ul>
+  )
   //********************************************************************** */
   return (
     <div className="DrawerDroop">
@@ -168,7 +166,19 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
               width={80}
               //   width={auto}
               height={80}
-              src="/images/head/sun_man_mount-380.png"
+              src="/images/head/sun_man_mount-380-RA-Old-English.png"
+            //   src="/images/head/sun_man_mount-380-RA-Algerian.png"
+            //   src="/images/head/sun_man_mount-380.png"
+              alt="logo"
+            />
+            <Image
+              title="ramag"
+              width={80}
+              //   width={auto}
+              height={80}
+            //   src="/images/head/sun_man_mount-380-RA-Old-English.png"
+              src="/images/head/sun_man_mount-380-RA-Algerian.png"
+            //   src="/images/head/sun_man_mount-380.png"
               alt="logo"
             />
           </Link>
@@ -201,7 +211,7 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
       <Navbar multilevelMenu={menuDocuments} />
       <hr className="DrawerDroop-hr" />
       {/* ----------------------------------------------------------- */}
-      {/* <RenderMenu title={"external/зовнішні"} menu={footerList} /> */}
+      <SocialMenu title={"Контакти"} menu={footerList} />
       <style jsx>
         {`
           .DrawerDroop {

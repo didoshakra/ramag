@@ -131,7 +131,7 @@ const MenuItems = ({ items, depthLevel }) => {
           width: 100%;
         }
         // Пункти випадаючого меню/нижній рівень
-        .menu-items a {
+        .menu-items-a {
           display: block;
           color: ${theme.colors.drawerDropdownMenuItem};
         }
@@ -165,7 +165,7 @@ const MenuItems = ({ items, depthLevel }) => {
         .menu-items-a:hover {
           //   text-decoration: underline;//підкреслення
           color: ${theme.colors.drawerDropdownMenuItemHover};
-          // cursor: pointer;
+          cursor: pointer;
         }
 
         // Стрілка верхньогоменю

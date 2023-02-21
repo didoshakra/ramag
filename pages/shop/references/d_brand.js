@@ -39,7 +39,7 @@ export default function Brand({
   //= Загрузка даних на фронтенді useSWR ================================================================*/
   const { data, error } = useSWR("/api/shop/references/d_brand/select-all", fetcher, {
     initialData: serverData,
-    refreshInterval: 100,
+    // refreshInterval: 30000, //milliseconds
   })
   if (error) return <div>не вдалося завантажити</div>
   if (!data) return <p>Loading/Завантаження ...</p>
@@ -211,8 +211,7 @@ function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
     gridRef.current.api.paginationSetPageSize(Number(value))
   }, [])
 
-
-//** */
+  //** */
   // Вихід з форми
   const onCancel = () => {
     //якщо не довідник
@@ -362,7 +361,7 @@ function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
     // Router.back()//На попередню сторінку
   }
 
-  const onCellClicked=()=>{
+  const onCellClicked = () => {
     alert("onCellClicked")
   }
   const onRowEditingStarted = useCallback((event) => {
@@ -380,7 +379,6 @@ function GBrand({ data, isDovidnuk = false, setDovActive, setValue }) {
   const onCellEditingStopped = useCallback((event) => {
     console.log("cellEditingStopped")
   }, [])
-
 
   //******************************************************************* */
   //--- На друк

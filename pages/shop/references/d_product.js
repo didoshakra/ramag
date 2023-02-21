@@ -45,8 +45,8 @@ export default function DProduct({
   setFocus, //Для передачі заданого  фокусу в Form
 }) {
   //= Загрузка даних на фронтенді useSWR ================================================================*/
-  const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, { initialData: serverData, refreshInterval: 100 })
-  //   const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, {  refreshInterval: 100 })
+  const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, { initialData: serverData, refreshInterval: 30000 })
+  //   const { data, error } = useSWR(`${urlAPI}select-all`, fetcher, {  refreshInterval: 30000 })
 
   if (error) return <div>не вдалося завантажити</div>
   if (!data) return <p>Loading/Завантаження ...</p>
@@ -247,7 +247,7 @@ function Product({ data, isDovidnuk = false, setDovActive, setValue, setFocus })
   const onGridReady = (params) => {
     if (gridApi) {
       //Якщо включено sizeColumnsToFit, то не працює параметр flex:1/flex:2...
-    console.log("d_product.js/onGridReady")
+      console.log("d_product.js/onGridReady")
       gridApi.sizeColumnsToFit() //Розмір стовпців відповідно до встановленого розміру(width).Якщо width не встановлено то воно береться з defaultColDef
     }
     setGridApi(params.api)
