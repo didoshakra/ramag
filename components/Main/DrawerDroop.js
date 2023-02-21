@@ -166,16 +166,6 @@ export default function DrawerDroop({ drawerOpen, setDrawerOpen }) {
               width={80}
               //   width={auto}
               height={80}
-              src="/images/head/sun_man_mount-380-RA-Old-English.png"
-            //   src="/images/head/sun_man_mount-380-RA-Algerian.png"
-            //   src="/images/head/sun_man_mount-380.png"
-              alt="logo"
-            />
-            <Image
-              title="ramag"
-              width={80}
-              //   width={auto}
-              height={80}
             //   src="/images/head/sun_man_mount-380-RA-Old-English.png"
               src="/images/head/sun_man_mount-380-RA-Algerian.png"
             //   src="/images/head/sun_man_mount-380.png"
