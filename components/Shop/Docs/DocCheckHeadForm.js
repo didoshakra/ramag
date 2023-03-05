@@ -3,7 +3,7 @@ import { useState, useContext } from "react"
 import Image from "next/image"
 import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test', { required: true })} />
 import IconCancel from "../../ui/svg/head/IconCancel"
-import IconRefresh from "../../ui/svg/table/IconRefresh"
+import IconRefresh from "../../ui/svg/table/"
 import DClient from "../../../pages/shop/references/d_client"
 import { ComponentContext } from "../../../context/ComponentContext"
 

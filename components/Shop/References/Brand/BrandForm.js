@@ -1,11 +1,11 @@
-//OvForm.js / Універсальна форма для коротких довідників(id,name)
-import { useContext } from "react"
+//users_form.js / без схеми/ schema = yup
+import { useContext, useEffect } from "react"
 import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test', { required: true })} />
-import IconCancel from "../../ui/svg/head/IconCancel"
-import IconRefresh from "../../ui/svg/table/IconRefresh"
-import { ComponentContext } from "../../../context/ComponentContext"
+import IconCancel from "../../../ui/svg/head/IconCancel"
+import IconRefresh from "../../../ui/svg/table/IconRefresh"
+import { ComponentContext } from "../../../../context/ComponentContext"
 
-export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
+export default function BrandForm({ onCloseForm, toFormData }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
 
@@ -18,6 +18,7 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
     handleSubmit,
     formState: { errors },
     reset,
+    setFocus,
   } = useForm({
     defaultValues: toFormData ? toFormData : defaultData,
   })
@@ -27,33 +28,35 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
     // alert(JSON.stringify(data))
     onCloseForm(data) //з закриттям форми передаємо дані у батьківський компонент
   }
+
   const onCancel = () => {
     onCloseForm(null) //Передаємо дані у батьківський компонент
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFocus("name", { shouldSelect: true })
+    }, 300)
+  }, [setFocus])
+
   return (
     <div className="modal-overley">
-      {/* <div className="form-container"> */}
       <form className="dataForm" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-nav">
           <button className="head-nav-button" type="button" onClick={() => reset()} title="Оновити ввід">
             <IconRefresh width={theme.size.formIcon} height={theme.size.formIcon} colorFill={theme.colors.formIcon} />
           </button>
-          <input className="inputSubmit" type="submit" />
+          <input className="inputSubmit" type="submit" title="Записати дані" />
           <button className="head-nav-button" type="button" onClick={onCancel} title="Вийти без збереження">
             <IconCancel width={theme.size.formIcon} height={theme.size.formIcon} colorFill={theme.colors.formIcon} />
           </button>
         </div>
         {/*---- */}
         <div className="formBody">
-          <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
-            <label className="label">Код</label>
-            <input className="input" {...register("kod")} required />
-            <div className="errorMsg">{errors.код?.type === "maxLength" && "Назва >50симв."}</div>
-          </div>
-          <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
-            <label className="label">Назва</label>
-            <input className="input" {...register("name", { maxLength: { maxName } })} required />
-            <div className="errorMsg">{errors.name?.type === "maxLength" && "Назва > ${maxName}"}</div>
+          <div className="inputBody" style={{ weight: "350px" }}>
+            <label className="label">Бренд / марка товару</label>
+            <input className="input" {...register("name", { maxLength: 30 })} required />
+            <div className="errorMsg">{errors.name?.type === "maxLength" && "Назва >30симв."}</div>
           </div>
         </div>
       </form>
@@ -87,7 +90,6 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
           cursor: pointer;
           background-color: ${theme.colors.formIconBackgroundHover};
         }
-
         //-- з *Form.module.css //
         .dataForm {
           max-width: 100%;

@@ -60,7 +60,7 @@ const HeaderSetingDroop = () => {
     // document.addEventListener("mousedown", onClick) // віджали кнопку миші на елементі.
     return () => {
       document.removeEventListener("click", onClick, true)
-      document.removeEventListener("scroll", onClick, true), true
+      document.removeEventListener("scroll", onClick, true)
     }
   }, [])
 
@@ -215,7 +215,6 @@ const HeaderSetingDroop = () => {
           opacity: 1;
           opacity: ${setingMenuOpen ? "1" : "0"};
           z-index: ${setingMenuOpen ? "2" : "-2"};
-          z-index: 2;
           transition: z-index 0.5s, opacity 0.5s linear;
           background: ${theme.colors.headMenuBackground};
         }

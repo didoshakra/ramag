@@ -198,10 +198,10 @@ export const themeDark = {
   },
   size: {
     headIcon: "20px",
-    headIconBorder: "30",
-
+    headIconBorder: "30px",
+    //
     tableIcon: "20px",
-    tableIconBorder: "30",
+    tableIconBorder: "30px",
     //
     formIcon: "20px",
     formIconBorder: "30px",
@@ -209,6 +209,7 @@ export const themeDark = {
     dialogIcon: "20px",
     dialogIconBorder: "30px",
   },
+ 
   colors: {
     text: "#fff",
     background: "rgba(65,69,69,1)",

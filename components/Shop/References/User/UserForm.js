@@ -1,16 +1,20 @@
-//OvForm.js / Універсальна форма для коротких довідників(id,name)
-import { useContext } from "react"
+//users_form.js / без схеми/ schema = yup
+import { useEffect,useContext } from "react"
 import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test', { required: true })} />
-import IconCancel from "../../ui/svg/head/IconCancel"
-import IconRefresh from "../../ui/svg/table/IconRefresh"
-import { ComponentContext } from "../../../context/ComponentContext"
+import IconCancel from "../../../ui/svg/head/IconCancel"
+import IconRefresh from "../../../ui/svg/table/IconRefresh"
+import { ComponentContext } from "../../../../context/ComponentContext"
 
-export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
+export default function UserForm({ onCloseForm, toFormData }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
 
   const defaultData = {
     name: "",
+    last_name: "",
+    login: "",
+    password: "",
+    profile: "",
   }
 
   const {
@@ -18,22 +22,32 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
     handleSubmit,
     formState: { errors },
     reset,
+    setFocus,
   } = useForm({
-    defaultValues: toFormData ? toFormData : defaultData,
+    // defaultValues: toFormData ? defaultData : toFormData,
+    defaultValues: toFormData,
   })
 
   const onSubmit = (data) => {
-    // console.log("***********UsersForm/onSubmit/data=", data)
+    // console.log("UsersForm/onSubmit/data=", data)
     // alert(JSON.stringify(data))
     onCloseForm(data) //з закриттям форми передаємо дані у батьківський компонент
   }
   const onCancel = () => {
     onCloseForm(null) //Передаємо дані у батьківський компонент
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFocus("name", { shouldSelect: true })
+    }, 300)
+  }, [setFocus])
+
   return (
     <div className="modal-overley">
       {/* <div className="form-container"> */}
       <form className="dataForm" onSubmit={handleSubmit(onSubmit)}>
+        {/* <form className="form" onSubmit={handleSubmit(onSubmit)}> */}
         <div className="form-nav">
           <button className="head-nav-button" type="button" onClick={() => reset()} title="Оновити ввід">
             <IconRefresh width={theme.size.formIcon} height={theme.size.formIcon} colorFill={theme.colors.formIcon} />
@@ -46,18 +60,35 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
         {/*---- */}
         <div className="formBody">
           <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
-            <label className="label">Код</label>
-            <input className="input" {...register("kod")} required />
-            <div className="errorMsg">{errors.код?.type === "maxLength" && "Назва >50симв."}</div>
+            <label className="label">Імя</label>
+            <input className="input" {...register("name", { maxLength: 30 })} required />
+            <div className="errorMsg">{errors.name?.type === "maxLength" && " >30симв."}</div>
           </div>
           <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
-            <label className="label">Назва</label>
-            <input className="input" {...register("name", { maxLength: { maxName } })} required />
-            <div className="errorMsg">{errors.name?.type === "maxLength" && "Назва > ${maxName}"}</div>
+            <label className="label">Прізвище</label>
+            <input className="input" {...register("last_name", { maxLength: 30 })} required />
+            <div className="errorMsg">{errors.last_name?.type === "maxLength" && " >30симв."}</div>
+          </div>
+
+          <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
+            <label className="label">Логін</label>
+            <input className="input" {...register("login", { maxLength: 20 })} required />
+            <div className="errorMsg">{errors.login?.type === "maxLength" && " >20симв."}</div>
+          </div>
+          <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
+            <label className="label">Пароль</label>
+            <input className="input" type="password" {...register("password", { maxLength: 20 })} required />
+            <div className="errorMsg">{errors.password?.type === "maxLength" && ">20симв."}</div>
+          </div>
+          <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
+            <label className="label">Профіль</label>
+            <input className="input" type="number" {...register("profile", { max: 1000000 })} required />
+            <div className="errorMsg">{errors.profile?.type === "max" && "від 0 до 1000000"}</div>
           </div>
         </div>
       </form>
       {/*  */}
+
       <style jsx>{`
         // накладання слоїв-затемнення екрану
         .modal-overley {

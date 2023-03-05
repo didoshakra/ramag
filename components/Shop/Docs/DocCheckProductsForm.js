@@ -18,7 +18,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
   const defaultData = {
     skod: "",
     product_id: 1,
-    name: "",//Назва продукту
+    name: "", //Назва продукту
     quantity: 0,
     ov_id: 1,
     ov: "",
@@ -26,7 +26,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
     discount: 0,
     departament_id: workPlace.departament,
     place: workPlace.place,
-    client_id:1,
+    client_id: 1,
   }
 
   const {
@@ -62,20 +62,19 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
     // console.log("DocCheckProductsForm.js/onKeyDown/multipleValues['skod']", multipleValues["skod"])
     // onProduct()
     if (e.key === "Enter") {
-
       //   console.log("DocCheckProductsForm.js/onKeyDown/e=", e)
       e.preventDefault() //Повертаємся назад в поле
       const singleValue = getValues("skod") // Одна змінна
-    //
-    if (singleValue != "") selParam(singleValue) //Запит до БД по Ш-коду
-    else onProduct()
+      //
+      if (singleValue != "") selParam(singleValue) //Запит до БД по Ш-коду
+      else onProduct()
     }
   }
   //Вихід (При натисканні клавіші в останньому полі)
   const onOutput = (e) => {
     //   alert("onOutput")
     if (e.key === "Enter") {
-        handleSubmit(onSubmit)()//Вихід з даними
+      handleSubmit(onSubmit)() //Вихід з даними
       //   e.preventDefault() //Повертаємся назад в поле
       //   alert("Вихід")
     }
@@ -150,7 +149,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
         {/*---- */}
         <div className="formBody">
           <div className="inputBody" style={{ width: 115, margin: "0 1px" }}>
-            <label className="label">Штрихкод</label>
+            <label className="label">old-Штрихкод</label>
             <input className="input" {...register("skod", { maxLength: 14 })} required />
             <div className="errorMsg">{errors.skod?.type === "maxLength" && ">14симв."}</div>
           </div>
@@ -229,7 +228,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
           <div className="inputBody" style={{ width: 380, margin: "0 1px" }}>
             <div className="inputImgContainer">
               {/* <Image style={{ width: 15, height: 15 }} src="/icons/png/Book24_24.png" alt="book" /> */}
-              <Image width={15} height={15}  src="/icons/png/Book24_24.png" alt="book" />
+              <Image width={15} height={15} src="/icons/png/Book24_24.png" alt="book" />
               {/* <Image
                 width={theme.size.formIcon}
                 height={theme.size.formIcon}

@@ -1,9 +1,9 @@
 //OvForm.js / Універсальна форма для коротких довідників(id,name)
-import { useContext } from "react"
+import { useEffect,useContext } from "react"
 import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test', { required: true })} />
-import IconCancel from "../../ui/svg/head/IconCancel"
-import IconRefresh from "../../ui/svg/table/IconRefresh"
-import { ComponentContext } from "../../../context/ComponentContext"
+import IconCancel from "../../../ui/svg/head/IconCancel"
+import IconRefresh from "../../../ui/svg/table/IconRefresh"
+import { ComponentContext } from "../../../../context/ComponentContext"
 
 export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
   const { state } = useContext(ComponentContext)
@@ -18,6 +18,7 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
     handleSubmit,
     formState: { errors },
     reset,
+    setFocus,
   } = useForm({
     defaultValues: toFormData ? toFormData : defaultData,
   })
@@ -30,6 +31,13 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
   const onCancel = () => {
     onCloseForm(null) //Передаємо дані у батьківський компонент
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFocus("name", { shouldSelect: true })
+    }, 300)
+  }, [setFocus])
+
   return (
     <div className="modal-overley">
       {/* <div className="form-container"> */}

@@ -91,3 +91,25 @@
 2023.02.18. / в doc_check_products- товари в чеках:
     - вилучення + коригуванн???
 
+2023.02.28./ Поки тільки для d_brand
+    - обновлення даних SWR-(mutate)
+        const { data, mutate, error } = useSWR("/api/shop/references/d_brand/select-all", fetcher) в GBrand
+
+    - Переміщення по стрілках  //https://github.com/ag-grid/ag-grid/issues/6186
+    - Дії при натиску на Enter
+
+2023.02.28./ react-bootstrap-table2(-next).// https://code.tutsplus.com/tutorials/working-with-tables-in-react-part-one--cms-29682
+        - !!!  react-bootstrap-table-next - гірший за agGrid !!!
+
+202.03.01-04 /Створив один компопент/components/AgGridModules/AgGrid.js для всіх таблиць, які використовують agGrid
+    !! Товарні чеки не прпцюють!!!
+    - Запуск Довідкики/agGrid/gmodule/
+        -pages//shop__agmodule/references/d_brand->/components/Shop/References/Brend/GBrend.js->AgGrid.js
+    - Залишив agGrid таблиці з agGrid у кожноному документі.
+        Запуск: Довідкики/agGrid
+        -pages//shop_agmodule/references/d_brand->/components/Shop/References/Brend/GBrend.js->AgGrid.js
+    -
+    !!! Не працює переміщення фокусу на швидкий пошук при виклику як довідник
+    !!! Не можу перемістити фокус на рядок, який був зкоригований після оновлення даних
+        ensureIndexVisible(selectedRowGridID, "top") //прокручує сітку/рядок(RowID) початок вікна
+        getDisplayedRowAtIndex(selectedRowGridID).setSelected(true)

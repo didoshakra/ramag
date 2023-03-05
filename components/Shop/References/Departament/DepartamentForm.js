@@ -1,15 +1,16 @@
-//OvForm.js / Універсальна форма для коротких довідників(id,name)
-import { useContext } from "react"
+//users_form.js / без схеми/ schema = yup
+import { useEffect,useContext } from "react"
 import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test', { required: true })} />
-import IconCancel from "../../ui/svg/head/IconCancel"
-import IconRefresh from "../../ui/svg/table/IconRefresh"
-import { ComponentContext } from "../../../context/ComponentContext"
+import IconCancel from "../../../ui/svg/head/IconCancel"
+import IconRefresh from "../../../ui/svg/table/IconRefresh"
+import { ComponentContext } from "../../../../context/ComponentContext"
 
-export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
-  const { state } = useContext(ComponentContext)
-  const { theme } = state
 
-  const defaultData = {
+export default function DepartamentForm({ onCloseForm, toFormData }) {
+ const { state } = useContext(ComponentContext)
+ const { theme } = state
+
+ const defaultData = {
     name: "",
   }
 
@@ -18,6 +19,7 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
     handleSubmit,
     formState: { errors },
     reset,
+    setFocus,
   } = useForm({
     defaultValues: toFormData ? toFormData : defaultData,
   })
@@ -30,6 +32,13 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
   const onCancel = () => {
     onCloseForm(null) //Передаємо дані у батьківський компонент
   }
+
+   useEffect(() => {
+     setTimeout(() => {
+       setFocus("name", { shouldSelect: true })
+     }, 300)
+   }, [setFocus])
+
   return (
     <div className="modal-overley">
       {/* <div className="form-container"> */}
@@ -46,14 +55,9 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
         {/*---- */}
         <div className="formBody">
           <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
-            <label className="label">Код</label>
-            <input className="input" {...register("kod")} required />
-            <div className="errorMsg">{errors.код?.type === "maxLength" && "Назва >50симв."}</div>
-          </div>
-          <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
-            <label className="label">Назва</label>
-            <input className="input" {...register("name", { maxLength: { maxName } })} required />
-            <div className="errorMsg">{errors.name?.type === "maxLength" && "Назва > ${maxName}"}</div>
+            <label className="label">Підрозділ / марка товару</label>
+            <input className="input" {...register("name", { maxLength: 50 })} required />
+            <div className="errorMsg">{errors.name?.type === "maxLength" && " >50симв."}</div>
           </div>
         </div>
       </form>

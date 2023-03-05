@@ -1,13 +1,14 @@
 //users_form.js / без схеми/ schema = yup
-import { useState, useContext } from "react"
+import { useEffect, useState, useContext } from "react"
 import Image from "next/image"
 import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test', { required: true })} />
-import IconCancel from "../../ui/svg/head/IconCancel"
-import IconRefresh from "../../ui/svg/table/IconRefresh"
-import DCategory from "../../../pages/shop_not_agmodule/references/d_category"
-import DBrand from "../../../pages/shop_not_agmodule/references/d_brand"
-import DOv from "../../../pages/shop_not_agmodule/references/d_ov"
-import { ComponentContext } from "../../../context/ComponentContext"
+import IconCancel from "../../../ui/svg/head/IconCancel"
+import IconRefresh from "../../../ui/svg/table/IconRefresh"
+import DCategory from "../../../../pages/shop/references/d_category"
+// import DBrand from "../../../../pages/shop/references/d_brand"
+import DBrand from "../../../../pages/shop/references/d_brand"
+import DOv from "../../../../pages/shop/references/d_ov"
+import { ComponentContext } from "../../../../context/ComponentContext"
 
 export default function ProductForm({ onCloseForm, toFormData }) {
   const { state } = useContext(ComponentContext)
@@ -37,6 +38,7 @@ export default function ProductForm({ onCloseForm, toFormData }) {
     handleSubmit,
     formState: { errors },
     reset,
+    setFocus,
   } = useForm({
     defaultValues: toFormData ? toFormData : defaultData,
   })
@@ -64,6 +66,12 @@ export default function ProductForm({ onCloseForm, toFormData }) {
     setDovActive("ov") //Відкрити форму
     // console.log("ProductForm.js/onOv/selectID=", ((selectId = " selectName="), selectName))
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFocus("name", { shouldSelect: true })
+    }, 300)
+  }, [setFocus])
 
   return (
     <div className="modal-overley">

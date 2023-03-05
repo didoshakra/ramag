@@ -1,16 +1,21 @@
-//OvForm.js / Універсальна форма для коротких довідників(id,name)
-import { useContext } from "react"
+//users_form.js / без схеми/ schema = yup
+import { useEffect,useContext } from "react"
 import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test', { required: true })} />
-import IconCancel from "../../ui/svg/head/IconCancel"
-import IconRefresh from "../../ui/svg/table/IconRefresh"
-import { ComponentContext } from "../../../context/ComponentContext"
+import IconCancel from "../../../ui/svg/head/IconCancel"
+import IconRefresh from "../../../ui/svg/table/IconRefresh"
+import { ComponentContext } from "../../../../context/ComponentContext"
 
-export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
+export default function ClientForm({ onCloseForm, toFormData }) {
   const { state } = useContext(ComponentContext)
   const { theme } = state
 
   const defaultData = {
     name: "",
+    last_name: "",
+    email: "",
+    // total: 0,
+    skod: "",
+    discount_proc: "0",
   }
 
   const {
@@ -18,18 +23,27 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
     handleSubmit,
     formState: { errors },
     reset,
+    setFocus,
   } = useForm({
     defaultValues: toFormData ? toFormData : defaultData,
+    // defaultValues: toFormData,
   })
 
   const onSubmit = (data) => {
-    // console.log("***********UsersForm/onSubmit/data=", data)
+    // console.log("UsersForm/onSubmit/data=", data)
     // alert(JSON.stringify(data))
     onCloseForm(data) //з закриттям форми передаємо дані у батьківський компонент
   }
   const onCancel = () => {
     onCloseForm(null) //Передаємо дані у батьківський компонент
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFocus("name", { shouldSelect: true })
+    }, 300)
+  }, [setFocus])
+
   return (
     <div className="modal-overley">
       {/* <div className="form-container"> */}
@@ -46,18 +60,63 @@ export default function OvForm({ onCloseForm, toFormData, maxName = 50 }) {
         {/*---- */}
         <div className="formBody">
           <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
-            <label className="label">Код</label>
-            <input className="input" {...register("kod")} required />
-            <div className="errorMsg">{errors.код?.type === "maxLength" && "Назва >50симв."}</div>
+            <label className="label">Імя</label>
+            <input className="input" {...register("name", { maxLength: 30 })} required />
+            <div className="errorMsg">{errors.name?.type === "maxLength" && "Ім'я >30симв."}</div>
           </div>
           <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
-            <label className="label">Назва</label>
-            <input className="input" {...register("name", { maxLength: { maxName } })} required />
-            <div className="errorMsg">{errors.name?.type === "maxLength" && "Назва > ${maxName}"}</div>
+            <label className="label">Прізвище</label>
+            <input className="input" {...register("last_name", { maxLength: 30 })} required />
+            <div className="errorMsg">{errors.last_name?.type === "maxLength" && "Прізвище >30симв."}</div>
+          </div>
+          {/*  */}
+          <div className="inputBody" style={{ weight: "50px", margin: "0 1px" }}>
+            {" "}
+            <label className="label">email</label>
+            <input
+              className="input"
+              type="email"
+              {...register("email", {
+                maxLength: 30,
+                // pattern: {
+                //   value: /^(.+)@(.+)\.(.+)$/,
+                //   //   value: /\S+@\S+\.\S+/,
+                // },
+              })}
+            />
+            {/* <div className="errorMsg">
+              {errors.email?.type === "pattern" && "Не формат email"}
+              {errors.email?.type === "maxLength" && " email > 30симв."}
+            </div> */}
+          </div>
+          {/*  */}
+          <div className="inputBody" style={{ width: 120, margin: "0 1px" }}>
+            <label className="label">ШтрихКод</label>
+            <input className="input" {...register("skod", { Length: 14 })} />
+            <div className="errorMsg"> {errors.skod?.type === "Length" && "Має = 14 симв."}</div>
+          </div>
+          {/*  */}
+          <div className="inputBody" style={{ width: "60px", margin: "0 1px" }}>
+            <label className="label">Знижка(%)</label>
+            <input
+              className="input"
+              type="text"
+              {...register("discount_proc", {
+                pattern: {
+                  value: /^\d*\.?\d{0,2}$/g, //(.) 2-а знаки після коми\ Не виводить повідомлення
+                },
+                max: 100,
+              })}
+            />
+            <div className="errorMsg">
+              {errors.discount_proc?.type === "pattern" && "Не: .XX"}
+              {errors.discount_proc?.type === "max" && "до 100"}
+            </div>
           </div>
         </div>
       </form>
       {/*  */}
+
       <style jsx>{`
         // накладання слоїв-затемнення екрану
         .modal-overley {

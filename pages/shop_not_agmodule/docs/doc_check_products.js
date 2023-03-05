@@ -1,4 +1,4 @@
-//doc_check_products.js //Товари в чеку-//Добавлення в масив
+//old/doc_check_products.js //Товари в чеку-//Добавлення в масив
 //Є PaymentDialo/ClientDialog/BackDialog
 //Добавлення в масив і для agGrid оновлюю  масив setRowData(rows1)
 //Початкові дані для agGrid з БД !!!
@@ -6,25 +6,110 @@
 //При добаленні не створюєм шапку документа doc_check_head, а входим в документ(doc_check_products)
 // ****** не раалізував ****
 // № чеку для check_id,беремо з select-seqence (SELECT nextval('doc_check_head_id_seq')`)/ Не зміг реалізувати добвлення в doc_check_head з зарезервованим check_id(nextval)-> cannot insert a non-DEFAULT value into column "id" / undefined
+//****************************************************************************** */
 //При збереженні документа, в циклі добавляю шапку документа в doc_check_head з усіма даними з масивів  і отримавши doc_check_head.id  добавляю дані в таблицю doc_check_products, де nom_check=doc_check_head.id
-//-------------------------------------------------------
 
-import { pool } from "../../../config/dbShop"
-// GDocCheckProducts
+//*** Для agGrid **** */ */
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
-import { useContext, useMemo, useState, useCallback, useRef } from "react"
+import { useEffect, useContext, useMemo, useState, useCallback, useRef } from "react"
 import { useRouter } from "next/router"
-import { ComponentContext } from "../../../context/ComponentContext"
-import DocCheckProductsForm from "../../../components/Shop/Docs/DocCheckProductsForm"
-import AgGrid from "../../../components/AgGridModules/AgGrid"
+import { AgGridReact } from "ag-grid-react"
+// import "ag-grid-enterprise" //Для EXELL/Дає помилку червоні зірочки, бо не ліцензований
+import "ag-grid-community/styles/ag-grid.css"
+import "ag-grid-community/styles/ag-theme-alpine.css"
+// import "ag-grid-community/dist/styles/ag-theme-balham.css"
 //
+import { dbHost } from "../../../config/dbHost"
+import { pool } from "../../../config/dbShop"
+
+import { ComponentContext } from "../../../context/ComponentContext"
+import IconAdd from "../../../components/ui/svg/table/IconAdd"
+import IconPencil_c3 from "../../../components/ui/svg/table/IconPencil_c3"
+import IconCancel from "../../../components/ui/svg/head/IconCancel"
+import IconRefresh from "../../../components/ui/svg/table/IconRefresh"
+import IconTrash from "../../../components/ui/svg/table/IconTrash_с2" //Корзина
+import IconMoon_border from "../../../components/ui/svg/head/IconMoon_border"
+import IconSun_border from "../../../components/ui/svg/head/IconSun_border"
+import IconTable_c2 from "../../../components/ui/svg/table/IconTable_c2"
+import IconExport from "../../../components/ui/svg/table/IconExport"
+import IconClientMale from "../../../components/ui/svg/table/IconClientMale"
+import IconPaymentMethod from "../../../components/ui/svg/table/IconPaymentMethod"
+import IconPrinter_c2 from "../../../components/ui/svg/head/IconPrinter_c2" //Принтер
+import PaymentDialog from "../../../components/Shop/DialogForms/PaymentDialog"
+import ClientDialog from "../../../components/Shop/DialogForms/ClientDialog"
+import BackDialog from "../../../components/Shop/DialogForms/BackDialog"
+import DocCheckProductsForm from "../../../components/Shop/Docs/DocCheckProductsForm"
+
+//*************************************************************************************** */
 const urlAPI = "/api/shop/docs/doc_check_products/" // Для useSWR/getServerSideProp i...
 const fetcher = (url) => fetch(url).then((res) => res.json()) // Для useSWR
 
 export default function DocCheckProducts({ serverData, setDocContent, headData, setHeadData }) {
-  console.log("doc_check_products.js")
+  //serverData-Вхідні дані з Сервера/ setDocContent-Назва документа(для закриття док)/headData-Дані шапки документу
+  //   console.log("doc_check_products.js/headData0=", headData)
+
+  //--- Загрузка даних на фронтенді useSWR
+  // ("/api/shop/docs/doc_check_products/"
+  const { data, error } = useSWR(`${urlAPI}${headData.id}`, fetcher, {
+    //   const { data, error } = useSWR(`${urlAPI}33`, fetcher, {
+    // refreshInterval: 0,
+  })
+
+  if (error) return <div>не вдалося завантажити</div>
+  if (!data) return <p>Loading/Завантаження ...</p>
+  //---
+  return (
+    <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0 }}>
+      {/* <div style={{ position: "relative", width: "calc(100vw)", height: "calc(100vh - 350px)" }}> */}
+      <GDocCheckProducts data={data} setDocContent={setDocContent} headData={headData} setHeadData={setHeadData} />
+    </div>
+  )
+}
+//= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
+export async function getServerSideProps(context) {
+  //   const url = `${dbHost}${urlAPI}${headData.id}` //->/[...slug].js
+  //   const response = await fetch(url)
+  //   const data = await response.json()
+  //**************************** */
+  let data = {}
+  const res = await pool.connect((err, client, done) => {
+    const sql = `SELECT id,COALESCE(to_char(datetime, 'MM-DD-YYYY HH24:MI:SS'), '') AS datetime,check_id,doc_check_products.ov_id,doc_check_products.price,quantity,discount,round((doc_check_products.price*quantity-discount),2) AS total,d_product.name AS name,d_ov.name AS ov FROM doc_check_products JOIN d_product ON d_product.id = doc_check_products.product_id JOIN d_ov ON d_ov.id = doc_check_products.ov_id WHERE doc_check_products.check_id = ${headData.id} ORDER BY id DESC`
+    // const sql = `SELECT doc_check_products.id,COALESCE(to_char(datetime, 'MM-DD-YYYY HH24:MI:SS'), '') AS datetime,check_id,doc_check_products.ov_id,doc_check_products.price,quantity,discount,round((doc_check_products.price*quantity-discount),2) AS total,d_product.name AS name,d_ov.name AS ov FROM doc_check_products JOIN d_product ON d_product.id = doc_check_products.product_id JOIN d_ov ON d_ov.id = doc_check_products.ov_id WHERE doc_check_products.check_id = ${headData.id} ORDER BY id DESC`
+    // const sql = "select * from d_category ORDER BY id DESC"
+    if (err) throw err //видає опис помилки підключення
+    data = client.query(sql, (err, result) => {
+      //   console.log("Category.js/getServerSideProps/result.rows=", result.rows)
+      done() // call `done()` to release the client back to the pool
+      if (err) {
+        console.log("error running query", err)
+      } else {
+        return result.rows
+        // resp.status(200).json(result.rows)
+      }
+    })
+  })
+  //**************************** */
+  //Якщо (!data)-видасть помилку 404
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
+  return {
+    props: { serverData: data }, // буде передано компоненту сторінки як атрибути
+  }
+}
+//************************************************************ */
+
+function GDocCheckProducts({
+  data, // Рядки документа
+  setDocContent, //Для виходу з документу setDocContent("")
+  headData, //
+  setHeadData = { setHeadData },
+}) {
+  const iconSize = "15px"
   const newDoc = headData.newDoc ? "*добавляється*" : ""
-  const titleTable = `${newDoc}  1Товари в чеку №: ` //заголовок
+  const titleTable = `${newDoc}  Товари в чеку №: ` //заголовок
   //
   const { state, dispatch } = useContext(ComponentContext)
   const { theme, themeTypeLight } = state
@@ -123,6 +208,7 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
       </div>
     )
   }
+
   //*** параметри і ф-ції AG_Grid **************************************** */
 
   //Розрахунок поля tatal
@@ -271,7 +357,7 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
     // alert("exitPaymentDialog",par)
     if (par === 1) {
       //Записс даних в БД
-      rowAddProductsFromArray() //Запис в БД  GDocCheckProducts
+      rowAddProductsFromArray() //Запис в БД  doc_check_products
     } else setDocContent("") //Вихід з компоннта без збереження даних
   }
 
@@ -280,9 +366,16 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
     alert("exitBackDialog", par)
     if (par === 1) {
       //Записс даних в БД
-      rowAddProductsFromArray() //Запис в БД  GDocCheckProducts
+      rowAddProductsFromArray() //Запис в БД  doc_check_products
     } else setDocContent("") //Вихід з компоннта без збереження даних
   }
+
+  //   //== Вихід з компоннта без збереження даних
+  //   const exitWithout = () => {
+  //     alert("exitWithout ")
+  //     if (setDocContent) setDocContent("") //Вихід з компоннта без збереження даних
+  //     else router.push("/")
+  //   }
 
   //*** Add/Edit/Delete/Cancel ===============================*/
 
@@ -338,7 +431,7 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
     redrawAllRows() //Перемальовує рядки agGrid
   }
 
-  //== Запис в БД  GDocCheckProducts(з масиву)
+  //== Запис в БД  doc_check_products(з масиву)
   const rowAddProductsFromArray = async () => {
     let insertZap = 0
     try {
@@ -346,7 +439,7 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
       console.log("doc_check_products.js/rowAddProductsFromArray/resRowHead=", resRowHead)
 
       console.log("doc_check_products.js/rowAddProductsFromArray/rowData=", rowData)
-      //Цикл по rowData(запис в БД (GDocCheckProducts)
+      //Цикл по rowData(запис в БД (doc_check_products)
       const addToDB = await rowData.map((item, index) => {
         console.log("doc_check_products.js/rowAddProductsFromArray/item=", item)
         item.check_id = resRowHead //Чекам присвоюємо значення реальне id шапки док.
@@ -366,7 +459,7 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
   //== Добавалення запису в БД(doc_check_head)
   const rowAddHead = async () => {
     console.log("doc_check_products.js/rowAddHead/headData=", headData)
-    //Рядок для запису в шапку документа: doc_check_hea:
+    //Рядок для запису в doc_check_products:
     const addRow = {
       // id: headData.id, //
       departament_id: headData.departament_id, //Add
@@ -409,7 +502,7 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
     // console.log("doc_check_products.js/rowAdd/headData=", headData)
     // console.log("doc_check_products.js/rowAdd/formData=", row)
 
-    //Рядок для запису в GDocCheckProducts:
+    //Рядок для запису в doc_check_products:
     const addRow = {
       //   check_id: headData.id, //
       departament_id: headData.departament_id, //Add
@@ -576,17 +669,7 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
     redrawAllRows() //Перемальовує рядки agGrid
   }
 
-  // ******************************************************************
-  //--- Загрузка даних на фронтенді useSWR
-  // ("/api/shop/docs/doc_check_products/"
-  const { data, error } = useSWR(`${urlAPI}${headData.id}`, fetcher, {
-    //   const { data, error } = useSWR(`${urlAPI}33`, fetcher, {
-    // refreshInterval: 0,
-  })
-
-  if (error) return <div>не вдалося завантажити</div>
-  if (!data) return <p>Loading/Завантаження ...</p>
-  // ******************************************************************
+  //===================================================================
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
@@ -603,56 +686,251 @@ export default function DocCheckProducts({ serverData, setDocContent, headData, 
         <ClientDialog setIsClientDialog={setIsClientDialog} setHeadData={setHeadData} discountRecalc={discountRecalc} />
       )}
       {isBackDialog && <BackDialog setIsBackDialog={setIsBackDialog} exitBackDialog={exitBackDialog} />}
+      <div className="agrid_head-container">
+        <div className="agrid_head-container-left">
+          <>
+            <button className="agrid_head-nav-button" onClick={changeTheme} title="Зміна теми">
+              {themeTypeLight ? (
+                // <IconMoon_border width="18" height="18" colorFill={theme.colors.tableIcon} />
+                <IconMoon_border
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
+              ) : (
+                <IconSun_border
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
+              )}
+            </button>
+            <button
+              className="agrid_head-nav-button"
+              onClick={resetState}
+              title="Відновлення початкового стану колонок"
+            >
+              <IconTable_c2
+                width={theme.size.tableIcon}
+                height={theme.size.tableIcon}
+                colorFill={theme.colors.tableIcon}
+                colorFill1={theme.colors.tableIcon1}
+              />
+              {/* Колонки */}
+            </button>
+            <button className="agrid_head-nav-button" onClick={redrawAllRows} title="Обновити дані">
+              <IconRefresh
+                width={theme.size.tableIcon}
+                height={theme.size.tableIcon}
+                colorFill={theme.colors.tableIcon}
+              />
+            </button>
+            {countSelectedRows === 0 ? (
+              <button className="agrid_head-nav-button" onClick={onAdd} title="Добавити">
+                <IconAdd
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
+              </button>
+            ) : (
+              ""
+            )}
+            {countSelectedRows === 1 ? (
+              <button className="agrid_head-nav-button" onClick={onEdit} title="Редагувати">
+                <IconPencil_c3
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                  colorFill1={theme.colors.tableIcon1}
+                  colorFill2={theme.colors.tableIcon2}
+                />
+              </button>
+            ) : (
+              ""
+            )}
+            {countSelectedRows > 0 ? (
+              <button className="agrid_head-nav-button" onClick={onDelete} title="Видалити">
+                <IconTrash
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                  colorFill1={theme.colors.tableIcon}
+                />
+              </button>
+            ) : (
+              ""
+            )}
+            <select
+              className="agrid_head-nav-button"
+              style={{ height: "25px" }}
+              defaultValue={"10"}
+              onChange={() => onPageSizeChanged()}
+              id="page-size"
+              title="Розмір сторінки"
+            >
+              <option value="10" disabled>
+                10
+              </option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="500">500</option>
+              <option value="0">auto</option>
+            </select>
+          </>
+          {/* )} */}
+        </div>
+        {/*  */}
+        <div className="agrid_head-title">
+          {titleTable} {headData.id}
+        </div>
+        {/* <div>Імпортовано: {insertRows.current} зап.</div> */}
+        {/*  */}
+        <div className="agrid_head-container-right">
+          <div className="agrid_head-container-right-notMobi">
+            <div style={{ display: "flex" }}>
+              <button className="agrid_head-nav-button" onClick={onPrint} title="Друк на принтер">
+                <IconPrinter_c2
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                  colorFill1={theme.colors.tableIcon1}
+                />
+              </button>
+              <button className="agrid_head-nav-button" onClick={onExportExcel} title="Експорт в Excel">
+                <IconExport
+                  width={theme.size.tableIcon}
+                  height={theme.size.tableIcon}
+                  colorFill={theme.colors.tableIcon}
+                />
+              </button>
+            </div>
+          </div>
+          <button className="agrid_head-nav-button" onClick={onPaymentDialog} title="Оплата">
+            <IconPaymentMethod
+              width={theme.size.tableIcon}
+              height={theme.size.tableIcon}
+              colorFill={theme.colors.tableIcon}
+            />
+          </button>
+          <button className="agrid_head-nav-button" onClick={onClient} title="Клієнт">
+            <IconClientMale
+              width={theme.size.tableIcon}
+              height={theme.size.tableIcon}
+              colorFill={theme.colors.tableIcon}
+            />
+          </button>
+          {/* <button className="agrid_head-nav-button" onClick={onCancelPaymentDialog} title="Вийти"> */}
+          <button className="agrid_head-nav-button" onClick={onCancel} title="Вийти">
+            <IconCancel width={theme.size.tableIcon} height={theme.size.tableIcon} colorFill={theme.colors.tableIcon} />
+          </button>
+        </div>
+      </div>
+      <div className="agrid_head-title-mobi">
+        <p>
+          {titleTable} {headData.id}
+        </p>
+      </div>
 
-      <AgGrid
-        // rowData={rowData}
-        data={data}
-        columnDefs={columnDefs}
-        defaultColDef={defaultColDef}
-        //
-        titleTable={titleTable}
-        onAdd={onAdd}
-        onEdit={onEdit}
-        onDelete={onDelete}
-        onCancel={onCancel}
-        // onRefresh={onRefresh}//Нема зато є //redrawAllRows
-        onPrint={onPrint}
-        // onChoose={onChoose} // Для входу в документ при подвійному кліку
-        onPaymentDialog={onPaymentDialog} //Діалог оплати
-        onClient={onClient} //Діалог вибору клієнта
-        //
-        setSelectedRowState={setSelectedRowState} //Дані з вибраних рядків
-      />
+      {/* Шапка документу */}
+      {<DocHead />}
+
+      <div
+        style={{ height: "calc(100% - 50px)" }}
+        className={themeTypeLight ? "ag-theme-alpine" : "ag-theme-alpine-dark"}
+      >
+        <AgGridReact
+          ref={gridRef} // Без нього не працює gridRef.current.columnApi.
+          rowData={rowData}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef} //Параметри для всіх колонок
+          onGridReady={onGridReady} //Загрузка даних
+          sortable={true} //сортування для всіх колонок
+          animateRows={true} //щоб рядки анімувалися під час сортування
+          pagination={true} //сторінки
+          paginationPageSize={10} //к-сть рядків в сторінці
+          paginationAutoPageSize={autoPageSize} //к-сть рядків в сторінці-АВТОМАТИЧНО
+          suppressDragLeaveHidesColumns //зупинить видалення стовпців із сітки, якщо їх перетягнути за межі сітки.
+          rowSelection="multiple" //дозволяє вибирати рядки клацанням миші
+          // onRowSelected={onRowSelected} ////Для вибору даних використовую ф-цію selectedRowState
+          onSelectionChanged={onSelectionChanged} //Вибір клацанням на рядок
+          //   onRowDoubleClicked={onDoubleClicke}
+        ></AgGridReact>
+      </div>
       {formActive && <DocCheckProductsForm onCloseForm={onCloseForm} toFormData={toFormData} />}
+      {/* --- */}
+      <style jsx>{`
+        .agrid_head-container-right-notMobi,
+        .agrid_head-container-right,
+        .agrid_head-container-left,
+        .agrid_head-container {
+          padding: 0.1vw;
+          display: flex;
+          align-items: center;
+          background-color: ${theme.colors.tableHeadBackground};
+        }
+        .agrid_head-container {
+          justify-content: space-between; //   притискає до країв
+          border-ltft: 0.5px solid ${theme.colors.tableHeadBorder};
+          border-top: 1px solid ${theme.colors.tableHeadBorder};
+          border-right: 1px solid ${theme.colors.tableHeadBorder};
+        }
+        .agrid_head-container-right {
+          justify-content: space-end; //   притискає до країв
+        }
+        .agrid_head-container-right-notMobi {
+          display: none;
+        }
+        .agrid_head-title-mobi,
+        .agrid_head-title {
+          text-align: center; //Текст по центру Х
+          vertical-align: middle;
+          background-color: ${theme.colors.tableHeadBackground};
+          color: ${theme.colors.tableHeadTitle};
+          font-size: 18px;
+          font-weight: bold;
+        }
+        .agrid_head-title-mobi {
+          display: flex;
+          justify-content: center; //по краях
+        }
+        .agrid_head-title {
+          display: none;
+        }
+        .agrid_head-nav-button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: ${theme.size.tableIconBorder};
+          height: ${theme.size.tableIconBorder};
+          border-radius: ${theme.size.tableIconBorder};
+          color: ${theme.colors.tableIcon};
+          border: 2px solid ${theme.colors.tableIconBorder};
+          background-color: ${theme.colors.tableHeadBackground};
+        }
+        .agrid_head-nav-button:hover {
+          cursor: pointer;
+          background-color: ${theme.colors.tableIconBackgroundHover};
+        }
+
+        @media (min-width: 960px) {
+          .agrid_head-title-mobi {
+            display: none;
+          }
+          .agrid_head-title {
+            display: block;
+          }
+          .agrid_head-container-right-notMobi {
+            padding: 0.1vw;
+            display: flex;
+            justify-content: space-end; //   притискає до країв
+            // align-items: center;
+            // background-color: ${theme.colors.tableHeadBackground};
+          }
+        }
+      `}</style>
     </div>
   )
-}
-//= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
-export async function getServerSideProps(context) {
-  let data = {}
-  const res = await pool.connect((err, client, done) => {
-    const sql = `SELECT doc_check_products.id,COALESCE(to_char(datetime, 'MM-DD-YYYY HH24:MI:SS'), '') AS datetime,check_id,doc_check_products.ov_id,doc_check_products.price,quantity,discount,round((doc_check_products.price*quantity-discount),2) AS total,d_product.name AS name,d_ov.name AS ov FROM doc_check_products JOIN d_product ON d_product.id = doc_check_products.product_id JOIN d_ov ON d_ov.id = doc_check_products.ov_id WHERE doc_check_products.check_id = ${headData.id} ORDER BY id DESC`
-    // const sql = `SELECT doc_check_products.id,COALESCE(to_char(datetime, 'MM-DD-YYYY HH24:MI:SS'), '') AS datetime,check_id,doc_check_products.ov_id,doc_check_products.price,quantity,discount,round((doc_check_products.price*quantity-discount),2) AS total,d_product.name AS name,d_ov.name AS ov FROM doc_check_products JOIN d_product ON d_product.id = doc_check_products.product_id JOIN d_ov ON d_ov.id = doc_check_products.ov_id WHERE doc_check_products.check_id = ${headData.id} ORDER BY id DESC`
-    // const sql = "select * from d_category ORDER BY id DESC"
-    if (err) throw err //видає опис помилки підключення
-    data = client.query(sql, (err, result) => {
-      //   console.log("Category.js/getServerSideProps/result.rows=", result.rows)
-      done() // call `done()` to release the client back to the pool
-      if (err) {
-        console.log("error running query", err)
-      } else {
-        return result.rows
-        // resp.status(200).json(result.rows)
-      }
-    })
-  })
-  //**************************** */
-  if (!data) {
-    return {
-      notFound: true,
-    }
-  }
-  return {
-    props: { serverData: data }, // буде передано компоненту сторінки як атрибути
-  }
 }
