@@ -1,6 +1,7 @@
 //HomePage.js
 import Head from "next/head"
 import Layout from "../components/Main/Layout"
+import Footer from "../components/Main/Footer"
 import MyHomePage from "../components/Shop/MyHomePage"
 
 // const HomePage = () => {
@@ -13,7 +14,7 @@ import MyHomePage from "../components/Shop/MyHomePage"
         <title>RAMAG</title>
       </Head>
       <MyHomePage />
-      {/* <Footer /> */}
+      <Footer />
     </Layout>
   )
 }
