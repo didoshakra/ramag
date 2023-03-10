@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form" //Vers 7.0.X:<input {...register('test
 import IconCancel from "../../../ui/svg/head/IconCancel"
 import IconRefresh from "../../../ui/svg/table/IconRefresh"
 import DProduct from "../../../../pages/shop/references/d_product"
+// import DProduct from "../../../../pages/shop_not_agmodule/references/d_product"
 
 import { ComponentContext } from "../../../../context/ComponentContext"
 
@@ -249,7 +250,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
           setDovActive={setDovActive} //Активація довідника
           setValue={setValue}
           setFocus={setFocus}
-        />
+        /> 
       )}
       {/* --- */}
       <style jsx>{`

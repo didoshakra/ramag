@@ -11,13 +11,14 @@ import AgGrid from "../../../AgGridModules/AgGrid"
 //
 const fetcher = (url) => fetch(url).then((r) => r.json()) // Для загрузка даних на фронтенді
 
-export default function GProduct({ serverData, isDovidnuk = false, setDovActive, setValue }) {
+export default function GProduct({ serverData, isDovidnuk = false, setDovActive, setValue, setFocus }) {
   const titleTable = "Товари" //заголовок
   const [selectedRowState, setSelectedRowState] = useState({}) //Виділений рядок
   const [formActive, setFormActive] = useState(false) //Для відкриття/закриття форми
   const router = useRouter() //для переходу на сторінки
   const [toFormData, setToFormData] = useState({}) //Початкове значення для форми
   const [isAdd, setIsAdd] = useState(false) //Щоб знати для чого заходилось у форму(добавл чи кориг)
+  const [rowData, setRowData] = useState({})
 
   //*** параметри і ф-ції AG_Grid **************************************** */
   // Для відображення фото в ячейці
@@ -244,10 +245,16 @@ export default function GProduct({ serverData, isDovidnuk = false, setDovActive,
 
   //Вибрати(Choose) значення з довідника і передати в input форми
   const onChoose = () => {
-    // console.log("Brand.js/onChoose/SelectedRowState=", selectedRowState["0"])
+    // console.log("Product.js/onChoose/SelectedRowState=", selectedRowState["0"])
     if (isDovidnuk) setDovActive("")
-    setValue("brand_id", selectedRowState["0"].id)
-    setValue("brand", selectedRowState["0"].name)
+    setValue("skod", selectedRowState["0"].skod)
+    setValue("product_id", selectedRowState["0"].id)
+    setValue("name", selectedRowState["0"].name)
+    setValue("ov_id", selectedRowState["0"].ov_id)
+    setValue("ov", selectedRowState["0"].ov)
+    setValue("price", selectedRowState["0"].price)
+    setFocus("quantity", { shouldSelect: true })
+
     // Router.back()//На попередню сторінку
   }
 

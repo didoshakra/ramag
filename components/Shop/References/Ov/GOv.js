@@ -201,8 +201,8 @@ export default function GOv({ serverData, isDovidnuk, setDovActive, setValue }) 
     // alert(onChoose)
     // console.log("Ov.js/onChoose/SelectedRowState=", selectedRowState["0"])
     if (isDovidnuk) setDovActive("")
-    setValue("brand_id", selectedRowState["0"].id)
-    setValue("brand", selectedRowState["0"].name)
+    setValue("ov_id", selectedRowState["0"].id)
+    setValue("ov", selectedRowState["0"].name)
     // Router.back()//На попередню сторінку
   }
 

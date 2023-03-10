@@ -31,7 +31,7 @@ export default function GDocCheckProducts({
 }) {
   console.log("GDocCheckProducts.js")
   const newDoc = headData.newDoc ? "*добавляється*" : ""
-  const titleTable = `${newDoc}  Товари в чеку №: ` //заголовок
+  const titleTable = `${newDoc}  *Товари в чеку №: ` //заголовок
   //
   const { state, dispatch } = useContext(ComponentContext)
   const { theme, themeTypeLight } = state
@@ -184,31 +184,31 @@ export default function GDocCheckProducts({
     suppressSizeToFit: true, //автоматичне змінення розміру стовбця(до розміру екрану)
   }
 
-  // загрузка даних в Agrid
-  const onGridReady = (params) => {
-    if (gridApi) {
-      //??? Якщо включено sizeColumnsToFit, то не працює параметр flex:1/flex:2...
-      gridApi.sizeColumnsToFit() //Розмір стовпців відповідно до встановленого розміру(width).Якщо width не встановлено то воно береться з defaultColDef
-    }
+  //   // загрузка даних в Agrid
+  //   const onGridReady = (params) => {
+  //     if (gridApi) {
+  //       //??? Якщо включено sizeColumnsToFit, то не працює параметр flex:1/flex:2...
+  //       gridApi.sizeColumnsToFit() //Розмір стовпців відповідно до встановленого розміру(width).Якщо width не встановлено то воно береться з defaultColDef
+  //     }
 
-    setGridApi(params.api)
-    setRowData(data) //з сервера Pg
+  //     setGridApi(params.api)
+  //     setRowData(data) //з сервера Pg
 
-    // Тестові дані з зовнішного сервера
-    // fetch("https://www.ag-grid.com/example-assets/olympic-winners.json")
-    //   .then((resp) => resp.json())
-    //   .then((data) => {
-    //     setRowData(data)
-    //   })
-  }
+  //     // Тестові дані з зовнішного сервера
+  //     // fetch("https://www.ag-grid.com/example-assets/olympic-winners.json")
+  //     //   .then((resp) => resp.json())
+  //     //   .then((data) => {
+  //     //     setRowData(data)
+  //     //   })
+  //   }
 
-  //https://stackoverflow.com/questions/44263350/count-number-of-selected-rows-in-ag-grid
-  const onSelectionChanged = (params) => {
-    setCountSelectedRows(params.api.getSelectedRows().length) //к-сть вибраних рядків
-    setSelectedRowState(params.api.getSelectedRows()) //вибрані рядки(iнформація)
-    // console.log("GDocCheckProducts.js/SelectionChanged/К-сть вибраних рядків=", countSelectedRows)
-    // console.log("GDocCheckProducts.js/SelectedRowState=", selectedRowState)
-  }
+  //   //https://stackoverflow.com/questions/44263350/count-number-of-selected-rows-in-ag-grid
+  //   const onSelectionChanged = (params) => {
+  //     setCountSelectedRows(params.api.getSelectedRows().length) //к-сть вибраних рядків
+  //     setSelectedRowState(params.api.getSelectedRows()) //вибрані рядки(iнформація)
+  //     // console.log("GDocCheckProducts.js/SelectionChanged/К-сть вибраних рядків=", countSelectedRows)
+  //     // console.log("GDocCheckProducts.js/SelectedRowState=", selectedRowState)
+  //   }
   //------------------------------------------------------------------------------------------------------------ */
 
   //Перемальовує всі рядки
@@ -219,29 +219,29 @@ export default function GDocCheckProducts({
     gridRef.current.api.redrawRows()
   }, [])
 
-  //*** відновити початковий стан стовбців //https://www.ag-grid.com/archive/27.2.0/react-data-grid/column-state/
-  const resetState = useCallback(() => {
-    gridRef.current.columnApi.resetColumnState()
-    // console.log("column state reset")
-  }, [])
+  //   //*** відновити початковий стан стовбців //https://www.ag-grid.com/archive/27.2.0/react-data-grid/column-state/
+  //   const resetState = useCallback(() => {
+  //     gridRef.current.columnApi.resetColumnState()
+  //     // console.log("column state reset")
+  //   }, [])
 
-  // зміна теми
-  const changeTheme = () => {
-    let newTheme = "light"
-    if (themeTypeLight) {
-      newTheme = "dark"
-    }
-    dispatch({ type: "THEME", payload: newTheme }) //Змінюємо state.theme
-  }
+  //   // зміна теми
+  //   const changeTheme = () => {
+  //     let newTheme = "light"
+  //     if (themeTypeLight) {
+  //       newTheme = "dark"
+  //     }
+  //     dispatch({ type: "THEME", payload: newTheme }) //Змінюємо state.theme
+  //   }
 
-  // Вибір(змінити) к-сті рядків на сторінці //***https://www.ag-grid.com/archive/26.0.0/react-data-grid/row-pagination/
-  const onPageSizeChanged = useCallback(() => {
-    setAutoPageSize(false)
-    var value = document.getElementById("page-size").value
-    if (value == "0") setAutoPageSize(true)
-    gridRef.current.api.paginationSetPageSize(Number(value))
-  }, [])
-  //** end-agGrid ******************************************************* */
+  //   // Вибір(змінити) к-сті рядків на сторінці //***https://www.ag-grid.com/archive/26.0.0/react-data-grid/row-pagination/
+  //   const onPageSizeChanged = useCallback(() => {
+  //     setAutoPageSize(false)
+  //     var value = document.getElementById("page-size").value
+  //     if (value == "0") setAutoPageSize(true)
+  //     gridRef.current.api.paginationSetPageSize(Number(value))
+  //   }, [])
+  //   //** end-agGrid ******************************************************* */
 
   //== ExportExell */ Пацює при включеній опції "ag-grid-enterprise"
   const onExportExcel = useCallback(() => {
@@ -586,12 +586,13 @@ export default function GDocCheckProducts({
 
   // ******************************************************************
   //--- Загрузка даних на фронтенді useSWR // refreshInterval: 0,
-    console.log("GDocCheckProducts.js/useSWR/headData.id=", headData.id)
-  const { data, error } = useSWR(`${urlAPI}${headData.id}`, fetcher, {
-  })
+  // console.log("GDocCheckProducts.js/useSWR/headData.id=", headData.id)
+  const { data, error } = useSWR(`${urlAPI}${headData.id}`, fetcher, {})
 
   if (error) return <div>не вдалося завантажити</div>
   if (!data) return <p>Loading/Завантаження ...</p>
+  //   setRowData(data) //Обновлює масив рядків agGrid
+
   // ******************************************************************
 
   return (
@@ -609,9 +610,12 @@ export default function GDocCheckProducts({
         <ClientDialog setIsClientDialog={setIsClientDialog} setHeadData={setHeadData} discountRecalc={discountRecalc} />
       )}
       {isBackDialog && <BackDialog setIsBackDialog={setIsBackDialog} exitBackDialog={exitBackDialog} />}
+      {/*Шапка документу  */}
       <DocHead />
+      {/*  */}
       <AgGrid
-        rowData={rowData}
+        // rowData={rowData}
+        rowData={data}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         //

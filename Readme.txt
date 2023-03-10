@@ -101,11 +101,12 @@
 2023.02.28./ react-bootstrap-table2(-next).// https://code.tutsplus.com/tutorials/working-with-tables-in-react-part-one--cms-29682
         - !!!  react-bootstrap-table-next - гірший за agGrid !!!
 
-202.03.01-04 /Створив один компопент/components/AgGridModules/AgGrid.js для всіх таблиць, які використовують agGrid
-    !! Товарні чеки не прпцюють!!!
-    - Запуск Довідкики/agGrid/gmodule/
+202.03.01-04 /
+    1.Створив один компопент/components/AgGridModules/AgGrid.js для всіх таблиць, які використовують agGrid
+     !! Товарні чеки не працюють!!!
+     - Запуск Довідкики/agGrid/gmodule/
         -pages//shop__agmodule/references/d_brand->/components/Shop/References/Brend/GBrend.js->AgGrid.js
-    - Залишив agGrid таблиці з agGrid у кожноному документі.
+    2.Залишив agGrid таблиці з agGrid у кожноному документі.
         Запуск: Довідкики/agGrid
         -pages//shop_agmodule/references/d_brand->/components/Shop/References/Brend/GBrend.js->AgGrid.js
     -

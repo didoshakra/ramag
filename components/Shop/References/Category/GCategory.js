@@ -7,7 +7,6 @@ import { useMemo, useState } from "react"
 import { useRouter } from "next/router"
 import CategoryForm from "./CategoryForm"
 import AgGrid from "../../../AgGridModules/AgGrid"
-
 //
 const fetcher = (url) => fetch(url).then((r) => r.json()) // Для загрузка даних на фронтенді
 
@@ -204,8 +203,8 @@ export default function GCategory({ serverData, isDovidnuk, setDovActive, setVal
     // alert(onChoose)
     // console.log("Brand.js/onChoose/SelectedRowState=", selectedRowState["0"])
     if (isDovidnuk) setDovActive("")
-    setValue("brand_id", selectedRowState["0"].id)
-    setValue("brand", selectedRowState["0"].name)
+    setValue("category_id", selectedRowState["0"].id)
+    setValue("category", selectedRowState["0"].name)
     // Router.back()//На попередню сторінку
   }
 

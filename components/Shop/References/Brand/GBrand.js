@@ -6,7 +6,7 @@ import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import { useMemo, useState } from "react"
 import { useRouter } from "next/router"
 import BrandForm from "./BrandForm"
-import AgGrid from "../../../AgGridModules/AgGrid"
+import AgGrid from "../../../AgGridModules/AgGrid"  
 //
 const fetcher = (url) => fetch(url).then((r) => r.json()) // Для загрузка даних на фронтенді
 
