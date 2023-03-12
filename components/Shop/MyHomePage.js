@@ -114,8 +114,9 @@ const MyHomePage = () => {
         .slider-text h1 {
           //   font-size: 8vw;
           font-size: 60px;
-          //   color: white;
-          color: #82ae46;
+          color: yellow;
+        //   color: white;
+          //   color: #82ae46;
           line-height: 1.3;
           font-weight: 800;
           font-family: ${theme.fontFamily.mimicHand};
@@ -125,7 +126,8 @@ const MyHomePage = () => {
           .slider-text h1 {
             font-size: 10vw;
             // color: white;
-            color: #82ae46;
+            color: yellow;
+            // color: #82ae46;
           }
         }
         .subheading {

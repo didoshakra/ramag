@@ -291,6 +291,7 @@ export default function AgGrid({
           </div>
           {/*  */}
           <div className="agrid_head-title">{titleTable}</div>
+          {/* <div className={`agrid_head-title ${theme.colors.tableHeadTitle}`}>{titleTable}</div> */}
           {/*  */}
           <div className="agrid_head-container-right">
             {!isDovidnuk && (

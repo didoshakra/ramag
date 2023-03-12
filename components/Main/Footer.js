@@ -1,6 +1,6 @@
 //Footer.js ff
 //Добавлено animat
-import {  useContext } from "react"
+import { useContext } from "react"
 import { ComponentContext } from "../../context/ComponentContext"
 import IconHeart_c2 from "../ui/svg/IconHeart_c2"
 import IconMapMarker_c4 from "../../components/ui/svg/IconMapMarker_c4"
@@ -14,6 +14,8 @@ import IconShevronUp from "../ui/svg/IconShevronUp" //^Стрілка вверх
 const Footer = () => {
   const { state } = useContext(ComponentContext)
   const { theme } = state
+  //   const dataTime = typeof window !== "undefined" && new Date().toString()
+//   const dataTime = typeof window !== "undefined" ? new Date().toString() : ""
   return (
     <section className="footer-section">
       {/* <div className="footer-arrow-up-row"> */}
@@ -31,7 +33,8 @@ const Footer = () => {
         <div className="footer-context-item-col">
           <h2 className="item__vegefoods-heading">RAMAG</h2>
           <p>
-            Сонце - це життя, гори - це воля, а сонце і гори - це вільне життя!
+            Сонце - це життя, гори - це свобода, а сонце і гори - це вільне життя!
+            Гори – ступені в небо. Піднімаючись по них, я йду до нового життя …
             {/* Far away, beyond the high mountains, beyond the blue seas.  */}
           </p>
           <ul className="footer-social">
@@ -163,14 +166,14 @@ const Footer = () => {
           <div className="footer-copyright-row">
             <p>
               {/* Copyright © {new Date().getFullYear()} */}
-              {/* Copyright © {new Date().getDate()} */}
               Copyright © {new Date().toDateString()}
+              {/* Copyright © {new Date().toString()} */}
               <IconHeart_c2
                 width={theme.size.tableIcon}
                 height={theme.size.tableIcon}
                 colorFill="#000"
                 colorStroke="#000"
-              />
+              />{" "}
               {/* <a href="https://colorlib.com" target="_blank">
                 Colorlib
               </a> */}
