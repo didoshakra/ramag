@@ -1,4 +1,4 @@
-//d_ov.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_ov.js //Основа- Довідник/НеДовідник
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import Layout from "../../../components/Main/Layout"
 // import Ov from "../../../components/Shop//References/Ov"
@@ -86,10 +86,10 @@ function Ov({ data, isDovidnuk = false, setDovActive, setValue }) {
   //   }
   // }, [rowData])
 
-//   // перед в Agrid
-//   const afterGuiAttached = (params) => {
-//     document.querySelector("#filterTextBox")?.focus() //Передати фокус в швидкий пошук
-//   }
+  //   // перед в Agrid
+  //   const afterGuiAttached = (params) => {
+  //     document.querySelector("#filterTextBox")?.focus() //Передати фокус в швидкий пошук
+  //   }
 
   // загрузка даних в Agrid
   const onGridReady = (params) => {

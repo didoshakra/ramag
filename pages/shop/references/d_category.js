@@ -1,4 +1,4 @@
-//d_category.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_category.js //Основа- Довідник/НеДовідник
 import { pool } from "../../../config/dbShop"
 import Layout from "../../../components/Main/Layout"
 import GCategory from "../../../components/Shop/References/Category/GCategory"

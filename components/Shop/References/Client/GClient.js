@@ -1,4 +1,4 @@
-//GClient.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//GClient.js //Основа- Довідник/НеДовідник
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 // import Client from "../../../components/Shop//References/Client"
 //- обновлення SWR-(mutate)

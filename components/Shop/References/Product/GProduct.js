@@ -1,4 +1,4 @@
-//GProduct.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//GProduct.js //Основа- Довідник/НеДовідник
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 // import Brand from "../../../components/Shop//References/Brand"
 //- обновлення SWR-(mutate)

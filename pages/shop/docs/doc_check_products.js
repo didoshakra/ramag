@@ -8,23 +8,13 @@
 // № чеку для check_id,беремо з select-seqence (SELECT nextval('doc_check_head_id_seq')`)/ Не зміг реалізувати добвлення в doc_check_head з зарезервованим check_id(nextval)-> cannot insert a non-DEFAULT value into column "id" / undefined
 //При збереженні документа, в циклі добавляю шапку документа в doc_check_head з усіма даними з масивів  і отримавши doc_check_head.id  добавляю дані в таблицю doc_check_products, де nom_check=doc_check_head.id
 //-------------------------------------------------------
-
+import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import { pool } from "../../../config/dbShop"
 import GDocCheckProducts from "../../../components/Shop/Docs/DocCheckProducts/GDocCheckProducts"
 
-export default function DocCheckProducts({ serverData, setDocContent, headData, setHeadData }) {
-  return (
-    <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0 }}>
-      {/* <div style={{ position: "relative", width: "calc(100vw)", height: "calc(100vh - 350px)" }}> */}
-      <GDocCheckProducts
-        serverData={serverData}
-        setDocContent={setDocContent}
-        headData={headData}
-        setHeadData={setHeadData}
-      />
-    </div>
-  )
-}
+// const urlAPI = "/api/shop/docs/doc_check_products/" // Для useSWR/getServerSideProp i...
+// const fetcher = (url) => fetch(url).then((res) => res.json()) // Для useSWR
+
 //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
 export async function getServerSideProps(context) {
   let data = {}
@@ -54,3 +44,30 @@ export async function getServerSideProps(context) {
     props: { serverData: data }, // буде передано компоненту сторінки як атрибути
   }
 }
+
+export default function DocCheckProducts({ serverData, setDocContent, headData, setHeadData }) {
+        console.log("*/*******serverData", serverData)
+
+    // ******************************************************************
+//   //--- Загрузка даних на фронтенді useSWR // refreshInterval: 0,
+//   // console.log("GDocCheckProducts.js/useSWR/headData.id=", headData.id)
+//   const { data, error } = useSWR(`${urlAPI}${headData.id}`, fetcher, {})
+
+//   if (error) return <div>не вдалося завантажити</div>
+//   if (!data) return <p>Loading/Завантаження ...</p>
+
+  // ******************************************************************
+  return (
+    <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, right: 0 }}>
+      {/* <div style={{ position: "relative", width: "calc(100vw)", height: "calc(100vh - 350px)" }}> */}
+      <GDocCheckProducts
+        // serverData={serverData}
+        data={serverData}
+        setDocContent={setDocContent}
+        headData={headData}
+        setHeadData={setHeadData}
+      />
+    </div>
+  )
+}
+

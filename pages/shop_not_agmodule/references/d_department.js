@@ -1,4 +1,4 @@
-//d_department.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_department.js //Основа- Довідник/НеДовідник
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import Layout from "../../../components/Main/Layout"
 // import Department from "../../../components/Shop//References/Department"
@@ -279,7 +279,7 @@ function Department({ data, isDovidnuk = false, setDovActive, setValue }) {
   //Вибрати(Pick) значення з довідника і передати в input форми
   const onChoose = () => {
     // console.log("Department.js/onChoose/SelectedRowState=", selectedRowState["0"])
-      if (isDovidnuk) setDovActive("")
+    if (isDovidnuk) setDovActive("")
     setValue("departamentId", selectedRowState["0"].id)
     setValue("departament", selectedRowState["0"].name)
     // Router.back()//На попередню сторінку

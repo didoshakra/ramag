@@ -1,4 +1,4 @@
-//d_doc_check_head.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_doc_check_head.js //Основа- Довідник/НеДовідник
 //Шпаки документів з входом у документ(додавання/кор... з самого документа)
 
 import Layout from "../../../components/Main/Layout"

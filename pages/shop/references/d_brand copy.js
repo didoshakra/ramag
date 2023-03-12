@@ -1,7 +1,40 @@
 //d_brand.js //Основа- Довідник/НеДовідник
+import { pool } from "../../../config/dbShop"
 import Layout from "../../../components/Main/Layout"
 import GBrand from "../../../components/Shop/References/Brand/GBrand"
-import { dbHost } from "../../../config/dbHost"// Налаштування dbHost = "http://localhost:3001")
+
+// //= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
+export async function getServerSideProps(context) {
+  console.log("d_brand.js/getServerSideProp/context")
+  //   let datas = {}
+  const resp = await pool.connect((err, client, done) => {
+    const sql = "select * from d_brand ORDER BY id DESC"
+    if (err) throw err //видає опис помилки підключення
+    const datas = client.query(sql, (err, result) => {
+      console.log("Category.js/getServerSideProps/result.rows*=", result.rows)
+      done() // call `done()` to release the client back to the pool
+      if (err) {
+        console.log("error running query", err)
+      } else {
+        return result.rows
+      }
+    })
+    console.log("d_brand.js/getServerSideProp/datas==", datas)
+  })
+  const datas1 = await result.rows
+  //**************************** */
+  console.log("d_brand.js/getServerSideProp/datas=", datas1)
+
+  //   if (!datas) {
+  //     return {
+  //       notFound: true,
+  //     }
+  //   }
+  //   const datas = await resp
+  return {
+    props: { serverData: {} }, // буде передано компоненту сторінки як атрибути
+  }
+}
 
 
 export default function DBrand({
@@ -30,15 +63,3 @@ export default function DBrand({
     }
     return <>{isDovidnuk ? <Dovidnuk /> : <NeDovidnuk />}</>
 }
-
-//= Загрузка даних на сервері getServerSideProps()/getStaticProps() \\Тільки на сторінках(не викликається як компонент)
-export async function getServerSideProps(context) {
-  const response = await fetch(`${dbHost}/api/shop/references/d_brand/select-all`)
-//   const response = await fetch(`/api/shop/references/d_brand/select-all`)
-  const datas = await response.json()
-  console.log("d_brand.js/getServerSideProps/datas=", datas)
-  return {
-    props: { serverData: datas }, // will be passed to the page component as props
-  }
-}
-

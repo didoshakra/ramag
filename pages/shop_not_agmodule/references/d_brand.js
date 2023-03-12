@@ -1,4 +1,4 @@
-//d_d_brand.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_d_brand.js //Основа- Довідник/НеДовідник
 //- обновлення SWR-(mutate)
 
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
@@ -29,7 +29,6 @@ import BrandForm from "../../../components/Shop/References/BrandForm"
 import { ComponentContext } from "../../../context/ComponentContext"
 
 //******************************************************************************* */
-const urlAPI = "/api/shop/docs/doc_check_head/" // Для useSWR/getServerSideProp i...
 const fetcher = (url) => fetch(url).then((r) => r.json()) // Для загрузка даних на фронтенді
 
 export default function Brand({
@@ -409,7 +408,7 @@ function GBrand({ serverData, isDovidnuk = false, setDovActive, setValue }) {
   //Вибрати(Pick) значення з довідника і передати в input форми
   const onChoose = () => {
     // console.log("d_brand.js/onChoose/SelectedRowState=", selectedRowState["0"])
-       if (isDovidnuk) setDovActive("")
+    if (isDovidnuk) setDovActive("")
     setValue("brand_id", selectedRowState["0"].id)
     setValue("brand", selectedRowState["0"].name)
     // Router.back()//На попередню сторінку

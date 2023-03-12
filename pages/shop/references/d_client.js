@@ -1,4 +1,4 @@
-//d_client.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_client.js //Основа- Довідник/НеДовідник
 import { pool } from "../../../config/dbShop"
 import Layout from "../../../components/Main/Layout"
 import GClient from "../../../components/Shop/References/Client/GClient"

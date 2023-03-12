@@ -1,4 +1,4 @@
-//GDepartament.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//GDepartament.js //Основа- Довідник/НеДовідник
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 // import Departament from "../../../components/Shop//References/Departament"
 //- обновлення SWR-(mutate)
@@ -199,7 +199,7 @@ export default function GDepartament({ serverData, isDovidnuk, setDovActive, set
   const onChoose = () => {
     // alert(onChoose)
     // console.log("Departament.js/onChoose/SelectedRowState=", selectedRowState["0"])
-       if (isDovidnuk) setDovActive("")
+    if (isDovidnuk) setDovActive("")
     setValue("brand_id", selectedRowState["0"].id)
     setValue("brand", selectedRowState["0"].name)
     // Router.back()//На попередню сторінку

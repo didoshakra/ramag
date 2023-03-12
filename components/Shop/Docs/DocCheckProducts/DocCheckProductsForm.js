@@ -241,7 +241,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
             <input className="input" required onClick={onProduct} {...register("name")} />
           </div>
           {/*  */}
-        </div>
+        </div> 
       </form>
 
       {dovActive == "product" && (
@@ -250,7 +250,7 @@ export default function DocCheckProductsForm({ onCloseForm, toFormData }) {
           setDovActive={setDovActive} //Активація довідника
           setValue={setValue}
           setFocus={setFocus}
-        /> 
+        />
       )}
       {/* --- */}
       <style jsx>{`

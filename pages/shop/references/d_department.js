@@ -1,4 +1,4 @@
-//d_departament.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_departament.js //Основа- Довідник/НеДовідник
 import { pool } from "../../../config/dbShop"
 import Layout from "../../../components/Main/Layout"
 import GDepartament from "../../../components/Shop/References/Departament/GDepartament"

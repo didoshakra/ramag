@@ -1,4 +1,4 @@
-//d_product.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_product.js //Основа- Довідник/НеДовідник
 import { pool } from "../../../config/dbShop"
 import Layout from "../../../components/Main/Layout"
 import GProduct from "../../../components/Shop/References/Product/GProduct"
@@ -8,12 +8,19 @@ export default function DProduct({
   isDovidnuk = false, //Чи відкривати як довідник
   setDovActive, //Назва довідника
   setValue, //Для зміни Input в формі вводу даних
+  setFocus,
 }) {
   const Dovidnuk = () => {
     return (
       //   <div style={{ position: "absolute", width: "770px", height: "calc(100vh - 200px)", maxWidth: "calc(100vw" }}>
       <div style={{ position: "relative", top: "0", width: "600px", height: "500px", maxWidth: "calc(100vw - 20px)" }}>
-        <GProduct serverData={serverData} isDovidnuk={true} setDovActive={setDovActive} setValue={setValue} />
+        <GProduct
+          serverData={serverData}
+          isDovidnuk={true}
+          setDovActive={setDovActive}
+          setValue={setValue}
+          setFocus={setFocus}
+        />
       </div>
     )
   }

@@ -1,4 +1,4 @@
-//Grid.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//Grid.js //Основа- Довідник/НеДовідник
 // import Brand from "../../../components/Shop//References/Brand"
 
 //********************************************************** */

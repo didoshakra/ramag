@@ -1,4 +1,4 @@
-//d_user.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_user.js //Основа- Довідник/НеДовідник
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import Layout from "../../../components/Main/Layout"
 // import User from "../../../components/Shop//References/User"

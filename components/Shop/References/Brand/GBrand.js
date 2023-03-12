@@ -1,4 +1,4 @@
-//GBrand.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//GBrand.js //Основа- Довідник/НеДовідник
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 // import Brand from "../../../components/Shop//References/Brand"
 //- обновлення SWR-(mutate)
@@ -6,7 +6,7 @@ import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import { useMemo, useState } from "react"
 import { useRouter } from "next/router"
 import BrandForm from "./BrandForm"
-import AgGrid from "../../../AgGridModules/AgGrid"  
+import AgGrid from "../../../AgGridModules/AgGrid"
 //
 const fetcher = (url) => fetch(url).then((r) => r.json()) // Для загрузка даних на фронтенді
 
@@ -81,7 +81,7 @@ export default function GBrand({ serverData, isDovidnuk, setDovActive, setValue 
       // якщо HTTP-статус в диапазоне 200-299
       const resRow = await response.json() //повертає тіло відповіді json
       const aler = await alert(`Запис успішно добавленo`)
-    //   const data = await mutate("/api/shop/references/d_brand/select-all", true) //Обновлення даних
+      //   const data = await mutate("/api/shop/references/d_brand/select-all", true) //Обновлення даних
       const data = await mutate() //Обновлення даних
       //   setRowData(data)
     } else {
@@ -224,16 +224,17 @@ export default function GBrand({ serverData, isDovidnuk, setDovActive, setValue 
     else setDovActive("")
   }
 
-  //= Загрузка даних на фронтенді useSWR == {refreshInterval: 0, //milliseconds}=========*/
-  const { data, mutate, error } = useSWR("/api/shop/references/d_brand/select-all", fetcher)
-  if (error) return <div>не вдалося завантажити</div>
-  if (!data) return <p>Loading/Завантаження ...</p>
-  //**================================================================================== */
+//   //= Загрузка даних на фронтенді useSWR == {refreshInterval: 0, //milliseconds}=========*/
+//   const { data, mutate, error } = useSWR("/api/shop/references/d_brand/select-all", fetcher)
+//   if (error) return <div>не вдалося завантажити</div>
+//   if (!data) return <p>Loading/Завантаження ...</p>
+//   //**================================================================================== */
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <AgGrid
-        rowData={data}
+        // rowData={data}
+        rowData={serverData}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         setSelectedRowState={setSelectedRowState} //Дані з вибраних рядків

@@ -1,4 +1,4 @@
-//d_doc_check_head.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_doc_check_head.js //Основа- Довідник/НеДовідник
 //2-а файли+agGrid.js
 
 import { pool } from "../../../config/dbShop"
@@ -42,4 +42,3 @@ export async function getServerSideProps(context) {
     props: { serverData: data }, // буде передано компоненту сторінки як атрибути
   }
 }
-

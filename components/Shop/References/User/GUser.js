@@ -1,4 +1,4 @@
-//GUser.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//GUser.js //Основа- Довідник/НеДовідник
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 // import User from "../../../components/Shop//References/User"
 //- обновлення SWR-(mutate)
@@ -20,32 +20,32 @@ export default function GUser({ serverData, isDovidnuk, setDovActive, setValue }
   const [isAdd, setIsAdd] = useState(false) //Щоб знати для чого заходилось у форму(добавл чи кориг)
 
   //*** параметри і ф-ції AG_Grid **************************************** */
-   const columnDefs = useMemo(
-     () => [
-       //   const [columnDefs, setColumnDefs] = useState([
-       {
-         //   headerName: "#",
-         //   field: "id",
-         minWidth: 30,
-         maxWidth: 100,
-         checkboxSelection: isDovidnuk ? false : true, //
-         headerCheckboxSelection: isDovidnuk ? false : true, //Добавляє в шапку
-         sortable: false,
-         suppressMenu: true,
-         filter: false,
-         resizable: false,
-         lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
-         suppressMovable: true, //Заборона перетягнути заголовок стовпця.
-         suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
-       },
-       { field: "name", headerName: "Ім'я", width: 300, minWidth: 150, flex: 4 },
-       { field: "last_name", headerName: "Прізвище", width: 300, minWidth: 150, flex: 4 },
-       { field: "login", headerName: "Логін", minWidth: 90, flex: 1 },
-       { field: "password", headerName: "Пароль", minWidth: 90, flex: 1 },
-       { field: "profile", headerName: "Профіль", minWidth: 90, flex: 1 },
-     ],
-     [isDovidnuk]
-   )
+  const columnDefs = useMemo(
+    () => [
+      //   const [columnDefs, setColumnDefs] = useState([
+      {
+        //   headerName: "#",
+        //   field: "id",
+        minWidth: 30,
+        maxWidth: 100,
+        checkboxSelection: isDovidnuk ? false : true, //
+        headerCheckboxSelection: isDovidnuk ? false : true, //Добавляє в шапку
+        sortable: false,
+        suppressMenu: true,
+        filter: false,
+        resizable: false,
+        lockPosition: "left", //блокує стовпець з одного боку сітки "left"або "right",(перетякування інших не діє)
+        suppressMovable: true, //Заборона перетягнути заголовок стовпця.
+        suppressSizeToFit: true, // заборона на автоматичне змінення розміру стовбця(до розміру екрану)
+      },
+      { field: "name", headerName: "Ім'я", width: 300, minWidth: 150, flex: 4 },
+      { field: "last_name", headerName: "Прізвище", width: 300, minWidth: 150, flex: 4 },
+      { field: "login", headerName: "Логін", minWidth: 90, flex: 1 },
+      { field: "password", headerName: "Пароль", minWidth: 90, flex: 1 },
+      { field: "profile", headerName: "Профіль", minWidth: 90, flex: 1 },
+    ],
+    [isDovidnuk]
+  )
 
   const defaultColDef = {
     flex: 1,

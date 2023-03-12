@@ -1,12 +1,11 @@
-//DocCheckHead.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//DocCheckHead.js //Основа- Довідник/НеДовідник
 //Шпаки документів з входом у документ(додавання/кор... з самого документа)
 //*** */
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
-import {  useMemo, useState, useCallback, useRef } from "react"
+import { useMemo, useState, useCallback, useRef } from "react"
 import { useRouter } from "next/router"
 import AgGrid from "../../../AgGridModules/AgGrid"
 import DocCheckProducts from "../../../../pages/shop/docs/doc_check_products"
-
 
 const urlAPI = "/api/shop/docs/doc_check_head/" // Для useSWR/getServerSideProp i...
 const fetcher = (url) => fetch(url).then((res) => res.json()) // Для useSWR
@@ -18,7 +17,7 @@ export default function GDocCheckHead({ serverData }) {
   //
   const router = useRouter() //для переходу на сторінки
   const gridRef = useRef(0)
-//   const [rowData, setRowData] = useState()
+  //   const [rowData, setRowData] = useState()
   //   const [countSelectedRows, setCountSelectedRows] = useState(0) //к-сть виділених рядків
   const [selectedRowState, setSelectedRowState] = useState({}) //виділені рядки(вміст)
   //
@@ -190,7 +189,7 @@ export default function GDocCheckHead({ serverData }) {
     alert("onChoose")
     setHeadData(selectedRowState["0"]) //Дані з вибраного запису в форму(для select)
     setDocContent("DocCheckProducts") //Для відкриття забаного ("DocCheckProducts") компонента
-      console.log("GDocCheckHead/onChoose/selectedRowState0  = ", selectedRowState["0"])
+    console.log("GDocCheckHead/onChoose/selectedRowState0  = ", selectedRowState["0"])
   }
 
   //--- ExportExell // Пацює при включеній опції "ag-grid-enterprise"

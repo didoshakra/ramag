@@ -4,15 +4,16 @@
 //https://node-postgres.com/features/pooling
 
 import { pool } from "../../../../../config/dbShop"
-  
+
 // пул із повідомленням про помилку від імені будь-яких неактивних клієнтів
 // містить дані про помилку серверної частини чи розділення мережі
-pool.on("error", (err, client) => {
-  console.error("Неочікувана помилка на неактивному клієнті", err) // your callback here
-  process.exit(-1)
-})
+// pool.on("error", (err, client) => {
+//   console.error("Неочікувана помилка на неактивному клієнті", err) // your callback here
+//   process.exit(-1)
+// })
 
 export default function handler(req, resp) {
+//   console.log("api/.../d_brand/select-all.js/handler")
   //(pool)
   const sql = "select *  from d_brand ORDER BY id DESC"
 

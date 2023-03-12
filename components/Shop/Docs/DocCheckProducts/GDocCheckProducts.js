@@ -20,11 +20,11 @@ import ClientDialog from "../../DialogForms/ClientDialog"
 import BackDialog from "../../DialogForms/BackDialog"
 
 //
-const urlAPI = "/api/shop/docs/doc_check_products/" // Для useSWR/getServerSideProp i...
-const fetcher = (url) => fetch(url).then((res) => res.json()) // Для useSWR
+// const urlAPI = "/api/shop/docs/doc_check_products/" // Для useSWR/getServerSideProp i...
+// const fetcher = (url) => fetch(url).then((res) => res.json()) // Для useSWR
 
 export default function GDocCheckProducts({
-  serverData, // Рядки документа
+  data, // Рядки документа
   setDocContent, //Для виходу з документу setDocContent("")
   headData, //
   setHeadData = { setHeadData },
@@ -584,16 +584,16 @@ export default function GDocCheckProducts({
     redrawAllRows() //Перемальовує рядки agGrid
   }
 
-  // ******************************************************************
-  //--- Загрузка даних на фронтенді useSWR // refreshInterval: 0,
-  // console.log("GDocCheckProducts.js/useSWR/headData.id=", headData.id)
-  const { data, error } = useSWR(`${urlAPI}${headData.id}`, fetcher, {})
+//   // ******************************************************************
+//   //--- Загрузка даних на фронтенді useSWR // refreshInterval: 0,
+//   // console.log("GDocCheckProducts.js/useSWR/headData.id=", headData.id)
+//   const { data, error } = useSWR(`${urlAPI}${headData.id}`, fetcher, {})
 
-  if (error) return <div>не вдалося завантажити</div>
-  if (!data) return <p>Loading/Завантаження ...</p>
-  //   setRowData(data) //Обновлює масив рядків agGrid
+//   if (error) return <div>не вдалося завантажити</div>
+//   if (!data) return <p>Loading/Завантаження ...</p>
+//   //   setRowData(data) //Обновлює масив рядків agGrid
 
-  // ******************************************************************
+//   // ******************************************************************
 
   return (
     <div style={{ height: "100%", width: "100%" }}>

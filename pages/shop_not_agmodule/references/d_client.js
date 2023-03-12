@@ -1,4 +1,4 @@
-//d_client.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_client.js //Основа- Довідник/НеДовідник
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import Layout from "../../../components/Main/Layout"
 // import User from "../../../components/Shop//References/User"
@@ -281,7 +281,7 @@ function User({ data, isDovidnuk = false, setDovActive, setValue }) {
   //Вибрати(Pick) значення з довідника і передати в input форми
   const onChoose = () => {
     // console.log("User.js/onChoose/SelectedRowState=", selectedRowState["0"])
-       if (isDovidnuk) setDovActive("")
+    if (isDovidnuk) setDovActive("")
     setValue("client_id", selectedRowState["0"].id)
     setValue("client", selectedRowState["0"].name)
     // Router.back()//На попередню сторінку

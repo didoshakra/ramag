@@ -1,4 +1,4 @@
-//d_product.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_product.js //Основа- Довідник/НеДовідник
 //??? Все ОК, крім асинхронного виводу добавлення записів в PostgreSQL
 
 import Layout from "../../../components/Main/Layout"
@@ -31,7 +31,7 @@ import IconTable_c2 from "../../../components/ui/svg/table/IconTable_c2"
 import IconExport from "../../../components/ui/svg/table/IconExport"
 import IconPrinter_c2 from "../../../components/ui/svg/head/IconPrinter_c2" //Принтер
 import ProductForm from "../../../components/Shop/References/Product/ProductForm"
-import {ComponentContext} from "../../../context/ComponentContext"
+import { ComponentContext } from "../../../context/ComponentContext"
 
 //--- DProduct --------------------------------------------------------------
 const urlAPI = "/api/shop/references/d_product/" // Для useSWR/getServerSideProp i...

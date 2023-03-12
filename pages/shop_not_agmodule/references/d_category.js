@@ -1,4 +1,4 @@
-//d_category.js //Основа- Довідник/НеДовідник\getServerSideProps(context)/useSWR/agGrid\...Form
+//d_category.js //Основа- Довідник/НеДовідник
 import useSWR from "swr" //https://www.setup.pp.ua/2020/06/useswr-react.html
 import Layout from "../../../components/Main/Layout"
 // import Category from "../../../components/Shop//References/Category"
@@ -276,7 +276,7 @@ function Category({ data, isDovidnuk = false, setDovActive, setValue }) {
   //Вибрати(Pick) значення з довідника і передати в input форми
   const onChoose = () => {
     // console.log("Category.js/onChoose/SelectedRowState=", selectedRowState["0"])
-   if (isDovidnuk) setDovActive("")
+    if (isDovidnuk) setDovActive("")
     setValue("category_id", selectedRowState["0"].id)
     setValue("category", selectedRowState["0"].name)
     // Router.back()//На попередню сторінку
