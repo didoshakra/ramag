@@ -34,8 +34,7 @@ const Footer = () => {
           <h2 className="item__vegefoods-heading">RAMAG</h2>
           <p>
             Сонце - це життя, гори - це свобода, а сонце і гори - це вільне життя!
-            Гори – ступені в небо. Піднімаючись по них, я йду до нового життя …
-            {/* Far away, beyond the high mountains, beyond the blue seas.  */}
+            Гори – це сходинки в небо. Піднімаючись по них, я йду до нового життя …
           </p>
           <ul className="footer-social">
             <li>

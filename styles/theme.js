@@ -82,6 +82,11 @@ export const themeLith = {
     headDroopMenuBackgroundHover: "#A5E189",
     headDroopMenuBackgroundActive: "red",
 
+    //-- headDroopMenu --------------------------------------------
+    // homePageSlidHeadingText: "yellow",
+    homePageSlidHeadingText: "#fff",
+    homePageSliderSubheadingText: "yellow",
+
     //-- drawer --------------------------------------------
     drawerHeadText: "#6B8E23", //
     drawerHeadTextHover: "#fff", //Підменю
@@ -209,7 +214,7 @@ export const themeDark = {
     dialogIcon: "20px",
     dialogIconBorder: "30px",
   },
- 
+
   colors: {
     text: "#fff",
     background: "rgba(65,69,69,1)",
@@ -264,6 +269,10 @@ export const themeDark = {
     headDroopMenuBackgroundHover: "#82AE46",
     headDroopMenuBackgroundActive: "red",
 
+    //-- headDroopMenu --------------------------------------------
+    // homePageSlidHeadingText: "white",
+    homePageSlidHeadingText: "black",
+    homePageSliderSubheadingText: "read",
     //-- drawer --------------------------------------------
     drawerHeadText: "#6B8E23", //
     drawerHeadTextHover: "#fff",

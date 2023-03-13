@@ -109,15 +109,17 @@ const Header = () => {
           {/* Логотип */}
           <HeaderLogo />
         </div>
-        <div className="header-conteiner__menu-center">
-          {/* Середній рядок меню */}
-          <HeaderMenu menu={menu} />
-        </div>
-        <div className="header-conteiner__menu-end">
-          {/* іконка мобільного меню/faList/ */}
-          <MobileMenuIcon mobileMenuOpen={mobileMenuOpen} mobileMenuToggle={mobileMenuToggle} />
-          {/* Налаштування(Теми,Мови)*/}
-          <HeaderSeting />
+        <div className="header-conteiner__menu-right">
+          <div className="header-conteiner__menu-center">
+            {/* Середній блок меню */}
+            <HeaderMenu menu={menu} />
+          </div>
+          <div className="header-conteiner__menu-end">
+            {/* іконка мобільного меню/faList/ */}
+            <MobileMenuIcon mobileMenuOpen={mobileMenuOpen} mobileMenuToggle={mobileMenuToggle} />
+            {/* Налаштування(Теми,Мови)*/}
+            <HeaderSeting />
+          </div>
         </div>
       </div>
       {/* Список мобильного меню */}
@@ -150,11 +152,15 @@ const Header = () => {
           align-items: center;
           //   border: 2px solid green;
         }
+
         .header-conteiner__menu-center {
           padding: 0 5px;
-          max-width: calc(100% - 350px);
+        //   max-width: calc(100% - 350px);
+          display: flex;
+          justify-content: space-end;
           align-items: center;
         }
+        
         .header-conteiner__menu-end {
           flex-shrink: 0;
           width: 50px;
@@ -167,6 +173,11 @@ const Header = () => {
         }
 
         @media (min-width: 960px) {
+          .header-conteiner__menu-right {
+            display: flex;
+            justify-content: space-end;
+            align-items: center;
+          }
           .header-section {
             // Для того щоб плавно сховати шапку
             margin: 0;

@@ -114,9 +114,7 @@ const MyHomePage = () => {
         .slider-text h1 {
           //   font-size: 8vw;
           font-size: 60px;
-          color: yellow;
-        //   color: white;
-          //   color: #82ae46;
+          color: ${theme.colors.homePageSlidHeadingText};
           line-height: 1.3;
           font-weight: 800;
           font-family: ${theme.fontFamily.mimicHand};
@@ -125,9 +123,6 @@ const MyHomePage = () => {
         @media (min-width: 960px) {
           .slider-text h1 {
             font-size: 10vw;
-            // color: white;
-            color: yellow;
-            // color: #82ae46;
           }
         }
         .subheading {
@@ -138,7 +133,8 @@ const MyHomePage = () => {
           text-transform: uppercase;
           display: inline-block;
           //   color: white;
-          color: red;
+          color: ${theme.colors.homePageSliderSubheadingText};
+          //   color: red;
         }
         .slider-text p {
           color: rgba(0, 0, 0, 0.8);
