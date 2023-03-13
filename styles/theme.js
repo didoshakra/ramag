@@ -267,12 +267,12 @@ export const themeDark = {
     headDroopMenuTextHover: "#fff",
     headDroopMenuBackground: "rgba(65,69,69,1)",
     headDroopMenuBackgroundHover: "#82AE46",
-    headDroopMenuBackgroundActive: "red",
+    headDroopMenuBackgroundActive: "#f64532",
 
     //-- headDroopMenu --------------------------------------------
-    // homePageSlidHeadingText: "white",
     homePageSlidHeadingText: "black",
-    homePageSliderSubheadingText: "read",
+    homePageSliderSubheadingText: "#8B0000",
+
     //-- drawer --------------------------------------------
     drawerHeadText: "#6B8E23", //
     drawerHeadTextHover: "#fff",
