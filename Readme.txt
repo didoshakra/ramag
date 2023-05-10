@@ -1,10 +1,22 @@
+//На базі rob20221025_raui-agrid //Повний курс/https://www.youtube.com/watch?v=_EOrSmjdOZQ&ab_channel=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BB%D0%B5%D0%BD%D0%9C%D0%B8%D0%BD%D0%B8%D0%BD
+        Запуск yarn dev -p 3000  //PasgresSql на http://localhost:3000/
+==============================================================================
+- PostgreSQL/Розмістив БД на elephantsql.com
+- Обновив  "next": "^13.1.6",- мусів міняти <Link <a>
+- Таблиці на основі agGrid/getStaticProps/Довідники
+    - Створив один компопент/components/AgGridModules/AgGrid.js для всіх таблиц agGrid
+- Таблиці на основі react-bootstrap-table2/Не сподобадось
+- getServerSideProps SSR/getStaticPaths SSG
+- pages/404.js- для помилок/ з поверненнням на HOME по часу
+- Завантажити дані з файлу в Next.js
+- Індикатор загрузки
+- Лічильник
+===========================================================================
 // ??? - була помилка next.js versi-n12-3-1
 // Зараз версія "next": "^13.1.6",- мусів міняти без <a>// <Link href={`${items.url}`} legacyBehavior>
 // <a className="menu-items-a">{items.title}</a>
 
 
-//На базі rob20221025_raui-agrid //Повний курс/https://www.youtube.com/watch?v=_EOrSmjdOZQ&ab_channel=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BB%D0%B5%D0%BD%D0%9C%D0%B8%D0%BD%D0%B8%D0%BD
-        Запуск yarn dev -p 3000  //PasgresSql на http://localhost:3000/
 //===================================================================================================
 Добавив:
     pages/404.js- для помилок/ з поверненнням на HOME по часу
@@ -28,7 +40,7 @@
 2022.12.30 - Індикатор загрузки //https://www.npmjs.com/package/nextjs-progressbar
     npm i nextjs-progressbar
 
-2022.12.31 - Лічильникb//https://codesandbox.io/s/1x81b?file=/package.json:223-233
+2022.12.31 - Лічильник//https://codesandbox.io/s/1x81b?file=/package.json:223-233
     npm i react-countup
 
 ////////////////////////////////////////////////////////////////////////
@@ -86,7 +98,7 @@
     Почистив від лишніх модулів
     Deploy to Versal
 
-2023.02.16. / Добавив налаштування кольорів теми в multilevelMenu(MenuItems.jsб)
+2023.02.16. / Добавив налаштування кольорів теми в multilevelMenu(MenuItems.js)
 
 2023.02.18. / в doc_check_products- товари в чеках:
     - вилучення + коригуванн???
@@ -97,11 +109,12 @@
 
     - Переміщення по стрілках  //https://github.com/ag-grid/ag-grid/issues/6186
     - Дії при натиску на Enter
+----------------------------------
 
 2023.02.28./ react-bootstrap-table2(-next).// https://code.tutsplus.com/tutorials/working-with-tables-in-react-part-one--cms-29682
         - !!!  react-bootstrap-table-next - гірший за agGrid !!!
 
-202.03.01-04 /
+2023.03.01-04 /
     1.Створив один компопент/components/AgGridModules/AgGrid.js для всіх таблиць, які використовують agGrid
      !! Товарні чеки не працюють!!!
      - Запуск Довідкики/agGrid/gmodule/
@@ -114,3 +127,7 @@
     !!! Не можу перемістити фокус на рядок, який був зкоригований після оновлення даних
         ensureIndexVisible(selectedRowGridID, "top") //прокручує сітку/рядок(RowID) початок вікна
         getDisplayedRowAtIndex(selectedRowGridID).setSelected(true)
+ -----------
+
+ 20023.04.07 / Своя таблийя на основі 
+

@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }) {
       <NextNprogress color="yellow" startPosition={0.3} stopDelayMs={500} height={6} />
       <Component {...pageProps} />
 
-      <style jsx global>{`
+      <style jsx global>{` 
         //global Next.js
         *,
         *::before,
